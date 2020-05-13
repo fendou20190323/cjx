@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fendou.com.fendou.moudle.mapper.BackProductInfoMapper">
+	<resultMap id="BaseBackProductInfoMap" type="com.fendou.moudle.model.BackProductInfo">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="orderSn" property="orderSn" jdbcType="VARCHAR"/>
+        <result column="goodsCode" property="goodsCode" jdbcType="VARCHAR"/>
+        <result column="goodsName" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="productCode" property="productCode" jdbcType="VARCHAR"/>
+        <result column="productType" property="productType" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="brandCode" property="brandCode" jdbcType="VARCHAR"/>
+        <result column="brandName" property="brandName" jdbcType="VARCHAR"/>
+        <result column="designCompanyCode" property="designCompanyCode" jdbcType="VARCHAR"/>
+        <result column="designCompanyName" property="designCompanyName" jdbcType="VARCHAR"/>
+        <result column="size" property="size" jdbcType="VARCHAR"/>
+        <result column="color" property="color" jdbcType="VARCHAR"/>
+        <result column="colorSeries" property="colorSeries" jdbcType="VARCHAR"/>
+        <result column="retailPrice" property="retailPrice" jdbcType="DECIMAL"/>
+        <result column="planBackQuantity" property="planBackQuantity" jdbcType="INTEGER"/>
+        <result column="backUnitPrice" property="backUnitPrice" jdbcType="DECIMAL"/>
+        <result column="realityBackQuantity" property="realityBackQuantity" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="updateBy" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="createBy" property="createBy" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="tenantId" property="tenantId" jdbcType="VARCHAR"/>
+	</resultMap>
+
+    <sql id="insertColumns">
+        , `orderSn`
+        , `goodsCode`
+        , `goodsName`
+        , `productCode`
+        , `productType`
+        , `image`
+        , `brandCode`
+        , `brandName`
+        , `designCompanyCode`
+        , `designCompanyName`
+        , `size`
+        , `color`
+        , `colorSeries`
+        , `retailPrice`
+        , `planBackQuantity`
+        , `backUnitPrice`
+        , `realityBackQuantity`
+        , `sort`
+        , `status`
+        , `remarks`
+        , `updateBy`
+        , `updateTime`
+        , `createBy`
+        , `createTime`
+        , `tenantId`
+    </sql>
+
+    <sql id="updateColumns">
+        , `orderSn` = #{orderSn, jdbcType=VARCHAR}
+        , `goodsCode` = #{goodsCode, jdbcType=VARCHAR}
+        , `goodsName` = #{goodsName, jdbcType=VARCHAR}
+        , `productCode` = #{productCode, jdbcType=VARCHAR}
+        , `productType` = #{productType, jdbcType=VARCHAR}
+        , `image` = #{image, jdbcType=VARCHAR}
+        , `brandCode` = #{brandCode, jdbcType=VARCHAR}
+        , `brandName` = #{brandName, jdbcType=VARCHAR}
+        , `designCompanyCode` = #{designCompanyCode, jdbcType=VARCHAR}
+        , `designCompanyName` = #{designCompanyName, jdbcType=VARCHAR}
+        , `size` = #{size, jdbcType=VARCHAR}
+        , `color` = #{color, jdbcType=VARCHAR}
+        , `colorSeries` = #{colorSeries, jdbcType=VARCHAR}
+        , `retailPrice` = #{retailPrice, jdbcType=DECIMAL}
+        , `planBackQuantity` = #{planBackQuantity, jdbcType=INTEGER}
+        , `backUnitPrice` = #{backUnitPrice, jdbcType=DECIMAL}
+        , `realityBackQuantity` = #{realityBackQuantity, jdbcType=INTEGER}
+        , `sort` = #{sort, jdbcType=INTEGER}
+        , `status` = #{status, jdbcType=INTEGER}
+        , `remarks` = #{remarks, jdbcType=VARCHAR}
+        , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+        , `tenantId` = #{tenantId, jdbcType=VARCHAR}
+    </sql>
+
+    <sql id="listWherePart">
+        <where>
+            `status` &lt; 9
+            <if test="orderSn != null and orderSn != ''">
+                AND `orderSn` = #{orderSn, jdbcType=VARCHAR}
+            </if>
+            <if test="goodsCode != null and goodsCode != ''">
+                AND `goodsCode` = #{goodsCode, jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                AND `goodsName` = #{goodsName, jdbcType=VARCHAR}
+            </if>
+            <if test="productCode != null and productCode != ''">
+                AND `productCode` = #{productCode, jdbcType=VARCHAR}
+            </if>
+            <if test="productType != null and productType != ''">
+                AND `productType` = #{productType, jdbcType=VARCHAR}
+            </if>
+            <if test="image != null and image != ''">
+                AND `image` = #{image, jdbcType=VARCHAR}
+            </if>
+            <if test="brandCode != null and brandCode != ''">
+                AND `brandCode` = #{brandCode, jdbcType=VARCHAR}
+            </if>
+            <if test="brandName != null and brandName != ''">
+                AND `brandName` = #{brandName, jdbcType=VARCHAR}
+            </if>
+            <if test="designCompanyCode != null and designCompanyCode != ''">
+                AND `designCompanyCode` = #{designCompanyCode, jdbcType=VARCHAR}
+            </if>
+            <if test="designCompanyName != null and designCompanyName != ''">
+                AND `designCompanyName` = #{designCompanyName, jdbcType=VARCHAR}
+            </if>
+            <if test="size != null and size != ''">
+                AND `size` = #{size, jdbcType=VARCHAR}
+            </if>
+            <if test="color != null and color != ''">
+                AND `color` = #{color, jdbcType=VARCHAR}
+            </if>
+            <if test="colorSeries != null and colorSeries != ''">
+                AND `colorSeries` = #{colorSeries, jdbcType=VARCHAR}
+            </if>
+            <if test="retailPrice != null">
+                AND `retailPrice` = #{retailPrice, jdbcType=DECIMAL}
+            </if>
+            <if test="planBackQuantity != null">
+                AND `planBackQuantity` = #{planBackQuantity, jdbcType=INTEGER}
+            </if>
+            <if test="backUnitPrice != null">
+                AND `backUnitPrice` = #{backUnitPrice, jdbcType=DECIMAL}
+            </if>
+            <if test="realityBackQuantity != null">
+                AND `realityBackQuantity` = #{realityBackQuantity, jdbcType=INTEGER}
+            </if>
+            <if test="sort != null">
+                AND `sort` = #{sort, jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                AND `status` = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                AND `remarks` = #{remarks, jdbcType=VARCHAR}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                AND `updateBy` = #{updateBy, jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime != null">
+                AND `updateTime` = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                AND `createBy` = #{createBy, jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                AND `createTime` = #{createTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                AND `tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+            <!--<if test="searchWords != null and searchWords != ''">
+                AND CONCAT_WS('', `keyword`) LIKE CONCAT(CONCAT('%', #{searchWords}), '%')
+            </if>-->
+        </where>
+    </sql>
+
+    <select id="list" parameterType="java.util.Map" resultMap="BaseBackProductInfoMap">
+        SELECT *
+        FROM back_product_info t
+        <include refid="listWherePart"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            ORDER BY createTime DESC
+        </if>
+        <if test="pageSize != null and pageSize > 0">
+            LIMIT #{pageStart}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="getAll" parameterType="java.util.Map" resultMap="BaseBackProductInfoMap">
+        SELECT * FROM back_product_info WHERE `status` &lt; 9 ORDER BY id ASC
+    </select>
+
+    <select id="planBackQuantity" resultType="java.lang.Integer">
+        SELECT sum(planBackQuantity) FROM back_product_info WHERE `status` &lt; 9 AND `orderSn` = #{orderSn, jdbcType=VARCHAR}
+    </select>
+
+    <select id="realityBackQuantity" resultType="java.lang.Integer">
+        SELECT sum(realityBackQuantity) FROM back_product_info
+        WHERE `status` &lt; 9
+        AND `orderSn` = #{orderSn, jdbcType=VARCHAR}
+    </select>
+
+    <select id="productStatistics" resultType="java.lang.Integer">
+        SELECT count(1) FROM (SELECT count(1),productCode FROM back_product_info
+        WHERE `status` &lt; 9
+        AND `orderSn` = #{orderSn, jdbcType=VARCHAR}
+        GROUP BY productCode)a
+    </select>
+
+    <select id="goodsStatistics" resultType="java.lang.Integer">
+        SELECT count(1) FROM (SELECT count(1),goodsCode FROM back_product_info
+        WHERE `status` &lt; 9
+        AND `orderSn` = #{orderSn, jdbcType=VARCHAR}
+        GROUP BY goodsCode)a
+    </select>
+    
+    <select id="realGoodsStatistics" resultType="java.lang.Integer">
+        SELECT count(1) FROM (SELECT count(1),goodsCode FROM back_product_info
+        WHERE `status` &lt; 9
+        AND `orderSn` = #{orderSn, jdbcType=VARCHAR} AND realityBackQuantity > 0
+        GROUP BY goodsCode)a
+    </select>
+
+    <select id="realProductStatistics" resultType="java.lang.Integer">
+        SELECT count(1) FROM (SELECT count(1),productCode FROM back_product_info
+        WHERE `status` &lt; 9
+        AND `orderSn` = #{orderSn, jdbcType=VARCHAR} AND realityBackQuantity > 0
+        GROUP BY productCode)a
+    </select>
+
+    <select id="listCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM back_product_info t
+        <include refid="listWherePart"/>
+    </select>
+
+    <select id="realityBackQtyByOrderSn" resultType="com.fendou.moudle.model.BackProductInfo">
+        SELECT * FROM back_product_info
+        WHERE realityBackQuantity > 0
+        AND `orderSn` = #{orderSn, jdbcType=VARCHAR} LIMIT 0, 1
+    </select>
+
+    <select id="get" resultType="com.fendou.moudle.model.BackProductInfo">
+        SELECT * FROM back_product_info WHERE `status` &lt; 9 AND id = #{id, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.fendou.moudle.model.BackProductInfo">
+        INSERT INTO back_product_info (
+            id
+        <include refid="insertColumns"/>
+        )
+        VALUES (
+            #{id, jdbcType=VARCHAR}
+            , #{orderSn, jdbcType=VARCHAR}
+            , #{goodsCode, jdbcType=VARCHAR}
+            , #{goodsName, jdbcType=VARCHAR}
+            , #{productCode, jdbcType=VARCHAR}
+            , #{productType, jdbcType=VARCHAR}
+            , #{image, jdbcType=VARCHAR}
+            , #{brandCode, jdbcType=VARCHAR}
+            , #{brandName, jdbcType=VARCHAR}
+            , #{designCompanyCode, jdbcType=VARCHAR}
+            , #{designCompanyName, jdbcType=VARCHAR}
+            , #{size, jdbcType=VARCHAR}
+            , #{color, jdbcType=VARCHAR}
+            , #{colorSeries, jdbcType=VARCHAR}
+            , #{retailPrice, jdbcType=DECIMAL}
+            , #{planBackQuantity, jdbcType=INTEGER}
+            , #{backUnitPrice, jdbcType=DECIMAL}
+            , #{realityBackQuantity, jdbcType=INTEGER}
+            , #{sort, jdbcType=INTEGER}
+            , #{status, jdbcType=INTEGER}
+            , #{remarks, jdbcType=VARCHAR}
+            , #{updateBy, jdbcType=VARCHAR}
+            , #{updateTime, jdbcType=TIMESTAMP}
+            , #{createBy, jdbcType=VARCHAR}
+            , #{createTime, jdbcType=TIMESTAMP}
+            , #{tenantId, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO back_product_info (
+            id
+        <include refid="insertColumns"/>
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.id}
+                , #{item.orderSn}
+                , #{item.goodsCode}
+                , #{item.goodsName}
+                , #{item.productCode}
+                , #{item.productType}
+                , #{item.image}
+                , #{item.brandCode}
+                , #{item.brandName}
+                , #{item.designCompanyCode}
+                , #{item.designCompanyName}
+                , #{item.size}
+                , #{item.color}
+                , #{item.colorSeries}
+                , #{item.retailPrice}
+                , #{item.planBackQuantity}
+                , #{item.backUnitPrice}
+                , #{item.realityBackQuantity}
+                , #{item.sort}
+                , #{item.status}
+                , #{item.remarks}
+                , #{item.updateBy}
+                , #{item.updateTime}
+                , #{item.createBy}
+                , #{item.createTime}
+                , #{item.tenantId}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.fendou.moudle.model.BackProductInfo">
+        UPDATE back_product_info
+        SET
+            updateTime = sysdate()
+        <include refid="updateColumns"/>
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            UPDATE back_product_info
+            <set>
+                updateTime = sysdate()
+                <!--<if test="item.orderSn != null">-->
+                    <!--, `orderSn` = #{item.orderSn, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.goodsCode != null">-->
+                    <!--, `goodsCode` = #{item.goodsCode, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.goodsName != null">-->
+                    <!--, `goodsName` = #{item.goodsName, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.productCode != null">-->
+                    <!--, `productCode` = #{item.productCode, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.productType != null">-->
+                    <!--, `productType` = #{item.productType, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.image != null">-->
+                    <!--, `image` = #{item.image, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.brandCode != null">-->
+                    <!--, `brandCode` = #{item.brandCode, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.brandName != null">-->
+                    <!--, `brandName` = #{item.brandName, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.designCompanyCode != null">-->
+                    <!--, `designCompanyCode` = #{item.designCompanyCode, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.designCompanyName != null">-->
+                    <!--, `designCompanyName` = #{item.designCompanyName, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.size != null">-->
+                    <!--, `size` = #{item.size, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.color != null">-->
+                    <!--, `color` = #{item.color, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <!--<if test="item.retailPrice != null">-->
+                    <!--, `retailPrice` = #{item.retailPrice, jdbcType=DECIMAL}-->
+                <!--</if>-->
+                <if test="item.planBackQuantity != null">
+                    , `planBackQuantity` = #{item.planBackQuantity, jdbcType=INTEGER}
+                </if>
+                <!--<if test="item.backUnitPrice != null">-->
+                    <!--, `backUnitPrice` = #{item.backUnitPrice, jdbcType=DECIMAL}-->
+                <!--</if>-->
+                <if test="item.realityBackQuantity != null">
+                    , `realityBackQuantity` = #{item.realityBackQuantity, jdbcType=INTEGER}
+                </if>
+                <!--<if test="item.sort != null">-->
+                    <!--, `sort` = #{item.sort, jdbcType=INTEGER}-->
+                <!--</if>-->
+                <!--<if test="item.status != null">-->
+                    <!--, `status` = #{item.status, jdbcType=INTEGER}-->
+                <!--</if>-->
+                <!--<if test="item.remarks != null">-->
+                    <!--, `remarks` = #{item.remarks, jdbcType=VARCHAR}-->
+                <!--</if>-->
+                <if test="item.updateBy != null">
+                    , `updateBy` = #{item.updateBy, jdbcType=VARCHAR}
+                </if>
+                <!--<if test="item.tenantId != null">-->
+                    <!--, `tenantId` = #{item.tenantId, jdbcType=VARCHAR}-->
+                <!--</if>-->
+            </set>
+            <where>
+                id = #{item.id, jdbcType=VARCHAR}
+            </where>
+        </foreach>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.fendou.moudle.model.BackProductInfo">
+        UPDATE back_product_info
+        SET
+            updateTime = sysdate()
+        <if test="orderSn != null">
+            , `orderSn` = #{orderSn, jdbcType=VARCHAR}
+        </if>
+        <if test="goodsCode != null">
+            , `goodsCode` = #{goodsCode, jdbcType=VARCHAR}
+        </if>
+        <if test="goodsName != null">
+            , `goodsName` = #{goodsName, jdbcType=VARCHAR}
+        </if>
+        <if test="productCode != null">
+            , `productCode` = #{productCode, jdbcType=VARCHAR}
+        </if>
+        <if test="productType != null">
+            , `productType` = #{productType, jdbcType=VARCHAR}
+        </if>
+        <if test="image != null">
+            , `image` = #{image, jdbcType=VARCHAR}
+        </if>
+        <if test="brandCode != null">
+            , `brandCode` = #{brandCode, jdbcType=VARCHAR}
+        </if>
+        <if test="brandName != null">
+            , `brandName` = #{brandName, jdbcType=VARCHAR}
+        </if>
+        <if test="designCompanyCode != null">
+            , `designCompanyCode` = #{designCompanyCode, jdbcType=VARCHAR}
+        </if>
+        <if test="designCompanyName != null">
+            , `designCompanyName` = #{designCompanyName, jdbcType=VARCHAR}
+        </if>
+        <if test="size != null">
+            , `size` = #{size, jdbcType=VARCHAR}
+        </if>
+        <if test="color != null">
+            , `color` = #{color, jdbcType=VARCHAR}
+        </if>
+        <if test="colorSeries != null">
+            , `colorSeries` = #{colorSeries, jdbcType=VARCHAR}
+        </if>
+        <if test="retailPrice != null">
+            , `retailPrice` = #{retailPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="planBackQuantity != null">
+            , `planBackQuantity` = #{planBackQuantity, jdbcType=INTEGER}
+        </if>
+        <if test="backUnitPrice != null">
+            , `backUnitPrice` = #{backUnitPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="realityBackQuantity != null">
+            , `realityBackQuantity` = #{realityBackQuantity, jdbcType=INTEGER}
+        </if>
+        <if test="sort != null">
+            , `sort` = #{sort, jdbcType=INTEGER}
+        </if>
+        <if test="status != null">
+            , `status` = #{status, jdbcType=INTEGER}
+        </if>
+        <if test="remarks != null">
+            , `remarks` = #{remarks, jdbcType=VARCHAR}
+        </if>
+        <if test="updateBy != null">
+            , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+        </if>
+        <if test="tenantId != null">
+            , `tenantId` = #{tenantId, jdbcType=VARCHAR}
+        </if>
+        <where>
+            id = #{id, jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <delete id="delete">
+        DELETE FROM back_product_info WHERE id = #{id, jdbcType=VARCHAR}
+    </delete>
+
+    <select id="findInfoByOrderSn" parameterType="java.lang.String" resultType="com.fendou.moudle.model.BackProductInfo">
+        select  * from back_product_info where  `orderSn` = #{orderSn, jdbcType=VARCHAR} and realityBackQuantity &gt;0
+    </select>
+</mapper>

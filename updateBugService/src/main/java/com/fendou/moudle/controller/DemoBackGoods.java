@@ -1,0 +1,81 @@
+package com.fendou.moudle.controller;
+
+import com.alibaba.fastjson.JSONObject;
+import com.fendou.moudle.dto.OrderItemDto;
+import com.fendou.moudle.dto.ReceiveOrderDto;
+import com.fendou.moudle.enmu.ConfigurationOrderTypeEnums;
+import com.fendou.moudle.mapper.BackGoodsMapper;
+import com.fendou.moudle.mapper.BackProductInfoMapper;
+import com.fendou.moudle.model.BackGoods;
+import com.fendou.moudle.model.BackProductInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * @author Cjx
+ * @date 2020/3/30 15:56
+ * @description
+ */
+@SuppressWarnings("ALL")
+@RestController
+@RequestMapping("/demo")
+public class DemoBackGoods {
+    @Autowired
+    private BackGoodsMapper backGoodsMapper;
+    @Autowired
+    private BackProductInfoMapper backProductInfoMapper;
+
+    @GetMapping("/find")
+    public String list(String orderSn) {
+        BackGoods backGoods = findBackGoods(orderSn);
+        List<BackProductInfo> infoList = findInfoByOrderSn(backGoods.getBackNum());
+        backGoods.setBackProductInfoList(infoList);
+        ReceiveOrderDto dto = createReceiveOrderDto(backGoods);
+        String jsonString = JSONObject.toJSONString(dto);
+        return jsonString;
+    }
+
+    private BackGoods findBackGoods(String orderSn) {
+
+        return backGoodsMapper.findByAssociateOrderSn(orderSn);
+    }
+
+    private List<BackProductInfo> findInfoByOrderSn(String orderSn) {
+        return backProductInfoMapper.findInfoByOrderSn(orderSn);
+    }
+
+    private ReceiveOrderDto createReceiveOrderDto(BackGoods backGoods) {
+        ReceiveOrderDto receiveOrderDto = new ReceiveOrderDto();
+        List<OrderItemDto> orderItemDtoList = new LinkedList<>();
+
+        receiveOrderDto.setLogisticsCode(backGoods.getLogisticsCode());
+        receiveOrderDto.setLogisticsSn(backGoods.getLogisticsNum());
+        receiveOrderDto.setOrderSn(backGoods.getAssociateOrderSn());
+        receiveOrderDto.setOrderSource(ConfigurationOrderTypeEnums.SUPPLY_CHAIN.getType());
+        receiveOrderDto.setOrderType(ConfigurationOrderTypeEnums.RETURN_INBOUND_ORDER.getType());
+        receiveOrderDto.setTenantId(backGoods.getTenantId());
+        receiveOrderDto.setWarehouseCode(backGoods.getWarehouseCode());
+
+        List<BackProductInfo> infoList = backGoods.getBackProductInfoList();
+        for (BackProductInfo info : infoList) {
+            OrderItemDto dto = new OrderItemDto();
+            dto.setGoodsCode(info.getGoodsCode());
+            dto.setOrderQuantity(info.getRealityBackQuantity());
+            dto.setProductCode(info.getProductCode());
+            dto.setColor(info.getColor());
+            dto.setSpecification(info.getSize());
+            dto.setBrand(info.getBrandName());
+            dto.setImage(info.getImage());
+            dto.setSkuLevel(1);
+            orderItemDtoList.add(dto);
+        }
+
+        receiveOrderDto.setOrderItemDtoList(orderItemDtoList);
+        return receiveOrderDto;
+    }
+}

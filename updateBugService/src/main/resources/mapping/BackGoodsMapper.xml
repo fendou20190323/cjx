@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fendou.com.fendou.moudle.mapper.BackGoodsMapper">
+	<resultMap id="BaseBackGoodsMap" type="com.fendou.moudle.model.BackGoods">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="backNum" property="backNum" jdbcType="VARCHAR"/>
+        <result column="associateOrderSn" property="associateOrderSn" jdbcType="VARCHAR"/>
+        <result column="backStatus" property="backStatus" jdbcType="INTEGER"/>
+        <result column="organizationId" property="organizationId" jdbcType="VARCHAR"/>
+        <result column="organizationName" property="organizationName" jdbcType="VARCHAR"/>
+        <result column="storeId" property="storeId" jdbcType="VARCHAR"/>
+        <result column="storeName" property="storeName" jdbcType="VARCHAR"/>
+        <result column="storeType" property="storeType" jdbcType="VARCHAR"/>
+        <result column="logisticsCode" property="logisticsCode" jdbcType="VARCHAR"/>
+        <result column="logisticsCompany" property="logisticsCompany" jdbcType="VARCHAR"/>
+        <result column="logisticsNum" property="logisticsNum" jdbcType="VARCHAR"/>
+        <result column="divisionId" property="divisionId" jdbcType="VARCHAR"/>
+        <result column="provinceCode" property="provinceCode" jdbcType="VARCHAR"/>
+        <result column="provinceName" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="cityCode" property="cityCode" jdbcType="VARCHAR"/>
+        <result column="cityName" property="cityName" jdbcType="VARCHAR"/>
+        <result column="areaCode" property="areaCode" jdbcType="VARCHAR"/>
+        <result column="areaName" property="areaName" jdbcType="VARCHAR"/>
+        <result column="addressInfo" property="addressInfo" jdbcType="VARCHAR"/>
+        <result column="backMan" property="backMan" jdbcType="VARCHAR"/>
+        <result column="backTime" property="backTime" jdbcType="TIMESTAMP"/>
+        <result column="productNum" property="productNum" jdbcType="INTEGER"/>
+        <result column="realityProductNum" property="realityProductNum" jdbcType="INTEGER"/>
+        <result column="totalPrice" property="totalPrice" jdbcType="DECIMAL"/>
+        <result column="goodsOwner" property="goodsOwner" jdbcType="VARCHAR"/>
+        <result column="receiveMan" property="receiveMan" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="warehouseCode" property="warehouseCode" jdbcType="VARCHAR"/>
+        <result column="warehouseName" property="warehouseName" jdbcType="VARCHAR"/>
+        <result column="createName" property="createName" jdbcType="VARCHAR"/>
+        <result column="orderType" property="orderType" jdbcType="INTEGER"/>
+        <result column="relationUserId" property="relationUserId" jdbcType="VARCHAR"/>
+        <result column="relationDepId" property="relationDepId" jdbcType="VARCHAR"/>
+        <result column="relationDepName" property="relationDepName" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="updateBy" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="createBy" property="createBy" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="tenantId" property="tenantId" jdbcType="VARCHAR"/>
+	</resultMap>
+
+    <sql id="insertColumns">
+        , `backNum`
+        , `associateOrderSn`
+        , `backStatus`
+        , `organizationId`
+        , `organizationName`
+        , `storeId`
+        , `storeName`
+        , `storeType`
+        , `logisticsCode`
+        , `logisticsCompany`
+        , `logisticsNum`
+        , `divisionId`
+        , `provinceCode`
+        , `provinceName`
+        , `cityCode`
+        , `cityName`
+        , `areaCode`
+        , `areaName`
+        , `addressInfo`
+        , `backMan`
+        , `backTime`
+        , `productNum`
+        , `realityProductNum`
+        , `totalPrice`
+        , `goodsOwner`
+        , `receiveMan`
+        , `phone`
+        , `warehouseCode`
+        , `warehouseName`
+        , `createName`
+        , `orderType`
+        , `relationUserId`
+        , `relationDepId`
+        , `relationDepName`
+        , `sort`
+        , `status`
+        , `remarks`
+        , `updateBy`
+        , `updateTime`
+        , `createBy`
+        , `createTime`
+        , `tenantId`
+    </sql>
+
+    <sql id="updateColumns">
+        , `backNum` = #{backNum, jdbcType=VARCHAR}
+        , `associateOrderSn` = #{associateOrderSn, jdbcType=VARCHAR}
+        , `backStatus` = #{backStatus, jdbcType=INTEGER}
+        , `organizationId` = #{organizationId, jdbcType=VARCHAR}
+        , `organizationName` = #{organizationName, jdbcType=VARCHAR}
+        , `storeId` = #{storeId, jdbcType=VARCHAR}
+        , `storeName` = #{storeName, jdbcType=VARCHAR}
+        , `storeType` = #{storeType, jdbcType=VARCHAR}
+        , `logisticsCode` = #{logisticsCode, jdbcType=VARCHAR}
+        , `logisticsCompany` = #{logisticsCompany, jdbcType=VARCHAR}
+        , `logisticsNum` = #{logisticsNum, jdbcType=VARCHAR}
+        , `divisionId` = #{divisionId, jdbcType=VARCHAR}
+        , `provinceCode` = #{provinceCode, jdbcType=VARCHAR}
+        , `provinceName` = #{provinceName, jdbcType=VARCHAR}
+        , `cityCode` = #{cityCode, jdbcType=VARCHAR}
+        , `cityName` = #{cityName, jdbcType=VARCHAR}
+        , `areaCode` = #{areaCode, jdbcType=VARCHAR}
+        , `areaName` = #{areaName, jdbcType=VARCHAR}
+        , `addressInfo` = #{addressInfo, jdbcType=VARCHAR}
+        , `backMan` = #{backMan, jdbcType=VARCHAR}
+        , `backTime` = #{backTime, jdbcType=TIMESTAMP}
+        , `productNum` = #{productNum, jdbcType=INTEGER}
+        , `realityProductNum` = #{realityProductNum, jdbcType=INTEGER}
+        , `totalPrice` = #{totalPrice, jdbcType=DECIMAL}
+        , `goodsOwner` = #{goodsOwner, jdbcType=VARCHAR}
+        , `receiveMan` = #{receiveMan, jdbcType=VARCHAR}
+        , `phone` = #{phone, jdbcType=VARCHAR}
+        , `warehouseCode` = #{warehouseCode, jdbcType=VARCHAR}
+        , `warehouseName` = #{warehouseName, jdbcType=VARCHAR}
+        , `createName` = #{createName, jdbcType=VARCHAR}
+        , `orderType` = #{orderType, jdbcType=INTEGER}
+        , `relationUserId` = #{relationUserId, jdbcType=VARCHAR}
+        , `relationDepId` = #{relationDepId, jdbcType=VARCHAR}
+        , `relationDepName` = #{relationDepName, jdbcType=VARCHAR}
+        , `sort` = #{sort, jdbcType=INTEGER}
+        , `status` = #{status, jdbcType=INTEGER}
+        , `remarks` = #{remarks, jdbcType=VARCHAR}
+        , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+        , `tenantId` = #{tenantId, jdbcType=VARCHAR}
+    </sql>
+
+    <sql id="listWherePart">
+        <where>
+            `status` &lt; 9
+            <if test="backNum != null and backNum != ''">
+                AND `backNum` = #{backNum, jdbcType=VARCHAR}
+            </if>
+            <if test="associateOrderSn != null and associateOrderSn != ''">
+                AND `associateOrderSn` = #{associateOrderSn, jdbcType=VARCHAR}
+            </if>
+            <if test="backStatus != null">
+                AND `backStatus` = #{backStatus, jdbcType=INTEGER}
+            </if>
+            <if test="organizationId != null and organizationId != ''">
+                AND `organizationId` = #{organizationId, jdbcType=VARCHAR}
+            </if>
+            <if test="organizationName != null and organizationName != ''">
+                AND `organizationName` = #{organizationName, jdbcType=VARCHAR}
+            </if>
+            <if test="storeId != null and storeId != ''">
+                AND `storeId` = #{storeId, jdbcType=VARCHAR}
+            </if>
+            <if test="storeName != null and storeName != ''">
+                AND `storeName` = #{storeName, jdbcType=VARCHAR}
+            </if>
+            <if test="storeType != null and storeType != ''">
+                AND `storeType` = #{storeType, jdbcType=VARCHAR}
+            </if>
+            <if test="logisticsCode != null and logisticsCode != ''">
+                AND `logisticsCode` = #{logisticsCode, jdbcType=VARCHAR}
+            </if>
+            <if test="logisticsCompany != null and logisticsCompany != ''">
+                AND `logisticsCompany` = #{logisticsCompany, jdbcType=VARCHAR}
+            </if>
+            <if test="logisticsNum != null and logisticsNum != ''">
+                AND `logisticsNum` = #{logisticsNum, jdbcType=VARCHAR}
+            </if>
+            <if test="divisionId != null and divisionId != ''">
+                AND `divisionId` = #{divisionId, jdbcType=VARCHAR}
+            </if>
+            <if test="provinceCode != null and provinceCode != ''">
+                AND `provinceCode` = #{provinceCode, jdbcType=VARCHAR}
+            </if>
+            <if test="provinceName != null and provinceName != ''">
+                AND `provinceName` = #{provinceName, jdbcType=VARCHAR}
+            </if>
+            <if test="cityCode != null and cityCode != ''">
+                AND `cityCode` = #{cityCode, jdbcType=VARCHAR}
+            </if>
+            <if test="cityName != null and cityName != ''">
+                AND `cityName` = #{cityName, jdbcType=VARCHAR}
+            </if>
+            <if test="areaCode != null and areaCode != ''">
+                AND `areaCode` = #{areaCode, jdbcType=VARCHAR}
+            </if>
+            <if test="areaName != null and areaName != ''">
+                AND `areaName` = #{areaName, jdbcType=VARCHAR}
+            </if>
+            <if test="addressInfo != null and addressInfo != ''">
+                AND `addressInfo` = #{addressInfo, jdbcType=VARCHAR}
+            </if>
+            <if test="backMan != null and backMan != ''">
+                AND `backMan` = #{backMan, jdbcType=VARCHAR}
+            </if>
+            <if test="backTime != null">
+                AND `backTime` = #{backTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="productNum != null">
+                AND `productNum` = #{productNum, jdbcType=INTEGER}
+            </if>
+            <if test="realityProductNum != null">
+                AND `realityProductNum` = #{realityProductNum, jdbcType=INTEGER}
+            </if>
+            <if test="totalPrice != null">
+                AND `totalPrice` = #{totalPrice, jdbcType=DECIMAL}
+            </if>
+            <if test="goodsOwner != null and goodsOwner != ''">
+                AND `goodsOwner` = #{goodsOwner, jdbcType=VARCHAR}
+            </if>
+            <if test="receiveMan != null and receiveMan != ''">
+                AND `receiveMan` = #{receiveMan, jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != ''">
+                AND `phone` = #{phone, jdbcType=VARCHAR}
+            </if>
+            <if test="warehouseCode != null and warehouseCode != ''">
+                AND `warehouseCode` = #{warehouseCode, jdbcType=VARCHAR}
+            </if>
+            <if test="warehouseName != null and warehouseName != ''">
+                AND `warehouseName` = #{warehouseName, jdbcType=VARCHAR}
+            </if>
+            <if test="createName != null and createName != ''">
+                AND `createName` = #{createName, jdbcType=VARCHAR}
+            </if>
+            <if test="orderType != null">
+                AND `orderType` = #{orderType, jdbcType=INTEGER}
+            </if>
+            <if test="relationUserId != null and relationUserId != ''">
+                AND `relationUserId` = #{relationUserId, jdbcType=VARCHAR}
+            </if>
+            <if test="relationDepId != null and relationDepId != ''">
+                AND `relationDepId` = #{relationDepId, jdbcType=VARCHAR}
+            </if>
+            <if test="relationDepName != null and relationDepName != ''">
+                AND `relationDepName` = #{relationDepName, jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null">
+                AND `sort` = #{sort, jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                AND `status` = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                AND `remarks` = #{remarks, jdbcType=VARCHAR}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                AND `updateBy` = #{updateBy, jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime != null">
+                AND `updateTime` = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                AND `createBy` = #{createBy, jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                AND `createTime` = #{createTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                AND `tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+            <if test="filter != null and filter != ''">
+                and CONCAT(ifnull(backNum,''),associateOrderSn) like CONCAT('%',#{filter, jdbcType=VARCHAR},'%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and `createTime` &gt;= #{startTime, jdbcType=VARCHAR}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and `createTime` &lt;= #{endTime, jdbcType=VARCHAR}
+            </if>
+            <!--<if test="searchWords != null and searchWords != ''">
+                AND CONCAT_WS('', `keyword`) LIKE CONCAT(CONCAT('%', #{searchWords}), '%')
+            </if>-->
+        </where>
+    </sql>
+
+    <select id="list" parameterType="java.util.Map" resultMap="BaseBackGoodsMap">
+        SELECT *
+        FROM back_goods t
+        <include refid="listWherePart"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            ORDER BY createTime DESC
+        </if>
+        <if test="pageSize != null and pageSize > 0">
+            LIMIT #{pageStart}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="getAll" parameterType="java.util.Map" resultMap="BaseBackGoodsMap">
+        SELECT * FROM back_goods WHERE `status` &lt; 9 ORDER BY id ASC
+    </select>
+
+    <select id="listCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM back_goods t
+        <include refid="listWherePart"/>
+    </select>
+
+    <select id="get" resultType="com.fendou.moudle.model.BackGoods">
+        SELECT * FROM back_goods WHERE `status` &lt; 9 AND id = #{id, jdbcType=VARCHAR}
+    </select>
+
+    <select id="totalReturns" resultType="java.lang.Object">
+        SELECT sum(realityProductNum) FROM back_goods WHERE `status` &lt; 9 AND storeId = #{storeId, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByAssociateOrderSn" resultType="com.fendou.moudle.model.BackGoods">
+        SELECT * FROM back_goods WHERE `status` &lt; 9 AND `associateOrderSn` = #{associateOrderSn, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.fendou.moudle.model.BackGoods">
+        INSERT INTO back_goods (
+            id
+        <include refid="insertColumns"/>
+        )
+        VALUES (
+            #{id, jdbcType=VARCHAR}
+            , #{backNum, jdbcType=VARCHAR}
+            , #{associateOrderSn, jdbcType=VARCHAR}
+            , #{backStatus, jdbcType=INTEGER}
+            , #{organizationId, jdbcType=VARCHAR}
+            , #{organizationName, jdbcType=VARCHAR}
+            , #{storeId, jdbcType=VARCHAR}
+            , #{storeName, jdbcType=VARCHAR}
+            , #{storeType, jdbcType=VARCHAR}
+            , #{logisticsCode, jdbcType=VARCHAR}
+            , #{logisticsCompany, jdbcType=VARCHAR}
+            , #{logisticsNum, jdbcType=VARCHAR}
+            , #{divisionId, jdbcType=VARCHAR}
+            , #{provinceCode, jdbcType=VARCHAR}
+            , #{provinceName, jdbcType=VARCHAR}
+            , #{cityCode, jdbcType=VARCHAR}
+            , #{cityName, jdbcType=VARCHAR}
+            , #{areaCode, jdbcType=VARCHAR}
+            , #{areaName, jdbcType=VARCHAR}
+            , #{addressInfo, jdbcType=VARCHAR}
+            , #{backMan, jdbcType=VARCHAR}
+            , #{backTime, jdbcType=TIMESTAMP}
+            , #{productNum, jdbcType=INTEGER}
+            , #{realityProductNum, jdbcType=INTEGER}
+            , #{totalPrice, jdbcType=DECIMAL}
+            , #{goodsOwner, jdbcType=VARCHAR}
+            , #{receiveMan, jdbcType=VARCHAR}
+            , #{phone, jdbcType=VARCHAR}
+            , #{warehouseCode, jdbcType=VARCHAR}
+            , #{warehouseName, jdbcType=VARCHAR}
+            , #{createName, jdbcType=VARCHAR}
+            , #{orderType, jdbcType=INTEGER}
+            , #{relationUserId, jdbcType=VARCHAR}
+            , #{relationDepId, jdbcType=VARCHAR}
+            , #{relationDepName, jdbcType=VARCHAR}
+            , #{sort, jdbcType=INTEGER}
+            , #{status, jdbcType=INTEGER}
+            , #{remarks, jdbcType=VARCHAR}
+            , #{updateBy, jdbcType=VARCHAR}
+            , #{updateTime, jdbcType=TIMESTAMP}
+            , #{createBy, jdbcType=VARCHAR}
+            , #{createTime, jdbcType=TIMESTAMP}
+            , #{tenantId, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO back_goods (
+            id
+        <include refid="insertColumns"/>
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.id}
+                , #{item.backNum}
+                , #{item.associateOrderSn}
+                , #{item.backStatus}
+                , #{item.organizationId}
+                , #{item.organizationName}
+                , #{item.storeId}
+                , #{item.storeName}
+                , #{item.storeType}
+                , #{item.logisticsCode}
+                , #{item.logisticsCompany}
+                , #{item.logisticsNum}
+                , #{item.divisionId}
+                , #{item.provinceCode}
+                , #{item.provinceName}
+                , #{item.cityCode}
+                , #{item.cityName}
+                , #{item.areaCode}
+                , #{item.areaName}
+                , #{item.addressInfo}
+                , #{item.backMan}
+                , #{item.backTime}
+                , #{item.productNum}
+                , #{item.realityProductNum}
+                , #{item.totalPrice}
+                , #{item.goodsOwner}
+                , #{item.receiveMan}
+                , #{item.phone}
+                , #{item.warehouseCode}
+                , #{item.warehouseName}
+                , #{item.createName}
+                , #{item.orderType}
+                , #{item.relationUserId}
+                , #{item.relationDepId}
+                , #{item.relationDepName}
+                , #{item.sort}
+                , #{item.status}
+                , #{item.remarks}
+                , #{item.updateBy}
+                , #{item.updateTime}
+                , #{item.createBy}
+                , #{item.createTime}
+                , #{item.tenantId}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.fendou.moudle.model.BackGoods">
+        UPDATE back_goods
+        SET
+            updateTime = sysdate()
+        <include refid="updateColumns"/>
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            UPDATE back_goods
+            <set>
+                updateTime = sysdate()
+                <if test="item.backNum != null">
+                    , `backNum` = #{item.backNum, jdbcType=VARCHAR}
+                </if>
+                <if test="item.associateOrderSn != null">
+                    , `associateOrderSn` = #{item.associateOrderSn, jdbcType=VARCHAR}
+                </if>
+                <if test="item.backStatus != null">
+                    , `backStatus` = #{item.backStatus, jdbcType=INTEGER}
+                </if>
+                <if test="item.organizationId != null">
+                    , `organizationId` = #{item.organizationId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.organizationName != null">
+                    , `organizationName` = #{item.organizationName, jdbcType=VARCHAR}
+                </if>
+                <if test="item.storeId != null">
+                    , `storeId` = #{item.storeId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.storeName != null">
+                    , `storeName` = #{item.storeName, jdbcType=VARCHAR}
+                </if>
+                <if test="item.storeType != null">
+                    , `storeType` = #{item.storeType, jdbcType=VARCHAR}
+                </if>
+                <if test="item.logisticsCode != null">
+                    , `logisticsCode` = #{item.logisticsCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.logisticsCompany != null">
+                    , `logisticsCompany` = #{item.logisticsCompany, jdbcType=VARCHAR}
+                </if>
+                <if test="item.logisticsNum != null">
+                    , `logisticsNum` = #{item.logisticsNum, jdbcType=VARCHAR}
+                </if>
+                <if test="item.divisionId != null">
+                    , `divisionId` = #{item.divisionId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.provinceCode != null">
+                    , `provinceCode` = #{item.provinceCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.provinceName != null">
+                    , `provinceName` = #{item.provinceName, jdbcType=VARCHAR}
+                </if>
+                <if test="item.cityCode != null">
+                    , `cityCode` = #{item.cityCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.cityName != null">
+                    , `cityName` = #{item.cityName, jdbcType=VARCHAR}
+                </if>
+                <if test="item.areaCode != null">
+                    , `areaCode` = #{item.areaCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.areaName != null">
+                    , `areaName` = #{item.areaName, jdbcType=VARCHAR}
+                </if>
+                <if test="item.addressInfo != null">
+                    , `addressInfo` = #{item.addressInfo, jdbcType=VARCHAR}
+                </if>
+                <if test="item.backMan != null">
+                    , `backMan` = #{item.backMan, jdbcType=VARCHAR}
+                </if>
+                <if test="item.backTime != null">
+                    , `backTime` = #{item.backTime, jdbcType=TIMESTAMP}
+                </if>
+                <if test="item.productNum != null">
+                    , `productNum` = #{item.productNum, jdbcType=INTEGER}
+                </if>
+                <if test="item.realityProductNum != null">
+                    , `realityProductNum` = #{item.realityProductNum, jdbcType=INTEGER}
+                </if>
+                <if test="item.totalPrice != null">
+                    , `totalPrice` = #{item.totalPrice, jdbcType=DECIMAL}
+                </if>
+                <if test="item.goodsOwner != null">
+                    , `goodsOwner` = #{item.goodsOwner, jdbcType=VARCHAR}
+                </if>
+                <if test="item.receiveMan != null">
+                    , `receiveMan` = #{item.receiveMan, jdbcType=VARCHAR}
+                </if>
+                <if test="item.phone != null">
+                    , `phone` = #{item.phone, jdbcType=VARCHAR}
+                </if>
+                <if test="item.warehouseCode != null">
+                    , `warehouseCode` = #{item.warehouseCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.warehouseName != null">
+                    , `warehouseName` = #{item.warehouseName, jdbcType=VARCHAR}
+                </if>
+                <if test="item.createName != null">
+                    , `createName` = #{item.createName, jdbcType=VARCHAR}
+                </if>
+                <if test="item.orderType != null">
+                    , `orderType` = #{item.orderType, jdbcType=INTEGER}
+                </if>
+                <if test="item.relationUserId != null">
+                    , `relationUserId` = #{item.relationUserId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.relationDepId != null">
+                    , `relationDepId` = #{item.relationDepId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.relationDepName != null">
+                    , `relationDepName` = #{item.relationDepName, jdbcType=VARCHAR}
+                </if>
+                <if test="item.sort != null">
+                    , `sort` = #{item.sort, jdbcType=INTEGER}
+                </if>
+                <if test="item.status != null">
+                    , `status` = #{item.status, jdbcType=INTEGER}
+                </if>
+                <if test="item.remarks != null">
+                    , `remarks` = #{item.remarks, jdbcType=VARCHAR}
+                </if>
+                <if test="item.updateBy != null">
+                    , `updateBy` = #{item.updateBy, jdbcType=VARCHAR}
+                </if>
+                <if test="item.tenantId != null">
+                    , `tenantId` = #{item.tenantId, jdbcType=VARCHAR}
+                </if>
+            </set>
+            <where>
+                id = #{item.id, jdbcType=VARCHAR}
+            </where>
+        </foreach>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.fendou.moudle.model.BackGoods">
+        UPDATE back_goods
+        SET
+            updateTime = sysdate()
+        <if test="backNum != null">
+            , `backNum` = #{backNum, jdbcType=VARCHAR}
+        </if>
+        <if test="associateOrderSn != null">
+            , `associateOrderSn` = #{associateOrderSn, jdbcType=VARCHAR}
+        </if>
+        <if test="backStatus != null">
+            , `backStatus` = #{backStatus, jdbcType=INTEGER}
+        </if>
+        <if test="organizationId != null">
+            , `organizationId` = #{organizationId, jdbcType=VARCHAR}
+        </if>
+        <if test="organizationName != null">
+            , `organizationName` = #{organizationName, jdbcType=VARCHAR}
+        </if>
+        <if test="storeId != null">
+            , `storeId` = #{storeId, jdbcType=VARCHAR}
+        </if>
+        <if test="storeName != null">
+            , `storeName` = #{storeName, jdbcType=VARCHAR}
+        </if>
+        <if test="storeType != null">
+            , `storeType` = #{storeType, jdbcType=VARCHAR}
+        </if>
+        <if test="logisticsCode != null">
+            , `logisticsCode` = #{logisticsCode, jdbcType=VARCHAR}
+        </if>
+        <if test="logisticsCompany != null">
+            , `logisticsCompany` = #{logisticsCompany, jdbcType=VARCHAR}
+        </if>
+        <if test="logisticsNum != null">
+            , `logisticsNum` = #{logisticsNum, jdbcType=VARCHAR}
+        </if>
+        <if test="divisionId != null">
+            , `divisionId` = #{divisionId, jdbcType=VARCHAR}
+        </if>
+        <if test="provinceCode != null">
+            , `provinceCode` = #{provinceCode, jdbcType=VARCHAR}
+        </if>
+        <if test="provinceName != null">
+            , `provinceName` = #{provinceName, jdbcType=VARCHAR}
+        </if>
+        <if test="cityCode != null">
+            , `cityCode` = #{cityCode, jdbcType=VARCHAR}
+        </if>
+        <if test="cityName != null">
+            , `cityName` = #{cityName, jdbcType=VARCHAR}
+        </if>
+        <if test="areaCode != null">
+            , `areaCode` = #{areaCode, jdbcType=VARCHAR}
+        </if>
+        <if test="areaName != null">
+            , `areaName` = #{areaName, jdbcType=VARCHAR}
+        </if>
+        <if test="addressInfo != null">
+            , `addressInfo` = #{addressInfo, jdbcType=VARCHAR}
+        </if>
+        <if test="backMan != null">
+            , `backMan` = #{backMan, jdbcType=VARCHAR}
+        </if>
+        <if test="backTime != null">
+            , `backTime` = #{backTime, jdbcType=TIMESTAMP}
+        </if>
+        <if test="productNum != null">
+            , `productNum` = #{productNum, jdbcType=INTEGER}
+        </if>
+        <if test="realityProductNum != null">
+            , `realityProductNum` = #{realityProductNum, jdbcType=INTEGER}
+        </if>
+        <if test="totalPrice != null">
+            , `totalPrice` = #{totalPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="goodsOwner != null">
+            , `goodsOwner` = #{goodsOwner, jdbcType=VARCHAR}
+        </if>
+        <if test="receiveMan != null">
+            , `receiveMan` = #{receiveMan, jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null">
+            , `phone` = #{phone, jdbcType=VARCHAR}
+        </if>
+        <if test="warehouseCode != null">
+            , `warehouseCode` = #{warehouseCode, jdbcType=VARCHAR}
+        </if>
+        <if test="warehouseName != null">
+            , `warehouseName` = #{warehouseName, jdbcType=VARCHAR}
+        </if>
+        <if test="createName != null">
+            , `createName` = #{createName, jdbcType=VARCHAR}
+        </if>
+        <if test="orderType != null">
+            , `orderType` = #{orderType, jdbcType=INTEGER}
+        </if>
+        <if test="relationUserId != null">
+            , `relationUserId` = #{relationUserId, jdbcType=VARCHAR}
+        </if>
+        <if test="relationDepId != null">
+            , `relationDepId` = #{relationDepId, jdbcType=VARCHAR}
+        </if>
+        <if test="relationDepName != null">
+            , `relationDepName` = #{relationDepName, jdbcType=VARCHAR}
+        </if>
+        <if test="sort != null">
+            , `sort` = #{sort, jdbcType=INTEGER}
+        </if>
+        <if test="status != null">
+            , `status` = #{status, jdbcType=INTEGER}
+        </if>
+        <if test="remarks != null">
+            , `remarks` = #{remarks, jdbcType=VARCHAR}
+        </if>
+        <if test="updateBy != null">
+            , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+        </if>
+        <if test="tenantId != null">
+            , `tenantId` = #{tenantId, jdbcType=VARCHAR}
+        </if>
+        <where>
+            id = #{id, jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <delete id="delete">
+        DELETE FROM back_goods WHERE id = #{id, jdbcType=VARCHAR}
+    </delete>
+
+    <select id="findByAssociateOrderSn" parameterType="java.lang.String" resultType="com.fendou.moudle.model.BackGoods">
+        select * from back_goods where `associateOrderSn` = #{associateOrderSn, jdbcType=VARCHAR}
+    </select>
+</mapper>
