@@ -14,6 +14,7 @@
     </parent>
     <groupId>com.fendou</groupId>
     <artifactId>cjx0323</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>cjx0323</name>
     <description>Demo project for Spring Boot</description>
