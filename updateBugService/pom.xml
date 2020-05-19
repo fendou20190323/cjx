@@ -45,6 +45,23 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.fendou</groupId>
+            <artifactId>warehouse_connector_core</artifactId>
+            <version>1.0.3</version>
+        </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>releases</id>
+            <url>http://192.168.218.128:8081/repository/maven-releases/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 </project>
