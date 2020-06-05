@@ -7,6 +7,7 @@
         <module>updateBugService</module>
         <module>springCloudConfig</module>
         <module>springEureka</module>
+        <module>springtest</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

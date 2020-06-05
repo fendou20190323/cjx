@@ -8,11 +8,16 @@ import com.fendou.moudle.mapper.BackGoodsMapper;
 import com.fendou.moudle.mapper.BackProductInfoMapper;
 import com.fendou.moudle.model.BackGoods;
 import com.fendou.moudle.model.BackProductInfo;
+import com.fendou.moudle.model.TestCjx;
+import com.fendou.moudle.model.TestCjx2;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +29,7 @@ import java.util.List;
 @SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/demo")
+@Slf4j(topic = "DemoBackGoods")
 public class DemoBackGoods {
     @Autowired
     private BackGoodsMapper backGoodsMapper;
@@ -77,5 +83,18 @@ public class DemoBackGoods {
 
         receiveOrderDto.setOrderItemDtoList(orderItemDtoList);
         return receiveOrderDto;
+    }
+    private final Logger LOGGER= LoggerFactory.getLogger(DemoBackGoods.class);
+    @PostMapping("/test")
+    public String test(@RequestBody @Valid TestCjx t){
+        /**logger*/
+        log.debug(t.getId());
+        log.debug(t.getNumList().toString());
+        log.debug(t.getName());
+        HashSet<Integer> set = new HashSet<>(t.getNumList());
+        log.debug("set{}",set.toString());
+        HashSet<TestCjx2> testCjx2s = new HashSet<>(t.getCjx2List());
+        log.debug("testCjx2s{}",testCjx2s.toString());
+        return "chenggong";
     }
 }

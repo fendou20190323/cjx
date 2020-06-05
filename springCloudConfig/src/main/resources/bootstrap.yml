@@ -1,0 +1,7 @@
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://localhost:8999/eureka/
+    instance:
+      instance-id: config-service

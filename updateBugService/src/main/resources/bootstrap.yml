@@ -1,0 +1,17 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8999/eureka/
+  instance:
+    instance-id: update-bug:9901
+
+spring:
+  cloud:
+    config:
+      name: updatebug
+      label: master  # 远程仓库的分支
+      profile: test
+      discovery:
+        enabled: true
+        service-id: config-service
+#      uri: http://localhost:9000/
