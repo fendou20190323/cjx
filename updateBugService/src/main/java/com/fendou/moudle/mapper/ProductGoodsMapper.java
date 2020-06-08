@@ -1,5 +1,6 @@
 package com.fendou.moudle.mapper;
 
+import com.fendou.moudle.model.WarehouseInventory;
 import com.fendou.moudle.model.product.ProductGoods;
 import org.apache.ibatis.annotations.Param;
 
@@ -43,4 +44,10 @@ public interface ProductGoodsMapper {
     List<String> findSKUByStoreName(Map<String, Object> params);
 
     List<ProductGoods> findBySKUCodes(Map<String, Object> params2);
+
+    List<String> queryWms(Map<String, Object> params);
+
+    List<WarehouseInventory> listWMSInventory(Map<String, Object> params);
+
+    int insertBatchWMSInventory(List<WarehouseInventory> list);
 }

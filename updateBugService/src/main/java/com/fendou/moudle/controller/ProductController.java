@@ -126,4 +126,51 @@ public class ProductController {
             return "失败" + e.getMessage();
         }
     }
+
+    @ApiOperation(value = "更新product_specifications表")
+    @GetMapping("/updateProductSpecifications")
+    public String updateProductSpecifications() {
+        try {
+            productService.updateProductSpecifications();
+            return "成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "失败" + e.getMessage();
+        }
+    }
+
+    @ApiOperation(value = "更新product_specifications_attribute表")
+    @GetMapping("/updateProductSpecificationsAttribute")
+    public String updateProductSpecificationsAttribute() {
+        try {
+            productService.updateProductSpecificationsAttribute();
+            return "成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "失败" + e.getMessage();
+        }
+    }
+    @ApiOperation(value = "更新configuration_goods_owner表")
+    @GetMapping("/updateConfigurationGoodsOwner")
+    public String updateConfigurationGoodsOwner() {
+        try {
+            productService.updateConfigurationGoodsOwner();
+            return "成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "失败" + e.getMessage();
+        }
+    }
+
+    @ApiOperation(value = "(WMS)更新wms_data_inventory表")
+    @GetMapping("/updateWmsDataInventory")
+    public String updateWmsDataInventory() {
+        try {
+            productService.updateWmsDataInventory();
+            return "成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "失败" + e.getMessage();
+        }
+    }
 }

@@ -2,9 +2,12 @@ package com.fendou.moudle.service.impl;
 
 import com.fendou.moudle.dto.ProductDto;
 import com.fendou.moudle.mapper.*;
+import com.fendou.moudle.model.ConfigurationGoodsOwner;
+import com.fendou.moudle.model.WarehouseInventory;
 import com.fendou.moudle.model.product.*;
 import com.fendou.moudle.service.ProductService;
 import com.fendou.moudle.utils.UUIDUtils;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Cjx
@@ -235,10 +239,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateCategories() {
         List<Categories> lssList = categoriesMapper.list(createParams());
+        List<Categories> orginal = categoriesMapper.list(createParams());
+
         int oldSize = lssList.size();
         lssList.stream().forEach(lss -> {
             lss.insertSet();
         });
+        for (Categories c : lssList) {
+            if (null != c.getParentId() && !"".equals(c.getParentId().trim())) {
+                Categories categories = lssList.stream().filter(l -> l.getRemarks().split(":")[1].equals(c.getParentId())).collect(Collectors.toList()).get(0);
+                c.setParentId(categories.getId());
+            }
+        }
         int row = categoriesMapper.insertBatch(lssList);
         if (oldSize != row) throw new RuntimeException("与原数据不等");
     }
@@ -268,25 +280,119 @@ public class ProductServiceImpl implements ProductService {
         list.addAll(productGoods3);
         list.addAll(productGoods4);
         list.addAll(productGoods5);
+        //去重
+        HashSet<ProductGoods> productGoodsSet = new HashSet<>(list);
+        List<ProductGoods> result = new LinkedList<>(productGoodsSet);
         Map<String, Object> map = createParams();
         map.put("tenantId", NEW_TENANTID);
         List<ProductDto> productList = productMapper.listIdAndRemark(map);
         System.err.println();
-        list.stream().forEach(pg -> {
+        result.stream().forEach(pg -> {
             if (pg.getProductId() != null && !"".equals(pg.getProductId().trim())) {
                 String productId = productList.stream().filter(p -> p.getRemarks().split(":")[1].equals(pg.getProductId())).collect(Collectors.toList()).get(0).getId();
                 pg.setProductId(productId);
             }
             pg.insertSet();
         });
-        List<ProductGoods> first = list.subList(0, 3000);
-        List<ProductGoods> second = list.subList(3000, list.size());
+//        int ceil = (int) Math.ceil(list.size() / (500 * 1.0));
+//        for (int i = 0; i < ceil; i++) {
+        List<ProductGoods> first = result.subList(0, 3000);
+        List<ProductGoods> second = result.subList(3000, result.size());
         productGoodsMapper.insertBatch(first);
         productGoodsMapper.insertBatch(second);
+//        }
+        System.err.println(result.size());
+//        productGoodsMapper.insertBatch(result);
+    }
+
+    @Autowired
+    private ProductSpecificationsMapper productSpecificationsMapper;
+
+    @Override
+    public void updateProductSpecifications() {
+        List<ProductSpecifications> lssList = productSpecificationsMapper.list(createParams());
+        Map<String, Object> params1 = createParams();
+        params1.put("tenantId", NEW_TENANTID);
+        List<Categories> categories = categoriesMapper.list(params1);
+        int oldSize = lssList.size();
+        lssList.stream().forEach(lss -> {
+            if (null != lss.getCateId() && !"".equals(lss.getCateId())) {
+                String catId = categories.stream().filter(c -> c.getRemarks().split(":")[1].equals(lss.getCateId())).collect(Collectors.toList()).get(0).getId();
+                lss.setCateId(catId);
+            }
+            lss.insertSet();
+        });
+        int row = productSpecificationsMapper.insertBatch(lssList);
+        if (oldSize != row) throw new RuntimeException("与原数据不等");
+    }
+
+    @Autowired
+    private ProductSpecificationsAttributeMapper productSpecificationsAttributeMapper;
+
+    @Override
+    public void updateProductSpecificationsAttribute() {
+        Map<String, Object> params1 = createParams();
+        params1.put("tenantId", NEW_TENANTID);
+        List<ProductSpecifications> productSpecificationsList = productSpecificationsMapper.list(params1);
+        if (null == productSpecificationsList || productSpecificationsList.size() == 0) {
+            throw new RuntimeException("ProductSpecifications没有数据");
+        }
+        List<ProductSpecificationsAttribute> lssList = productSpecificationsAttributeMapper.list(createParams());
+        int oldSize = lssList.size();
+        lssList.stream().forEach(lss -> {
+            if (null != lss.getSpecificationsId() && !"".equals(lss.getSpecificationsId().trim())) {
+                String prspecId = productSpecificationsList.stream().filter(p -> p.getRemarks().split(":")[1].equals(lss.getSpecificationsId())).collect(Collectors.toList()).get(0).getId();
+                lss.setSpecificationsId(prspecId);
+            }
+            lss.insertSet();
+        });
+        int row = productSpecificationsAttributeMapper.insertBatch(lssList);
+        if (oldSize != row) throw new RuntimeException("与原数据不等");
+    }
+
+    @Autowired
+    private ConfigurationGoodsOwnerMapper configurationGoodsOwnerMapper;
+    @Override
+    public void updateConfigurationGoodsOwner() {
+        List<ConfigurationGoodsOwner> lssList = configurationGoodsOwnerMapper.list(createParams());
+        int oldSize = lssList.size();
+        lssList.stream().forEach(lss -> {
+            lss.insertSet();
+        });
+        int row = configurationGoodsOwnerMapper.insertBatch(lssList);
+        if (oldSize != row) throw new RuntimeException("与原数据不等");
+    }
+
+
+    /**
+     * 更新wms仓库
+     */
+    private static final String NEW_WMS_TENANTID="33079544-335e-4189-bd8b-7bbcc4f6bca8";
+    @Override
+    public void updateWmsDataInventory() {
+        Map<String, Object> params = createParams();
+        List<String> wareHoseCodes = Stream.of("004", "003").collect(Collectors.toList());
+        params.put("wareHoseCodes", wareHoseCodes);
+      List<WarehouseInventory> lssList=  productGoodsMapper.listWMSInventory(params);
+        int oldSize = lssList.size();
+        lssList.stream().forEach(lss -> {
+            lss.insertSet();
+            lss.setTenantId(NEW_WMS_TENANTID);
+        });
+        int row = productGoodsMapper.insertBatchWMSInventory(lssList);
+        if (oldSize != row) throw new RuntimeException("与原数据不等");
     }
 
     private List<ProductGoods> queryWms() {
-        List<ProductGoods> list = new LinkedList<>();
+//        SELECT t.product_goods_code  FROM wms_data_inventory t WHERE
+//        t.warehouse_code IN ('004','003') AND t.tenant_id = '9889d4ed-dea4-11e9-a898-0242ac110002';
+        Map<String, Object> params = createParams();
+        List<String> wareHoseCodes = Stream.of("004", "003").collect(Collectors.toList());
+        params.put("wareHoseCodes", wareHoseCodes);
+        List<String> skuCodes = productGoodsMapper.queryWms(params);
+        Map<String, Object> params2 = createParams();
+        params2.put("skuCodes", skuCodes);
+        List<ProductGoods> list = productGoodsMapper.findBySKUCodes(params2);
         return list;
     }
 
@@ -305,6 +411,7 @@ public class ProductServiceImpl implements ProductService {
         List<String> spuCodes = new LinkedList<>();
         spuCodes.add("535339003F");
         spuCodes.add("535336004S");
+        spuCodes.add("5353390045");
         params.put("spuCodes", spuCodes);
         return productGoodsMapper.findBySPUCodes(params);
     }

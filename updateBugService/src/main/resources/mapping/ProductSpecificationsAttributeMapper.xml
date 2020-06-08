@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fendou.moudle.mapper.ProductSpecificationsAttributeMapper">
+	<resultMap id="BaseProductSpecificationsAttributeMap" type="com.fendou.moudle.model.product.ProductSpecificationsAttribute">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="size" property="size" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="specificationsId" property="specificationsId" jdbcType="VARCHAR"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="createBy" property="createBy" jdbcType="VARCHAR"/>
+        <result column="updateBy" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="relationUserId" property="relationUserId" jdbcType="VARCHAR"/>
+        <result column="relationDepId" property="relationDepId" jdbcType="VARCHAR"/>
+        <result column="tenantId" property="tenantId" jdbcType="VARCHAR"/>
+	</resultMap>
+
+    <sql id="insertColumns">
+        , `code`
+        , `name`
+        , `size`
+        , `image`
+        , `specificationsId`
+        , `keyword`
+        , `sort`
+        , `description`
+        , `remarks`
+        , `valid`
+        , `status`
+        , `createBy`
+        , `updateBy`
+        , `createTime`
+        , `updateTime`
+        , `relationUserId`
+        , `relationDepId`
+        , `tenantId`
+    </sql>
+
+    <sql id="updateColumns">
+        , `code` = #{code, jdbcType=VARCHAR}
+        , `name` = #{name, jdbcType=VARCHAR}
+        , `size` = #{size, jdbcType=VARCHAR}
+        , `image` = #{image, jdbcType=VARCHAR}
+        , `specificationsId` = #{specificationsId, jdbcType=VARCHAR}
+        , `keyword` = #{keyword, jdbcType=VARCHAR}
+        , `sort` = #{sort, jdbcType=INTEGER}
+        , `description` = #{description, jdbcType=VARCHAR}
+        , `remarks` = #{remarks, jdbcType=VARCHAR}
+        , `valid` = #{valid, jdbcType=BIT}
+        , `status` = #{status, jdbcType=INTEGER}
+        , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+    </sql>
+
+    <sql id="listWherePart">
+        <where>
+            1=1
+            <if test="code != null and code != ''">
+                and `code` = #{code, jdbcType=VARCHAR}
+            </if>
+            <if test="name != null and name != ''">
+                and `name` = #{name, jdbcType=VARCHAR}
+            </if>
+            <if test="size != null and size != ''">
+                and `size` = #{size, jdbcType=VARCHAR}
+            </if>
+            <if test="image != null and image != ''">
+                and `image` = #{image, jdbcType=VARCHAR}
+            </if>
+            <if test="specificationsId != null and specificationsId != ''">
+                and `specificationsId` = #{specificationsId, jdbcType=VARCHAR}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and `keyword` = #{keyword, jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null">
+                and `sort` = #{sort, jdbcType=INTEGER}
+            </if>
+            <if test="description != null and description != ''">
+                and `description` = #{description, jdbcType=VARCHAR}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and `remarks` = #{remarks, jdbcType=VARCHAR}
+            </if>
+            <if test="valid != null">
+                and `valid` = #{valid, jdbcType=BIT}
+            </if>
+            <if test="status != null">
+                and `status` = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and `createBy` = #{createBy, jdbcType=VARCHAR}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and `updateBy` = #{updateBy, jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and `createTime` = #{createTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null">
+                and `updateTime` = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="relationUserId != null and relationUserId != ''">
+                AND `relationUserId` = #{relationUserId, jdbcType=VARCHAR}
+            </if>
+            <if test="relationDepId != null and relationDepId != ''">
+                AND `relationDepId` = #{relationDepId, jdbcType=VARCHAR}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                AND `tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" parameterType="java.util.Map" resultMap="BaseProductSpecificationsAttributeMap">
+        select *
+        from product_specifications_attribute t
+        <include refid="listWherePart"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            order by createTime
+        </if>
+        <if test="pageSize != null and pageSize > 0">
+            limit #{pageStart}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="autoComplete" resultType="com.fendou.moudle.model.product.ProductSpecificationsAttribute">
+        SELECT
+            id,
+            <include refid="insertColumns"/>
+        FROM
+            product_specifications_attribute
+        WHERE
+            `status` &lt; 9
+        <if test="tenantId != null and tenantId != ''">
+            AND `tenantId` = #{tenantId, jdbcType=VARCHAR}
+        </if>
+        <if test="term != null and term != ''">
+            AND TRIM(CONCAT_WS('', `keyword`)) LIKE CONCAT(CONCAT('%', TRIM(#{term})), '%')
+        </if>
+    </select>
+
+    <select id="getAll" parameterType="java.util.Map" resultMap="BaseProductSpecificationsAttributeMap">
+        select * from product_specifications_attribute where `status` &lt; 9 order by id asc
+    </select>
+
+    <select id="listCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1)
+        from product_specifications_attribute t
+        <include refid="listWherePart"/>
+    </select>
+
+    <select id="get" resultType="com.fendou.moudle.model.product.ProductSpecificationsAttribute">
+        select * from product_specifications_attribute where `status` &lt; 9 and id = #{id, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.fendou.moudle.model.product.ProductSpecificationsAttribute">
+        insert into product_specifications_attribute (
+            id
+        <include refid="insertColumns"/>
+        )
+        values (
+            #{id, jdbcType=VARCHAR}
+            , #{code, jdbcType=VARCHAR}
+            , #{name, jdbcType=VARCHAR}
+            , #{size, jdbcType=VARCHAR}
+            , #{image, jdbcType=VARCHAR}
+            , #{specificationsId, jdbcType=VARCHAR}
+            , #{keyword, jdbcType=VARCHAR}
+            , #{sort, jdbcType=INTEGER}
+            , #{description, jdbcType=VARCHAR}
+            , #{remarks, jdbcType=VARCHAR}
+            , #{valid, jdbcType=BIT}
+            , #{status, jdbcType=INTEGER}
+            , #{createBy, jdbcType=VARCHAR}
+            , #{updateBy, jdbcType=VARCHAR}
+            , #{createTime, jdbcType=TIMESTAMP}
+            , #{updateTime, jdbcType=TIMESTAMP}
+        , #{relationUserId, jdbcType=VARCHAR}
+        , #{relationDepId, jdbcType=VARCHAR}
+        , #{tenantId, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into product_specifications_attribute (
+            id
+        <include refid="insertColumns"/>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.id}
+                , #{item.code}
+                , #{item.name}
+                , #{item.size}
+                , #{item.image}
+                , #{item.specificationsId}
+                , #{item.keyword}
+                , #{item.sort}
+                , #{item.description}
+                , #{item.remarks}
+                , #{item.valid}
+                , #{item.status}
+                , #{item.createBy}
+                , #{item.updateBy}
+                , #{item.createTime}
+                , #{item.updateTime}
+            , #{item.relationUserId}
+            , #{item.relationDepId}
+            , #{item.tenantId}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.fendou.moudle.model.product.ProductSpecificationsAttribute">
+        update product_specifications_attribute
+        set
+            updateTime = sysdate()
+        <include refid="updateColumns"/>
+        where
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update product_specifications_attribute
+            <set>
+                updateTime = sysdate()
+                <if test="item.code != null">
+                    , `code` = #{item.code, jdbcType=VARCHAR}
+                </if>
+                <if test="item.name != null">
+                    , `name` = #{item.name, jdbcType=VARCHAR}
+                </if>
+                <if test="item.size != null">
+                    , `size` = #{item.size, jdbcType=VARCHAR}
+                </if>
+                <if test="item.image != null">
+                    , `image` = #{item.image, jdbcType=VARCHAR}
+                </if>
+                <if test="item.specificationsId != null">
+                    , `specificationsId` = #{item.specificationsId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.keyword != null">
+                    , `keyword` = #{item.keyword, jdbcType=VARCHAR}
+                </if>
+                <if test="item.sort != null">
+                    , `sort` = #{item.sort, jdbcType=INTEGER}
+                </if>
+                <if test="item.description != null">
+                    , `description` = #{item.description, jdbcType=VARCHAR}
+                </if>
+                <if test="item.remarks != null">
+                    , `remarks` = #{item.remarks, jdbcType=VARCHAR}
+                </if>
+                <if test="item.valid != null">
+                    , `valid` = #{item.valid, jdbcType=BIT}
+                </if>
+                <if test="item.status != null">
+                    , `status` = #{item.status, jdbcType=INTEGER}
+                </if>
+                <if test="item.updateBy != null">
+                    , `updateBy` = #{item.updateBy, jdbcType=VARCHAR}
+                </if>
+            </set>
+            <where>
+                id = #{item.id, jdbcType=VARCHAR}
+            </where>
+        </foreach>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.fendou.moudle.model.product.ProductSpecificationsAttribute">
+        update product_specifications_attribute
+        set
+            updateTime = sysdate()
+        <if test="code != null">
+            , `code` = #{code, jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            , `name` = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="size != null">
+            , `size` = #{size, jdbcType=VARCHAR}
+        </if>
+        <if test="image != null">
+            , `image` = #{image, jdbcType=VARCHAR}
+        </if>
+        <if test="specificationsId != null">
+            , `specificationsId` = #{specificationsId, jdbcType=VARCHAR}
+        </if>
+        <if test="keyword != null">
+            , `keyword` = #{keyword, jdbcType=VARCHAR}
+        </if>
+        <if test="sort != null">
+            , `sort` = #{sort, jdbcType=INTEGER}
+        </if>
+        <if test="description != null">
+            , `description` = #{description, jdbcType=VARCHAR}
+        </if>
+        <if test="remarks != null">
+            , `remarks` = #{remarks, jdbcType=VARCHAR}
+        </if>
+        <if test="valid != null">
+            , `valid` = #{valid, jdbcType=BIT}
+        </if>
+        <if test="status != null">
+            , `status` = #{status, jdbcType=INTEGER}
+        </if>
+        <if test="updateBy != null">
+            , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+        </if>
+        <where>
+            id = #{id, jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from product_specifications_attribute where id = #{id, jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

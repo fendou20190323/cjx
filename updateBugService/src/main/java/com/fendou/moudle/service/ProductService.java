@@ -22,4 +22,12 @@ public interface ProductService {
 
     void updateProdcutGoods();
 
+    void updateProductSpecifications();
+
+    void updateProductSpecificationsAttribute();
+
+    void updateConfigurationGoodsOwner();
+
+    void updateWmsDataInventory();
+
 }

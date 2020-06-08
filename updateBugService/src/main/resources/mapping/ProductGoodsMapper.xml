@@ -871,4 +871,104 @@
         </foreach>
         and `tenantId` = #{tenantId, jdbcType=VARCHAR}
     </select>
+
+    <select id="queryWms" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT t.product_goods_code  FROM warehouse.wms_data_inventory t WHERE
+         t.warehouse_code IN
+         <foreach collection="wareHoseCodes" item="item" separator="," close=")" open="(">
+             #{item}
+         </foreach>
+         AND  t.tenant_id = #{tenantId};
+    </select>
+     <select id="listWMSInventory" parameterType="java.util.Map" resultMap="BaseWarehouseInventoryMapWMSInventory">
+        SELECT *  FROM warehouse.wms_data_inventory t WHERE
+         t.warehouse_code IN
+         <foreach collection="wareHoseCodes" item="item" separator="," close=")" open="(">
+             #{item}
+         </foreach>
+         AND  t.tenant_id = #{tenantId};
+    </select>
+
+    <insert id="insertBatchWMSInventory" parameterType="java.util.List">
+        INSERT INTO warehouse.wms_data_inventory (
+        id
+        <include refid="insertColumnsWMSInventory"/>
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id}
+            , #{item.tenantId}
+            , #{item.productCode}
+            , #{item.productGoodsCode}
+            , #{item.warehouseCode}
+            , #{item.ownerId}
+            , #{item.ownerName}
+            , #{item.totalQuantity}
+            , #{item.availableQuantity}
+            , #{item.blockedQuantity}
+            , #{item.inventoryStatus}
+            , #{item.inventoryStatusName}
+            , #{item.relationUserId}
+            , #{item.relationDepId}
+            , #{item.remarks}
+            , #{item.status}
+            , #{item.createBy}
+            , #{item.creatorName}
+            , #{item.updateBy}
+            , #{item.updatorName}
+            , #{item.createTime}
+            , #{item.updateTime}
+            )
+        </foreach>
+    </insert>
+
+    <sql id="insertColumnsWMSInventory">
+        , `tenant_id`
+        , `product_code`
+        , `product_goods_code`
+        , `warehouse_code`
+        , `owner_id`
+        , `owner_name`
+        , `total_quantity`
+        , `available_quantity`
+        , `blocked_quantity`
+        , `inventory_status`
+        , `inventory_status_name`
+        , `relation_user_id`
+        , `relation_dep_id`
+        , `remarks`
+        , `status`
+        , `create_by`
+        , `creator_name`
+        , `update_by`
+        , `updator_name`
+        , `create_time`
+        , `update_time`
+    </sql>
+
+    <resultMap id="BaseWarehouseInventoryMapWMSInventory" type="com.fendou.moudle.model.WarehouseInventory">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="tenant_id" property="tenantId" jdbcType="VARCHAR"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="product_goods_code" property="productGoodsCode" jdbcType="VARCHAR"/>
+        <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR"/>
+        <result column="owner_id" property="ownerId" jdbcType="VARCHAR"/>
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+        <result column="total_quantity" property="totalQuantity" jdbcType="INTEGER"/>
+        <result column="available_quantity" property="availableQuantity" jdbcType="INTEGER"/>
+        <result column="blocked_quantity" property="blockedQuantity" jdbcType="INTEGER"/>
+        <result column="inventory_status" property="inventoryStatus" jdbcType="BIT"/>
+        <result column="inventory_status_name" property="inventoryStatusName" jdbcType="VARCHAR"/>
+        <result column="relation_user_id" property="relationUserId" jdbcType="VARCHAR"/>
+        <result column="relation_dep_id" property="relationDepId" jdbcType="VARCHAR"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="BIT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="updator_name" property="updatorName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
 </mapper>

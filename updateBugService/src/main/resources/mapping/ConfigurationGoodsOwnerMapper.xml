@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fendou.moudle.mapper.ConfigurationGoodsOwnerMapper">
+	<resultMap id="BaseConfigurationGoodsOwnerMap" type="com.fendou.moudle.model.ConfigurationGoodsOwner">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="tenantId" property="tenantId" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="contact" property="contact" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="division_id" property="divisionId" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="is_valid" property="isValid" jdbcType="BIT"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+    <sql id="insertColumns">
+        , `tenantId`
+        , `code`
+        , `name`
+        , `contact`
+        , `telephone`
+        , `division_id`
+        , `province`
+        , `city`
+        , `area`
+        , `address`
+        , `description`
+        , `is_valid`
+        , `remarks`
+        , `status`
+        , `sort`
+        , `create_by`
+        , `update_by`
+        , `create_time`
+        , `update_time`
+    </sql>
+
+    <sql id="updateColumns">
+        , `tenantId` = #{tenantId, jdbcType=VARCHAR}
+        , `code` = #{code, jdbcType=VARCHAR}
+        , `name` = #{name, jdbcType=VARCHAR}
+        , `contact` = #{contact, jdbcType=VARCHAR}
+        , `telephone` = #{telephone, jdbcType=VARCHAR}
+        , `division_id` = #{divisionId, jdbcType=VARCHAR}
+        , `province` = #{province, jdbcType=VARCHAR}
+        , `city` = #{city, jdbcType=VARCHAR}
+        , `area` = #{area, jdbcType=VARCHAR}
+        , `address` = #{address, jdbcType=VARCHAR}
+        , `description` = #{description, jdbcType=VARCHAR}
+        , `is_valid` = #{isValid, jdbcType=BIT}
+        , `remarks` = #{remarks, jdbcType=VARCHAR}
+        , `status` = #{status, jdbcType=INTEGER}
+        , `sort` = #{sort, jdbcType=INTEGER}
+        , `create_by` = #{createBy, jdbcType=VARCHAR}
+        , `update_by` = #{updateBy, jdbcType=VARCHAR}
+        , `create_time` = #{createTime, jdbcType=TIMESTAMP}
+        , `update_time` = #{updateTime, jdbcType=TIMESTAMP}
+    </sql>
+
+    <sql id="listWherePart">
+        <where>
+            `status` &lt; 9
+            <if test="tenantId != null and tenantId != ''">
+                AND `tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+            <if test="code != null and code != ''">
+                AND `code` = #{code, jdbcType=VARCHAR}
+            </if>
+            <if test="name != null and name != ''">
+                AND `name` = #{name, jdbcType=VARCHAR}
+            </if>
+            <if test="contact != null and contact != ''">
+                AND `contact` = #{contact, jdbcType=VARCHAR}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                AND `telephone` = #{telephone, jdbcType=VARCHAR}
+            </if>
+            <if test="divisionId != null and divisionId != ''">
+                AND `division_id` = #{divisionId, jdbcType=VARCHAR}
+            </if>
+            <if test="province != null and province != ''">
+                AND `province` = #{province, jdbcType=VARCHAR}
+            </if>
+            <if test="city != null and city != ''">
+                AND `city` = #{city, jdbcType=VARCHAR}
+            </if>
+            <if test="area != null and area != ''">
+                AND `area` = #{area, jdbcType=VARCHAR}
+            </if>
+            <if test="address != null and address != ''">
+                AND `address` = #{address, jdbcType=VARCHAR}
+            </if>
+            <if test="description != null and description != ''">
+                AND `description` = #{description, jdbcType=VARCHAR}
+            </if>
+            <if test="isValid != null">
+                AND `is_valid` = #{isValid, jdbcType=BIT}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                AND `remarks` = #{remarks, jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                AND `status` = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="sort != null">
+                AND `sort` = #{sort, jdbcType=INTEGER}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                AND `create_by` = #{createBy, jdbcType=VARCHAR}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                AND `update_by` = #{updateBy, jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                AND `create_time` = #{createTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null">
+                AND `update_time` = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+            <!--<if test="searchWords != null and searchWords != ''">
+                AND CONCAT_WS('', `keyword`) LIKE CONCAT('%', #{searchWords}, '%')
+            </if>-->
+        </where>
+    </sql>
+
+    <select id="list" parameterType="java.util.Map" resultMap="BaseConfigurationGoodsOwnerMap">
+        SELECT *
+        FROM configuration_goods_owner t
+        <include refid="listWherePart"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            ORDER BY create_time DESC
+        </if>
+    </select>
+
+    <select id="getAll" parameterType="java.util.Map" resultMap="BaseConfigurationGoodsOwnerMap">
+        SELECT * FROM configuration_goods_owner WHERE `status` &lt; 9 ORDER BY id ASC
+    </select>
+
+    <select id="listCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM configuration_goods_owner t
+        <include refid="listWherePart"/>
+    </select>
+
+    <select id="get" resultType="com.fendou.moudle.model.ConfigurationGoodsOwner">
+        SELECT * FROM configuration_goods_owner WHERE `status` &lt; 9 AND id = #{id, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.fendou.moudle.model.ConfigurationGoodsOwner">
+        INSERT INTO configuration_goods_owner (
+            id
+        <include refid="insertColumns"/>
+        )
+        VALUES (
+            #{id, jdbcType=VARCHAR}
+            , #{tenantId, jdbcType=VARCHAR}
+            , #{code, jdbcType=VARCHAR}
+            , #{name, jdbcType=VARCHAR}
+            , #{contact, jdbcType=VARCHAR}
+            , #{telephone, jdbcType=VARCHAR}
+            , #{divisionId, jdbcType=VARCHAR}
+            , #{province, jdbcType=VARCHAR}
+            , #{city, jdbcType=VARCHAR}
+            , #{area, jdbcType=VARCHAR}
+            , #{address, jdbcType=VARCHAR}
+            , #{description, jdbcType=VARCHAR}
+            , #{isValid, jdbcType=BIT}
+            , #{remarks, jdbcType=VARCHAR}
+            , #{status, jdbcType=INTEGER}
+            , #{sort, jdbcType=INTEGER}
+            , #{createBy, jdbcType=VARCHAR}
+            , #{updateBy, jdbcType=VARCHAR}
+            , #{createTime, jdbcType=TIMESTAMP}
+            , #{updateTime, jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO configuration_goods_owner (
+            id
+        <include refid="insertColumns"/>
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.id}
+                , #{item.tenantId}
+                , #{item.code}
+                , #{item.name}
+                , #{item.contact}
+                , #{item.telephone}
+                , #{item.divisionId}
+                , #{item.province}
+                , #{item.city}
+                , #{item.area}
+                , #{item.address}
+                , #{item.description}
+                , #{item.isValid}
+                , #{item.remarks}
+                , #{item.status}
+                , #{item.sort}
+                , #{item.createBy}
+                , #{item.updateBy}
+                , #{item.createTime}
+                , #{item.updateTime}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.fendou.moudle.model.ConfigurationGoodsOwner">
+        UPDATE configuration_goods_owner
+        SET
+            updateTime = sysdate()
+        <include refid="updateColumns"/>
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            UPDATE configuration_goods_owner
+            <set>
+                updateTime = sysdate()
+                <if test="item.tenantId != null">
+                    , `tenantId` = #{item.tenantId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.code != null">
+                    , `code` = #{item.code, jdbcType=VARCHAR}
+                </if>
+                <if test="item.name != null">
+                    , `name` = #{item.name, jdbcType=VARCHAR}
+                </if>
+                <if test="item.contact != null">
+                    , `contact` = #{item.contact, jdbcType=VARCHAR}
+                </if>
+                <if test="item.telephone != null">
+                    , `telephone` = #{item.telephone, jdbcType=VARCHAR}
+                </if>
+                <if test="item.divisionId != null">
+                    , `division_id` = #{item.divisionId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.province != null">
+                    , `province` = #{item.province, jdbcType=VARCHAR}
+                </if>
+                <if test="item.city != null">
+                    , `city` = #{item.city, jdbcType=VARCHAR}
+                </if>
+                <if test="item.area != null">
+                    , `area` = #{item.area, jdbcType=VARCHAR}
+                </if>
+                <if test="item.address != null">
+                    , `address` = #{item.address, jdbcType=VARCHAR}
+                </if>
+                <if test="item.description != null">
+                    , `description` = #{item.description, jdbcType=VARCHAR}
+                </if>
+                <if test="item.isValid != null">
+                    , `is_valid` = #{item.isValid, jdbcType=BIT}
+                </if>
+                <if test="item.remarks != null">
+                    , `remarks` = #{item.remarks, jdbcType=VARCHAR}
+                </if>
+                <if test="item.status != null">
+                    , `status` = #{item.status, jdbcType=INTEGER}
+                </if>
+                <if test="item.sort != null">
+                    , `sort` = #{item.sort, jdbcType=INTEGER}
+                </if>
+                <if test="item.createBy != null">
+                    , `create_by` = #{item.createBy, jdbcType=VARCHAR}
+                </if>
+                <if test="item.updateBy != null">
+                    , `update_by` = #{item.updateBy, jdbcType=VARCHAR}
+                </if>
+                <if test="item.createTime != null">
+                    , `create_time` = #{item.createTime, jdbcType=TIMESTAMP}
+                </if>
+                <if test="item.updateTime != null">
+                    , `update_time` = #{item.updateTime, jdbcType=TIMESTAMP}
+                </if>
+            </set>
+            <where>
+                id = #{item.id, jdbcType=VARCHAR}
+            </where>
+        </foreach>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.fendou.moudle.model.ConfigurationGoodsOwner">
+        UPDATE configuration_goods_owner
+        SET
+            updateTime = sysdate()
+        <if test="tenantId != null">
+            , `tenantId` = #{tenantId, jdbcType=VARCHAR}
+        </if>
+        <if test="code != null">
+            , `code` = #{code, jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            , `name` = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="contact != null">
+            , `contact` = #{contact, jdbcType=VARCHAR}
+        </if>
+        <if test="telephone != null">
+            , `telephone` = #{telephone, jdbcType=VARCHAR}
+        </if>
+        <if test="divisionId != null">
+            , `division_id` = #{divisionId, jdbcType=VARCHAR}
+        </if>
+        <if test="province != null">
+            , `province` = #{province, jdbcType=VARCHAR}
+        </if>
+        <if test="city != null">
+            , `city` = #{city, jdbcType=VARCHAR}
+        </if>
+        <if test="area != null">
+            , `area` = #{area, jdbcType=VARCHAR}
+        </if>
+        <if test="address != null">
+            , `address` = #{address, jdbcType=VARCHAR}
+        </if>
+        <if test="description != null">
+            , `description` = #{description, jdbcType=VARCHAR}
+        </if>
+        <if test="isValid != null">
+            , `is_valid` = #{isValid, jdbcType=BIT}
+        </if>
+        <if test="remarks != null">
+            , `remarks` = #{remarks, jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            , `status` = #{status, jdbcType=INTEGER}
+        </if>
+        <if test="sort != null">
+            , `sort` = #{sort, jdbcType=INTEGER}
+        </if>
+        <if test="createBy != null">
+            , `create_by` = #{createBy, jdbcType=VARCHAR}
+        </if>
+        <if test="updateBy != null">
+            , `update_by` = #{updateBy, jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            , `create_time` = #{createTime, jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateTime != null">
+            , `update_time` = #{updateTime, jdbcType=TIMESTAMP}
+        </if>
+        <where>
+            id = #{id, jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <delete id="delete">
+        DELETE FROM configuration_goods_owner WHERE id = #{id, jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
