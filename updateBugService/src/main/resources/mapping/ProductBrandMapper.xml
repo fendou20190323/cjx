@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fendou.moudle.mapper.ProductBrandMapper">
+	<resultMap id="BaseProductBrandMap" type="com.fendou.moudle.model.product.ProductBrand">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="recommend" property="recommend" jdbcType="INTEGER"/>
+        <result column="show" property="show" jdbcType="INTEGER"/>
+        <result column="contact" property="contact" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="settledTime" property="settledTime" jdbcType="TIMESTAMP"/>
+        <result column="cooperation" property="cooperation" jdbcType="BIT"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="createBy" property="createBy" jdbcType="VARCHAR"/>
+        <result column="updateBy" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="relationUserId" property="relationUserId" jdbcType="VARCHAR"/>
+        <result column="relationDepId" property="relationDepId" jdbcType="VARCHAR"/>
+        <result column="tenantId" property="tenantId" jdbcType="VARCHAR"/>
+	</resultMap>
+
+    <sql id="insertColumns">
+        , `code`
+        , `name`
+        , `logo`
+        , `type`
+        , `recommend`
+        , `show`
+        , `contact`
+        , `telephone`
+        , `address`
+        , `settledTime`
+        , `cooperation`
+        , `keyword`
+        , `sort`
+        , `description`
+        , `remarks`
+        , `valid`
+        , `status`
+        , `createBy`
+        , `updateBy`
+        , `createTime`
+        , `updateTime`
+        , `relationUserId`
+        , `relationDepId`
+        , `tenantId`
+    </sql>
+
+    <sql id="updateColumns">
+        , `code` = #{code, jdbcType=VARCHAR}
+        , `name` = #{name, jdbcType=VARCHAR}
+        , `logo` = #{logo, jdbcType=VARCHAR}
+        , `type` = #{type, jdbcType=INTEGER}
+        , `recommend` = #{recommend, jdbcType=INTEGER}
+        , `show` = #{show, jdbcType=INTEGER}
+        , `contact` = #{contact, jdbcType=VARCHAR}
+        , `telephone` = #{telephone, jdbcType=VARCHAR}
+        , `address` = #{address, jdbcType=VARCHAR}
+        , `settledTime` = #{settledTime, jdbcType=TIMESTAMP}
+        , `cooperation` = #{cooperation, jdbcType=BIT}
+        , `keyword` = #{keyword, jdbcType=VARCHAR}
+        , `sort` = #{sort, jdbcType=INTEGER}
+        , `description` = #{description, jdbcType=VARCHAR}
+        , `remarks` = #{remarks, jdbcType=VARCHAR}
+        , `valid` = #{valid, jdbcType=BIT}
+        , `status` = #{status, jdbcType=INTEGER}
+        , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+    </sql>
+
+    <sql id="listWherePart">
+        <where>
+            1=1
+            <if test="code != null and code != ''">
+                and `code` = #{code, jdbcType=VARCHAR}
+            </if>
+            <if test="name != null and name != ''">
+                and `name` = #{name, jdbcType=VARCHAR}
+            </if>
+            <if test="logo != null and logo != ''">
+                and `logo` = #{logo, jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and `type` = #{type, jdbcType=INTEGER}
+            </if>
+            <if test="recommend != null">
+                and `recommend` = #{recommend, jdbcType=INTEGER}
+            </if>
+            <if test="show != null">
+                and `show` = #{show, jdbcType=INTEGER}
+            </if>
+            <if test="contact != null and contact != ''">
+                and `contact` = #{contact, jdbcType=VARCHAR}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and `telephone` = #{telephone, jdbcType=VARCHAR}
+            </if>
+            <if test="address != null and address != ''">
+                and `address` = #{address, jdbcType=VARCHAR}
+            </if>
+            <if test="settledTime != null">
+                and `settledTime` = #{settledTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="cooperation != null">
+                and `cooperation` = #{cooperation, jdbcType=BIT}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and `keyword` = #{keyword, jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null">
+                and `sort` = #{sort, jdbcType=INTEGER}
+            </if>
+            <if test="description != null and description != ''">
+                and `description` = #{description, jdbcType=VARCHAR}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and `remarks` = #{remarks, jdbcType=VARCHAR}
+            </if>
+            <if test="valid != null">
+                and `valid` = #{valid, jdbcType=BIT}
+            </if>
+            <if test="status != null">
+                and `status` = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and `createBy` = #{createBy, jdbcType=VARCHAR}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and `updateBy` = #{updateBy, jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and `createTime` = #{createTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null">
+                and `updateTime` = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="relationUserId != null and relationUserId != ''">
+                AND `relationUserId` = #{relationUserId, jdbcType=VARCHAR}
+            </if>
+            <if test="relationDepId != null and relationDepId != ''">
+                AND `relationDepId` = #{relationDepId, jdbcType=VARCHAR}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                AND `tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+            <if test="searchWords != null and searchWords != ''">
+                and concat_ws('', `code`, `name`, `keyword`) like concat(concat('%', #{searchWords}),'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" parameterType="java.util.Map" resultMap="BaseProductBrandMap">
+        select *
+        from product_brand t
+        <include refid="listWherePart"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            order by createTime
+        </if>
+        <if test="pageSize != null and pageSize > 0">
+            limit #{pageStart}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="autoComplete" resultType="com.fendou.moudle.model.product.ProductBrand">
+        SELECT
+            id,
+            <include refid="insertColumns"/>
+        FROM
+            product_brand
+        WHERE
+            `status` &lt; 9
+        <if test="tenantId != null and tenantId != ''">
+            AND `tenantId` = #{tenantId, jdbcType=VARCHAR}
+        </if>
+        <if test="term != null and term != ''">
+            AND TRIM(CONCAT_WS('', `keyword`)) LIKE CONCAT(CONCAT('%', TRIM(#{term})), '%')
+        </if>
+    </select>
+
+    <select id="listForCate" parameterType="java.util.Map" resultMap="BaseProductBrandMap">
+        SELECT
+            pb.*
+        FROM
+            product_brand pb
+        LEFT JOIN product p ON pb.id = p.brandId
+        <where>
+            pb.`status` &lt; 9
+            <if test="cateIdentifier != null and cateIdentifier != ''">
+                AND p.cateIdentifier LIKE CONCAT(#{cateIdentifier, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                AND pb.`tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+        </where>
+        GROUP BY pb.`id`
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            ORDER BY createTime
+        </if>
+        <if test="pageSize != null and pageSize > 0">
+            LIMIT #{pageStart}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="getAll" parameterType="java.util.Map" resultMap="BaseProductBrandMap">
+        select * from product_brand where `status` &lt; 9 order by id asc
+    </select>
+
+    <select id="listCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1)
+        from product_brand t
+        <include refid="listWherePart"/>
+    </select>
+
+    <select id="listForCateCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            (
+            SELECT
+                pb.*
+            FROM
+                product_brand pb
+            LEFT JOIN product p ON pb.id = p.brandId
+            <where>
+                pb.`status` &lt; 9
+                <if test="cateIdentifier != null and cateIdentifier != ''">
+                    AND p.cateIdentifier LIKE CONCAT(#{cateIdentifier, jdbcType=VARCHAR}, '%')
+                </if>
+                <if test="tenantId != null and tenantId != ''">
+                    AND pb.`tenantId` = #{tenantId, jdbcType=VARCHAR}
+                </if>
+            </where>
+            GROUP BY pb.`id`
+            ) t
+    </select>
+
+    <select id="get" resultType="com.fendou.moudle.model.product.ProductBrand">
+        select * from product_brand where `status` &lt; 9 and id = #{id, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.fendou.moudle.model.product.ProductBrand">
+        insert into product_brand (
+            id
+        <include refid="insertColumns"/>
+        )
+        values (
+            #{id, jdbcType=VARCHAR}
+            , #{code, jdbcType=VARCHAR}
+            , #{name, jdbcType=VARCHAR}
+            , #{logo, jdbcType=VARCHAR}
+            , #{type, jdbcType=INTEGER}
+            , #{recommend, jdbcType=INTEGER}
+            , #{show, jdbcType=INTEGER}
+            , #{contact, jdbcType=VARCHAR}
+            , #{telephone, jdbcType=VARCHAR}
+            , #{address, jdbcType=VARCHAR}
+            , #{settledTime, jdbcType=TIMESTAMP}
+            , #{cooperation, jdbcType=BIT}
+            , #{keyword, jdbcType=VARCHAR}
+            , #{sort, jdbcType=INTEGER}
+            , #{description, jdbcType=VARCHAR}
+            , #{remarks, jdbcType=VARCHAR}
+            , #{valid, jdbcType=BIT}
+            , #{status, jdbcType=INTEGER}
+            , #{createBy, jdbcType=VARCHAR}
+            , #{updateBy, jdbcType=VARCHAR}
+            , #{createTime, jdbcType=TIMESTAMP}
+            , #{updateTime, jdbcType=TIMESTAMP}
+        , #{relationUserId, jdbcType=VARCHAR}
+        , #{relationDepId, jdbcType=VARCHAR}
+        , #{tenantId, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into product_brand (
+            id
+        <include refid="insertColumns"/>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.id}
+                , #{item.code}
+                , #{item.name}
+                , #{item.logo}
+                , #{item.type}
+                , #{item.recommend}
+                , #{item.show}
+                , #{item.contact}
+                , #{item.telephone}
+                , #{item.address}
+                , #{item.settledTime}
+                , #{item.cooperation}
+                , #{item.keyword}
+                , #{item.sort}
+                , #{item.description}
+                , #{item.remarks}
+                , #{item.valid}
+                , #{item.status}
+                , #{item.createBy}
+                , #{item.updateBy}
+                , #{item.createTime}
+                , #{item.updateTime}
+            , #{item.relationUserId}
+            , #{item.relationDepId}
+            , #{item.tenantId}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.fendou.moudle.model.product.ProductBrand">
+        update product_brand
+        set
+            updateTime = sysdate()
+        <include refid="updateColumns"/>
+        where
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update product_brand
+            <set>
+                updateTime = sysdate()
+                <if test="item.code != null">
+                    , `code` = #{item.code, jdbcType=VARCHAR}
+                </if>
+                <if test="item.name != null">
+                    , `name` = #{item.name, jdbcType=VARCHAR}
+                </if>
+                <if test="item.logo != null">
+                    , `logo` = #{item.logo, jdbcType=VARCHAR}
+                </if>
+                <if test="item.type != null">
+                    , `type` = #{item.type, jdbcType=INTEGER}
+                </if>
+                <if test="item.recommend != null">
+                    , `recommend` = #{item.recommend, jdbcType=INTEGER}
+                </if>
+                <if test="item.show != null">
+                    , `show` = #{item.show, jdbcType=INTEGER}
+                </if>
+                <if test="item.contact != null">
+                    , `contact` = #{item.contact, jdbcType=VARCHAR}
+                </if>
+                <if test="item.telephone != null">
+                    , `telephone` = #{item.telephone, jdbcType=VARCHAR}
+                </if>
+                <if test="item.address != null">
+                    , `address` = #{item.address, jdbcType=VARCHAR}
+                </if>
+                <if test="item.settledTime != null">
+                    , `settledTime` = #{item.settledTime, jdbcType=TIMESTAMP}
+                </if>
+                <if test="item.cooperation != null">
+                    , `cooperation` = #{item.cooperation, jdbcType=BIT}
+                </if>
+                <if test="item.keyword != null">
+                    , `keyword` = #{item.keyword, jdbcType=VARCHAR}
+                </if>
+                <if test="item.sort != null">
+                    , `sort` = #{item.sort, jdbcType=INTEGER}
+                </if>
+                <if test="item.description != null">
+                    , `description` = #{item.description, jdbcType=VARCHAR}
+                </if>
+                <if test="item.remarks != null">
+                    , `remarks` = #{item.remarks, jdbcType=VARCHAR}
+                </if>
+                <if test="item.valid != null">
+                    , `valid` = #{item.valid, jdbcType=BIT}
+                </if>
+                <if test="item.status != null">
+                    , `status` = #{item.status, jdbcType=INTEGER}
+                </if>
+                <if test="item.updateBy != null">
+                    , `updateBy` = #{item.updateBy, jdbcType=VARCHAR}
+                </if>
+            </set>
+            <where>
+                id = #{item.id, jdbcType=VARCHAR}
+            </where>
+        </foreach>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.fendou.moudle.model.product.ProductBrand">
+        update product_brand
+        set
+            updateTime = sysdate()
+        <if test="code != null">
+            , `code` = #{code, jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            , `name` = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="logo != null">
+            , `logo` = #{logo, jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            , `type` = #{type, jdbcType=INTEGER}
+        </if>
+        <if test="recommend != null">
+            , `recommend` = #{recommend, jdbcType=INTEGER}
+        </if>
+        <if test="show != null">
+            , `show` = #{show, jdbcType=INTEGER}
+        </if>
+        <if test="contact != null">
+            , `contact` = #{contact, jdbcType=VARCHAR}
+        </if>
+        <if test="telephone != null">
+            , `telephone` = #{telephone, jdbcType=VARCHAR}
+        </if>
+        <if test="address != null">
+            , `address` = #{address, jdbcType=VARCHAR}
+        </if>
+        <if test="settledTime != null">
+            , `settledTime` = #{settledTime, jdbcType=TIMESTAMP}
+        </if>
+        <if test="cooperation != null">
+            , `cooperation` = #{cooperation, jdbcType=BIT}
+        </if>
+        <if test="keyword != null">
+            , `keyword` = #{keyword, jdbcType=VARCHAR}
+        </if>
+        <if test="sort != null">
+            , `sort` = #{sort, jdbcType=INTEGER}
+        </if>
+        <if test="description != null">
+            , `description` = #{description, jdbcType=VARCHAR}
+        </if>
+        <if test="remarks != null">
+            , `remarks` = #{remarks, jdbcType=VARCHAR}
+        </if>
+        <if test="valid != null">
+            , `valid` = #{valid, jdbcType=BIT}
+        </if>
+        <if test="status != null">
+            , `status` = #{status, jdbcType=INTEGER}
+        </if>
+        <if test="updateBy != null">
+            , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+        </if>
+        <where>
+            id = #{id, jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from product_brand where id = #{id, jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

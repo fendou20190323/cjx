@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fendou.moudle.mapper.ProductGoodsMapper">
+    <resultMap id="BaseProductGoodsMap" type="com.fendou.moudle.model.product.ProductGoods">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="productCode" property="productCode" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="colorSeriesId" property="colorSeriesId" jdbcType="VARCHAR"/>
+        <result column="colorSeriesCode" property="colorSeriesCode" jdbcType="VARCHAR"/>
+        <result column="colorSeries" property="colorSeries" jdbcType="VARCHAR"/>
+        <result column="colorCode" property="colorCode" jdbcType="VARCHAR"/>
+        <result column="color" property="color" jdbcType="VARCHAR"/>
+        <result column="sizeCode" property="sizeCode" jdbcType="VARCHAR"/>
+        <result column="size" property="size" jdbcType="VARCHAR"/>
+        <result column="sizeAttribute" property="sizeAttribute" jdbcType="VARCHAR"/>
+        <result column="specifications" property="specifications" jdbcType="VARCHAR"/>
+        <result column="promotionInfo" property="promotionInfo" jdbcType="VARCHAR"/>
+        <result column="productId" property="productId" jdbcType="VARCHAR"/>
+        <result column="purchasePrice" property="purchasePrice" jdbcType="DECIMAL"/>
+        <result column="wholesalePrice" property="wholesalePrice" jdbcType="DECIMAL"/>
+        <result column="retailPrice" property="retailPrice" jdbcType="DECIMAL"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="stockEarlyWarning" property="stockEarlyWarning" jdbcType="BIT"/>
+        <result column="minThreshold" property="minThreshold" jdbcType="INTEGER"/>
+        <result column="maxThreshold" property="maxThreshold" jdbcType="INTEGER"/>
+        <result column="defaultGoods" property="defaultGoods" jdbcType="BIT"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="createBy" property="createBy" jdbcType="VARCHAR"/>
+        <result column="updateBy" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="tagBrandName" property="tagBrandName" jdbcType="VARCHAR"/>
+        <result column="fullCateName" property="fullCateName" jdbcType="VARCHAR"/>
+        <result column="ownerId" property="ownerId" jdbcType="VARCHAR"/>
+        <result column="ownerName" property="ownerName" jdbcType="VARCHAR"/>
+        <result column="relationUserId" property="relationUserId" jdbcType="VARCHAR"/>
+        <result column="relationDepId" property="relationDepId" jdbcType="VARCHAR"/>
+        <result column="tenantId" property="tenantId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="insertColumns">
+        , `productCode`
+        , `code`
+        , `name`
+        , `barcode`
+        , `type`
+        , `image`
+        , `colorSeriesId`
+        , `colorSeriesCode`
+        , `colorSeries`
+        , `colorCode`
+        , `color`
+        , `sizeCode`
+        , `size`
+        , `sizeAttribute`
+        , `specifications`
+        , `promotionInfo`
+        , `productId`
+        , `purchasePrice`
+        , `wholesalePrice`
+        , `retailPrice`
+        , `stock`
+        , `stockEarlyWarning`
+        , `minThreshold`
+        , `maxThreshold`
+        , `defaultGoods`
+        , `keyword`
+        , `sort`
+        , `description`
+        , `remarks`
+        , `valid`
+        , `status`
+        , `createBy`
+        , `updateBy`
+        , `createTime`
+        , `updateTime`
+        , `ownerId`
+        , `ownerName`
+        , `relationUserId`
+        , `relationDepId`
+        , `tenantId`
+    </sql>
+
+    <sql id="updateColumns">
+        , `productCode` = #{productCode, jdbcType=VARCHAR}
+        , `code` = #{code, jdbcType=VARCHAR}
+        , `name` = #{name, jdbcType=VARCHAR}
+        , `barcode` = #{barcode, jdbcType=VARCHAR}
+        , `type` = #{type, jdbcType=INTEGER}
+        , `image` = #{image, jdbcType=VARCHAR}
+        , `colorSeriesId` = #{colorSeriesId, jdbcType=VARCHAR}
+        , `colorSeriesCode` = #{colorSeriesCode, jdbcType=VARCHAR}
+        , `colorSeries` = #{colorSeries, jdbcType=VARCHAR}
+        , `colorCode` = #{colorCode, jdbcType=VARCHAR}
+        , `color` = #{color, jdbcType=VARCHAR}
+        , `sizeCode` = #{sizeCode, jdbcType=VARCHAR}
+        , `size` = #{size, jdbcType=VARCHAR}
+        , `sizeAttribute` = #{sizeAttribute, jdbcType=VARCHAR}
+        , `specifications` = #{specifications, jdbcType=VARCHAR}
+        , `promotionInfo` = #{promotionInfo, jdbcType=VARCHAR}
+        , `productId` = #{productId, jdbcType=VARCHAR}
+        , `purchasePrice` = #{purchasePrice, jdbcType=DECIMAL}
+        , `wholesalePrice` = #{wholesalePrice, jdbcType=DECIMAL}
+        , `retailPrice` = #{retailPrice, jdbcType=DECIMAL}
+        , `stock` = #{stock, jdbcType=INTEGER}
+        , `stockEarlyWarning` = #{stockEarlyWarning, jdbcType=BIT}
+        , `minThreshold` = #{minThreshold, jdbcType=INTEGER}
+        , `maxThreshold` = #{maxThreshold, jdbcType=INTEGER}
+        , `defaultGoods` = #{defaultGoods, jdbcType=BIT}
+        , `keyword` = #{keyword, jdbcType=VARCHAR}
+        , `sort` = #{sort, jdbcType=INTEGER}
+        , `description` = #{description, jdbcType=VARCHAR}
+        , `remarks` = #{remarks, jdbcType=VARCHAR}
+        , `valid` = #{valid, jdbcType=BIT}
+        , `status` = #{status, jdbcType=INTEGER}
+        , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+    </sql>
+
+    <sql id="listWherePart">
+        <where>
+         1=1
+            <if test="productCode != null and productCode != ''">
+                AND pg.`productCode` = #{productCode, jdbcType=VARCHAR}
+            </if>
+            <if test="code != null and code != ''">
+                AND pg.`code` = #{code, jdbcType=VARCHAR}
+            </if>
+            <if test="name != null and name != ''">
+                AND pg.`name` = #{name, jdbcType=VARCHAR}
+            </if>
+            <if test="barcode != null and barcode != ''">
+                AND pg.`barcode` = #{barcode, jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                AND pg.`type` = #{type, jdbcType=INTEGER}
+            </if>
+            <if test="image != null and image != ''">
+                AND pg.`image` = #{image, jdbcType=VARCHAR}
+            </if>
+            <if test="colorSeriesId != null and colorSeriesId != ''">
+                AND pg.`colorSeriesId` = #{colorSeriesId, jdbcType=VARCHAR}
+            </if>
+            <if test="colorSeriesCode != null and colorSeriesCode != ''">
+                AND pg.`colorSeriesCode` = #{colorSeriesCode, jdbcType=VARCHAR}
+            </if>
+            <if test="colorSeries != null and colorSeries != ''">
+                AND pg.`colorSeries` = #{colorSeries, jdbcType=VARCHAR}
+            </if>
+            <if test="colorCode != null and colorCode != ''">
+                AND pg.`colorCode` = #{colorCode, jdbcType=VARCHAR}
+            </if>
+            <if test="color != null and color != ''">
+                AND pg.`color` = #{color, jdbcType=VARCHAR}
+            </if>
+            <if test="sizeCode != null and sizeCode != ''">
+                AND pg.`sizeCode` = #{sizeCode, jdbcType=VARCHAR}
+            </if>
+            <if test="size != null and size != ''">
+                AND pg.`size` = #{size, jdbcType=VARCHAR}
+            </if>
+            <if test="sizeAttribute != null and sizeAttribute != ''">
+                AND pg.`sizeAttribute` = #{sizeAttribute, jdbcType=VARCHAR}
+            </if>
+            <if test="specifications != null and specifications != ''">
+                AND pg.`specifications` = #{specifications, jdbcType=VARCHAR}
+            </if>
+            <if test="promotionInfo != null and promotionInfo != ''">
+                AND pg.`promotionInfo` = #{promotionInfo, jdbcType=VARCHAR}
+            </if>
+            <if test="productId != null and productId != ''">
+                AND pg.`productId` = #{productId, jdbcType=VARCHAR}
+            </if>
+            <if test="purchasePrice != null">
+                AND pg.`purchasePrice` = #{purchasePrice, jdbcType=DECIMAL}
+            </if>
+            <if test="wholesalePrice != null">
+                AND pg.`wholesalePrice` = #{wholesalePrice, jdbcType=DECIMAL}
+            </if>
+            <if test="retailPrice != null">
+                AND pg.`retailPrice` = #{retailPrice, jdbcType=DECIMAL}
+            </if>
+            <if test="stock != null">
+                AND pg.`stock` = #{stock, jdbcType=INTEGER}
+            </if>
+            <if test="stockEarlyWarning != null">
+                AND pg.`stockEarlyWarning` = #{stockEarlyWarning, jdbcType=BIT}
+            </if>
+            <if test="minThreshold != null">
+                AND pg.`minThreshold` = #{minThreshold, jdbcType=INTEGER}
+            </if>
+            <if test="maxThreshold != null">
+                AND pg.`maxThreshold` = #{maxThreshold, jdbcType=INTEGER}
+            </if>
+            <if test="defaultGoods != null">
+                AND pg.`defaultGoods` = #{defaultGoods, jdbcType=BIT}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND pg.`keyword` = #{keyword, jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null">
+                AND pg.`sort` = #{sort, jdbcType=INTEGER}
+            </if>
+            <if test="description != null and description != ''">
+                AND pg.`description` = #{description, jdbcType=VARCHAR}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                AND pg.`remarks` = #{remarks, jdbcType=VARCHAR}
+            </if>
+            <if test="valid != null">
+                AND pg.`valid` = #{valid, jdbcType=BIT}
+            </if>
+            <if test="status != null">
+                AND pg.`status` = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                AND pg.`createBy` = #{createBy, jdbcType=VARCHAR}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                AND pg.`updateBy` = #{updateBy, jdbcType=VARCHAR}
+            </if>
+            <if test="ownerId != null and ownerId != ''">
+                AND pg.`ownerId` = #{ownerId, jdbcType=VARCHAR}
+            </if>
+            <if test="ownerName != null and ownerName != ''">
+                AND pg.`ownerName` LIKE CONCAT('%', #{ownerName, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="relationUserId != null and relationUserId != ''">
+                AND pg.`relationUserId` = #{relationUserId, jdbcType=VARCHAR}
+            </if>
+            <if test="relationDepId != null and relationDepId != ''">
+                AND pg.`relationDepId` = #{relationDepId, jdbcType=VARCHAR}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                AND pg.`tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null">
+                AND DATE_FORMAT( pg.`createTime`, '%Y-%m-%d %H:%i:%s') &gt;= DATE_FORMAT(#{startTime}, '%Y-%m-%d
+                %H:%i:%s')
+            </if>
+            <if test="endTime != null">
+                AND DATE_FORMAT( pg.`createTime`, '%Y-%m-%d %H:%i:%s') &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d
+                %H:%i:%s')
+            </if>
+            <if test="productCodes != null and productCodes.size() > 0">
+                AND pg.productCode IN
+                <foreach collection="productCodes" item="productCode" index="index" open="(" separator="," close=")">
+                    #{productCode}
+                </foreach>
+            </if>
+            <if test="productGoodsCodes !=null and productGoodsCodes.size() > 0">
+                and pg.productCode  in
+                <foreach collection="productGoodsCodes" item="productGoodsCode" separator="," close=")" open="(">
+                    #{productGoodsCode}
+                </foreach>
+            </if>
+            <if test="searchWords != null and searchWords != ''">
+                AND CONCAT_WS('', pg.`code`, pg.`name`, pg.`keyword`) like CONCAT(CONCAT('%', #{searchWords}),'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" parameterType="java.util.Map" resultMap="BaseProductGoodsMap">
+        select
+        <include refid="listWherePart"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by  pg.${orderBy} desc
+            <if test="orderByTwo !=null and orderByTwo !=''">
+                ,pg.${orderByTwo} desc
+            </if>
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            order by pg.createTime desc
+        </if>
+        <if test="pageSize != null and pageSize > 0">
+            limit #{pageStart}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="autoComplete" resultType="com.fendou.moudle.model.product.ProductGoods">
+        SELECT
+            id,
+            <include refid="insertColumns"/>
+        FROM
+            product_goods
+        WHERE
+            `status` &lt; 9
+        <if test="tenantId != null and tenantId != ''">
+            AND `tenantId` = #{tenantId, jdbcType=VARCHAR}
+        </if>
+        <if test="term != null and term != ''">
+            AND TRIM(CONCAT_WS('', `keyword`)) LIKE CONCAT(CONCAT('%', TRIM(#{term})), '%')
+        </if>
+    </select>
+
+    <select id="listCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1)
+        from product_goods pg
+        left join product p on p.id = pg.productId
+        <include refid="listWherePart"/>
+    </select>
+
+    <sql id="listProductGoodsWherePart">
+        <where>
+            pg.status &lt; 9
+            AND pb.status &lt; 9
+            AND p.status &lt; 9
+            <if test="quantityGE != null or quantityLE != null or availableQuantityGE != null
+             or availableQuantityLE != null or frozenQuantityGE != null or frozenQuantityLE != null
+             or warehouseCode != null or validStock != null">
+                AND pgs.status &lt; 9
+            </if>
+            AND cate.status &lt; 9
+            <if test="productId != null and productId != ''">
+                AND pg.`productId` = #{productId, jdbcType=VARCHAR}
+            </if>
+            <if test="productCode != null and productCode != ''">
+                AND pg.`productCode` = #{productCode, jdbcType=VARCHAR}
+            </if>
+            <if test="brandId != null and brandId != ''">
+                AND p.`brandId` = #{brandId, jdbcType=VARCHAR}
+            </if>
+            <if test="cateId != null and cateId != ''">
+                AND p.`cateId` = #{cateId, jdbcType=VARCHAR}
+            </if>
+            <if test="cateIdentifier != null and cateIdentifier != ''">
+                AND p.`cateIdentifier` LIKE concat(#{cateIdentifier, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="designCompanyId != null and designCompanyId != ''">
+                AND p.`designCompanyId` = #{designCompanyId, jdbcType=VARCHAR}
+            </if>
+            <if test="brandOwnerId != null and brandOwnerId != ''">
+                AND p.`brandOwnerId` = #{brandOwnerId, jdbcType=VARCHAR}
+            </if>
+            <if test="colorSeriesId != null and colorSeriesId != ''">
+                AND pg.`colorSeriesId` = #{colorSeriesId, jdbcType=VARCHAR}
+            </if>
+            <if test="colorSeriesCode != null and colorSeriesCode != ''">
+                AND pg.`colorSeriesCode` = #{colorSeriesCode, jdbcType=VARCHAR}
+            </if>
+            <if test="colorCode != null and colorCode != ''">
+                AND pg.`colorCode` = #{colorCode, jdbcType=VARCHAR}
+            </if>
+            <if test="seasonalStyleCode != null and seasonalStyleCode != ''">
+                AND p.`seasonalStyleCode` = #{seasonalStyleCode, jdbcType=VARCHAR}
+            </if>
+            <if test="ownerId != null and ownerId != ''">
+                AND pg.`ownerId` = #{ownerId, jdbcType=VARCHAR}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                AND pg.`tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+            <if test="purchasePriceGE != null">
+                AND pg.`purchasePrice` &gt;= #{purchasePriceGE, jdbcType=DECIMAL}
+            </if>
+            <if test="purchasePriceLE != null">
+                AND pg.`purchasePrice` &lt;= #{purchasePriceLE, jdbcType=DECIMAL}
+            </if>
+            <if test="wholesalePriceGE != null">
+                AND pg.`wholesalePrice` &gt;= #{wholesalePriceGE, jdbcType=DECIMAL}
+            </if>
+            <if test="wholesalePriceLE != null">
+                AND pg.`wholesalePrice` &lt;= #{wholesalePriceLE, jdbcType=DECIMAL}
+            </if>
+            <if test="retailPriceGE != null">
+                AND pg.`retailPrice` &gt;= #{retailPriceGE, jdbcType=DECIMAL}
+            </if>
+            <if test="retailPriceLE != null">
+                AND pg.`retailPrice` &lt;= #{retailPriceLE, jdbcType=DECIMAL}
+            </if>
+            <if test="warehouseCode != null and warehouseCode != ''">
+                AND pgs.`warehouseCode` = #{warehouseCode, jdbcType=VARCHAR}
+            </if>
+            <if test="valid != null">
+                AND pg.`valid` = #{valid, jdbcType=BIT}
+            </if>
+            <if test="searchWords != null and searchWords != ''">
+                AND concat_ws('', p.`name`, pg.`name`, p.`code`, pg.`code`, p.`keyword`, pg.`keyword`) LIKE
+                concat(concat('%', #{searchWords}),'%')
+            </if>
+            <if test="productBrandCodes != null and productBrandCodes.size() > 0">
+                AND p.`brandCode` IN
+                <foreach collection="productBrandCodes" item="code" index="index" open="(" separator="," close=")">
+                    #{code}
+                </foreach>
+            </if>
+            <if test="productCateIdentifiers != null and productCateIdentifiers.size() > 0">
+                AND p.`cateIdentifier` IN
+                <foreach collection="productCateIdentifiers" item="identifier" index="index" open="(" separator=","
+                         close=")">
+                    #{identifier}
+                </foreach>
+            </if>
+            <if test="productGoodsCodes != null and productGoodsCodes.size() > 0">
+                AND pg.`code` IN
+                <foreach collection="productGoodsCodes" item="code" index="index" open="(" separator="," close=")">
+                    #{code}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="listProductGoodsHavingPart">
+
+        <if test="validStock != null and validStock == 1">
+            HAVING availableQuantity &gt; 0
+        </if>
+
+        <if test="quantityGE != null and quantityLE == null">
+            HAVING quantity &gt;= #{quantityGE, jdbcType=INTEGER}
+        </if>
+        <if test="quantityLE != null and quantityGE == null">
+            HAVING quantity &lt;= #{quantityLE, jdbcType=INTEGER}
+        </if>
+        <if test="quantityGE != null and quantityLE != null">
+            HAVING quantity &gt;= #{quantityGE, jdbcType=INTEGER} AND quantity &lt;= #{quantityLE, jdbcType=INTEGER}
+        </if>
+
+        <if test="availableQuantityGE != null and availableQuantityLE == null">
+            HAVING availableQuantity &gt;= #{availableQuantityGE, jdbcType=INTEGER}
+        </if>
+        <if test="availableQuantityLE != null and availableQuantityGE == null">
+            HAVING availableQuantity &lt;= #{availableQuantityLE, jdbcType=INTEGER}
+        </if>
+        <if test="availableQuantityGE != null and availableQuantityLE != null">
+            HAVING availableQuantity &gt;= #{availableQuantityGE, jdbcType=INTEGER} AND availableQuantity &lt;=
+            #{availableQuantityLE, jdbcType=INTEGER}
+        </if>
+
+        <if test="frozenQuantityGE != null and frozenQuantityLE == null">
+            HAVING frozenQuantity &gt;= #{frozenQuantityGE, jdbcType=INTEGER}
+        </if>
+        <if test="frozenQuantityLE != null and frozenQuantityGE == null">
+            HAVING frozenQuantity &lt;= #{frozenQuantityLE, jdbcType=INTEGER}
+        </if>
+        <if test="frozenQuantityGE != null and frozenQuantityLE != null">
+            HAVING frozenQuantity &gt;= #{frozenQuantityGE, jdbcType=INTEGER} AND frozenQuantity &lt;=
+            #{frozenQuantityLE, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+
+    <select id="listProductGoodsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT
+        COUNT(DISTINCT pg.`id`)
+        FROM
+        product_goods pg
+        LEFT JOIN product p ON pg.productId = p.id
+        <if test="quantityGE != null or quantityLE != null or availableQuantityGE != null
+             or availableQuantityLE != null or frozenQuantityGE != null or frozenQuantityLE != null
+             or warehouseCode != null or validStock != null">
+            LEFT JOIN product_goods_stock pgs ON pgs.productGoodsCode = pg.`code`
+        </if>
+        LEFT JOIN product_brand pb ON p.brandId = pb.id
+        LEFT JOIN categories cate ON p.cateId = cate.id
+        <include refid="listProductGoodsWherePart"/>
+    </select>
+
+    <sql id="listAvailableQuantityForProductGoodsWherePart">
+        <where>
+            pg.`status` &lt; 9
+            <if test="ditchOrderStock != null and ditchOrderStock == 1">
+                AND pgs.inventoryStatus = 1
+            </if>
+            <if test="validStock != null and validStock == 1">
+                and pgs.`availableQuantity` &gt; 0
+            </if>
+            <if test="productId != null and productId != ''">
+                and pg.`productId` = #{productId, jdbcType=VARCHAR}
+            </if>
+            <if test="brandId != null and brandId != ''">
+                and p.`brandId` = #{brandId, jdbcType=VARCHAR}
+            </if>
+            <if test="cateId != null and cateId != ''">
+                and p.`cateId` = #{cateId, jdbcType=VARCHAR}
+            </if>
+            <if test="cateIdentifier != null and cateIdentifier != ''">
+                and p.`cateIdentifier` like concat(#{cateIdentifier, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="designCompanyId != null and designCompanyId != ''">
+                and p.`designCompanyId` = #{designCompanyId, jdbcType=VARCHAR}
+            </if>
+            <if test="ownerId != null and ownerId != ''">
+                and pg.`ownerId` = #{ownerId, jdbcType=VARCHAR}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and pg.`tenantId` = #{tenantId, jdbcType=VARCHAR}
+            </if>
+            <if test="warehouseCode != null and warehouseCode != ''">
+                and pgs.`warehouseCode` = #{warehouseCode, jdbcType=VARCHAR}
+            </if>
+            <if test="searchWords != null and searchWords != ''">
+                and concat_ws('', p.`name`, pg.`name`, p.`keyword`, pg.`keyword`) like concat(concat('%',
+                #{searchWords}),'%')
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="listAvailableQuantityForProductGoodsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(DISTINCT pg.id)
+        FROM product_goods pg
+        LEFT JOIN product p ON pg.productId = p.id
+        LEFT JOIN product_goods_stock pgs ON pgs.productGoodsCode = pg.`code`
+        LEFT JOIN product_brand pb ON p.brandId = pb.id
+        LEFT JOIN categories cate ON p.cateId = cate.id
+        <include refid="listAvailableQuantityForProductGoodsWherePart"/>
+    </select>
+
+    <select id="get" resultType="com.fendou.moudle.model.product.ProductGoods">
+        SELECT * FROM product_goods WHERE `status` &lt; 9 AND id = #{id, jdbcType=VARCHAR}
+    </select>
+
+
+    <insert id="insert" parameterType="com.fendou.moudle.model.product.ProductGoods">
+        INSERT INTO product_goods (
+        id
+        <include refid="insertColumns"/>
+        )
+        VALUES (
+        #{id, jdbcType=VARCHAR}
+        , #{productCode, jdbcType=VARCHAR}
+        , #{code, jdbcType=VARCHAR}
+        , #{name, jdbcType=VARCHAR}
+        , #{barcode, jdbcType=VARCHAR}
+        , #{type, jdbcType=INTEGER}
+        , #{image, jdbcType=VARCHAR}
+        , #{colorSeriesId, jdbcType=VARCHAR}
+        , #{colorSeriesCode, jdbcType=VARCHAR}
+        , #{colorSeries, jdbcType=VARCHAR}
+        , #{colorCode, jdbcType=VARCHAR}
+        , #{color, jdbcType=VARCHAR}
+        , #{sizeCode, jdbcType=VARCHAR}
+        , #{size, jdbcType=VARCHAR}
+        , #{sizeAttribute, jdbcType=VARCHAR}
+        , #{specifications, jdbcType=VARCHAR}
+        , #{promotionInfo, jdbcType=VARCHAR}
+        , #{productId, jdbcType=VARCHAR}
+        , #{purchasePrice, jdbcType=DECIMAL}
+        , #{wholesalePrice, jdbcType=DECIMAL}
+        , #{retailPrice, jdbcType=DECIMAL}
+        , #{stock, jdbcType=INTEGER}
+        , #{stockEarlyWarning, jdbcType=BIT}
+        , #{minThreshold, jdbcType=INTEGER}
+        , #{maxThreshold, jdbcType=INTEGER}
+        , #{defaultGoods, jdbcType=BIT}
+        , #{keyword, jdbcType=VARCHAR}
+        , #{sort, jdbcType=INTEGER}
+        , #{description, jdbcType=VARCHAR}
+        , #{remarks, jdbcType=VARCHAR}
+        , #{valid, jdbcType=BIT}
+        , #{status, jdbcType=INTEGER}
+        , #{createBy, jdbcType=VARCHAR}
+        , #{updateBy, jdbcType=VARCHAR}
+        , #{createTime, jdbcType=TIMESTAMP}
+        , #{updateTime, jdbcType=TIMESTAMP}
+        , #{ownerId, jdbcType=VARCHAR}
+        , #{ownerName, jdbcType=VARCHAR}
+        , #{relationUserId, jdbcType=VARCHAR}
+        , #{relationDepId, jdbcType=VARCHAR}
+        , #{tenantId, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO product_goods (
+        id
+        <include refid="insertColumns"/>
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id}
+            , #{item.productCode}
+            , #{item.code}
+            , #{item.name}
+            , #{item.barcode}
+            , #{item.type}
+            , #{item.image}
+            , #{item.colorSeriesId}
+            , #{item.colorSeriesCode}
+            , #{item.colorSeries}
+            , #{item.colorCode}
+            , #{item.color}
+            , #{item.sizeCode}
+            , #{item.size}
+            , #{item.sizeAttribute}
+            , #{item.specifications}
+            , #{item.promotionInfo}
+            , #{item.productId}
+            , #{item.purchasePrice}
+            , #{item.wholesalePrice}
+            , #{item.retailPrice}
+            , #{item.stock}
+            , #{item.stockEarlyWarning}
+            , #{item.minThreshold}
+            , #{item.maxThreshold}
+            , #{item.defaultGoods}
+            , #{item.keyword}
+            , #{item.sort}
+            , #{item.description}
+            , #{item.remarks}
+            , #{item.valid}
+            , #{item.status}
+            , #{item.createBy}
+            , #{item.updateBy}
+            , #{item.createTime}
+            , #{item.updateTime}
+            , #{item.ownerId}
+            , #{item.ownerName}
+            , #{item.relationUserId}
+            , #{item.relationDepId}
+            , #{item.tenantId}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.fendou.moudle.model.product.ProductGoods">
+        UPDATE product_goods
+        SET
+        updateTime = sysdate()
+        <include refid="updateColumns"/>
+        WHERE
+        id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            UPDATE product_goods
+            <set>
+                updateTime = sysdate()
+                <if test="item.productCode != null">
+                    , `productCode` = #{item.productCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.code != null">
+                    , `code` = #{item.code, jdbcType=VARCHAR}
+                </if>
+                <if test="item.name != null">
+                    , `name` = #{item.name, jdbcType=VARCHAR}
+                </if>
+                <if test="item.barcode != null">
+                    , `barcode` = #{item.barcode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.type != null">
+                    , `type` = #{item.type, jdbcType=INTEGER}
+                </if>
+                <if test="item.image != null">
+                    , `image` = #{item.image, jdbcType=VARCHAR}
+                </if>
+                <if test="item.colorSeriesId != null">
+                    , `colorSeriesId` = #{item.colorSeriesId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.colorSeriesCode != null">
+                    , `colorSeriesCode` = #{item.colorSeriesCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.colorSeries != null">
+                    , `colorSeries` = #{item.colorSeries, jdbcType=VARCHAR}
+                </if>
+                <if test="item.colorCode != null">
+                    , `colorCode` = #{item.colorCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.color != null">
+                    , `color` = #{item.color, jdbcType=VARCHAR}
+                </if>
+                <if test="item.sizeCode != null">
+                    , `sizeCode` = #{item.sizeCode, jdbcType=VARCHAR}
+                </if>
+                <if test="item.size != null">
+                    , `size` = #{item.size, jdbcType=VARCHAR}
+                </if>
+                <if test="item.sizeAttribute != null">
+                    , `sizeAttribute` = #{item.sizeAttribute, jdbcType=VARCHAR}
+                </if>
+                <if test="item.specifications != null">
+                    , `specifications` = #{item.specifications, jdbcType=VARCHAR}
+                </if>
+                <if test="item.promotionInfo != null">
+                    , `promotionInfo` = #{item.promotionInfo, jdbcType=VARCHAR}
+                </if>
+                <if test="item.productId != null">
+                    , `productId` = #{item.productId, jdbcType=VARCHAR}
+                </if>
+                <if test="item.purchasePrice != null">
+                    , `purchasePrice` = #{item.purchasePrice, jdbcType=DECIMAL}
+                </if>
+                <if test="item.wholesalePrice != null">
+                    , `wholesalePrice` = #{item.wholesalePrice, jdbcType=DECIMAL}
+                </if>
+                <if test="item.retailPrice != null">
+                    , `retailPrice` = #{item.retailPrice, jdbcType=DECIMAL}
+                </if>
+                <if test="item.stock != null">
+                    , `stock` = #{item.stock, jdbcType=INTEGER}
+                </if>
+                <if test="item.stockEarlyWarning != null">
+                    , `stockEarlyWarning` = #{item.stockEarlyWarning, jdbcType=BIT}
+                </if>
+                <if test="item.minThreshold != null">
+                    , `minThreshold` = #{item.minThreshold, jdbcType=INTEGER}
+                </if>
+                <if test="item.maxThreshold != null">
+                    , `maxThreshold` = #{item.maxThreshold, jdbcType=INTEGER}
+                </if>
+                <if test="item.defaultGoods != null">
+                    , `defaultGoods` = #{item.defaultGoods, jdbcType=BIT}
+                </if>
+                <if test="item.keyword != null">
+                    , `keyword` = #{item.keyword, jdbcType=VARCHAR}
+                </if>
+                <if test="item.sort != null">
+                    , `sort` = #{item.sort, jdbcType=INTEGER}
+                </if>
+                <if test="item.description != null">
+                    , `description` = #{item.description, jdbcType=VARCHAR}
+                </if>
+                <if test="item.remarks != null">
+                    , `remarks` = #{item.remarks, jdbcType=VARCHAR}
+                </if>
+                <if test="item.valid != null">
+                    , `valid` = #{item.valid, jdbcType=BIT}
+                </if>
+                <if test="item.status != null">
+                    , `status` = #{item.status, jdbcType=INTEGER}
+                </if>
+                <if test="item.updateBy != null">
+                    , `updateBy` = #{item.updateBy, jdbcType=VARCHAR}
+                </if>
+            </set>
+            <where>
+                id = #{item.id, jdbcType=VARCHAR}
+            </where>
+        </foreach>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.fendou.moudle.model.product.ProductGoods">
+        UPDATE product_goods
+        SET
+        updateTime = sysdate()
+        <if test="productCode != null">
+            , `productCode` = #{productCode, jdbcType=VARCHAR}
+        </if>
+        <if test="code != null">
+            , `code` = #{code, jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            , `name` = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="barcode != null">
+            , `barcode` = #{barcode, jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            , `type` = #{type, jdbcType=INTEGER}
+        </if>
+        <if test="image != null">
+            , `image` = #{image, jdbcType=VARCHAR}
+        </if>
+        <if test="colorSeriesId != null">
+            , `colorSeriesId` = #{colorSeriesId, jdbcType=VARCHAR}
+        </if>
+        <if test="colorSeriesCode != null">
+            , `colorSeriesCode` = #{colorSeriesCode, jdbcType=VARCHAR}
+        </if>
+        <if test="colorSeries != null">
+            , `colorSeries` = #{colorSeries, jdbcType=VARCHAR}
+        </if>
+        <if test="colorCode != null">
+            , `colorCode` = #{colorCode, jdbcType=VARCHAR}
+        </if>
+        <if test="color != null">
+            , `color` = #{color, jdbcType=VARCHAR}
+        </if>
+        <if test="sizeCode != null">
+            , `sizeCode` = #{sizeCode, jdbcType=VARCHAR}
+        </if>
+        <if test="size != null">
+            , `size` = #{size, jdbcType=VARCHAR}
+        </if>
+        <if test="sizeAttribute != null">
+            , `sizeAttribute` = #{sizeAttribute, jdbcType=VARCHAR}
+        </if>
+        <if test="specifications != null">
+            , `specifications` = #{specifications, jdbcType=VARCHAR}
+        </if>
+        <if test="promotionInfo != null">
+            , `promotionInfo` = #{promotionInfo, jdbcType=VARCHAR}
+        </if>
+        <if test="productId != null">
+            , `productId` = #{productId, jdbcType=VARCHAR}
+        </if>
+        <if test="purchasePrice != null">
+            , `purchasePrice` = #{purchasePrice, jdbcType=DECIMAL}
+        </if>
+        <if test="wholesalePrice != null">
+            , `wholesalePrice` = #{wholesalePrice, jdbcType=DECIMAL}
+        </if>
+        <if test="retailPrice != null">
+            , `retailPrice` = #{retailPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="stock != null">
+            , `stock` = #{stock, jdbcType=INTEGER}
+        </if>
+        <if test="stockEarlyWarning != null">
+            , `stockEarlyWarning` = #{stockEarlyWarning, jdbcType=BIT}
+        </if>
+        <if test="minThreshold != null">
+            , `minThreshold` = #{minThreshold, jdbcType=INTEGER}
+        </if>
+        <if test="maxThreshold != null">
+            , `maxThreshold` = #{maxThreshold, jdbcType=INTEGER}
+        </if>
+        <if test="defaultGoods != null">
+            , `defaultGoods` = #{defaultGoods, jdbcType=BIT}
+        </if>
+        <if test="keyword != null">
+            , `keyword` = #{keyword, jdbcType=VARCHAR}
+        </if>
+        <if test="sort != null">
+            , `sort` = #{sort, jdbcType=INTEGER}
+        </if>
+        <if test="description != null">
+            , `description` = #{description, jdbcType=VARCHAR}
+        </if>
+        <if test="remarks != null">
+            , `remarks` = #{remarks, jdbcType=VARCHAR}
+        </if>
+        <if test="valid != null">
+            , `valid` = #{valid, jdbcType=BIT}
+        </if>
+        <if test="status != null">
+            , `status` = #{status, jdbcType=INTEGER}
+        </if>
+        <if test="updateBy != null">
+            , `updateBy` = #{updateBy, jdbcType=VARCHAR}
+        </if>
+        <where>
+            id = #{id, jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <delete id="delete">
+        DELETE FROM product_goods WHERE id = #{id, jdbcType=VARCHAR}
+    </delete>
+
+    <select id="findBySPUCodes" parameterType="java.util.Map" resultType="com.fendou.moudle.model.product.ProductGoods">
+        SELECT * from product_goods where productCode IN
+        <foreach collection="spuCodes" item="item" separator="," close=")" open="(">
+            #{item}
+        </foreach>
+        and `tenantId` = #{tenantId, jdbcType=VARCHAR}
+    </select>
+
+    <select id="findByOwnerName" parameterType="java.util.Map" resultType="com.fendou.moudle.model.product.ProductGoods">
+        select * from product_goods where `tenantId` = #{tenantId, jdbcType=VARCHAR} and `ownerName`  =#{ownerName}
+    </select>
+
+    <select id="findSKUByStoreName" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT goodsCode FROM retailstore.`store_product` where 	tenantId = #{tenantId} and storeName=#{storeName}
+    </select>
+    <select id="findBySKUCodes" parameterType="java.util.Map" resultType="com.fendou.moudle.model.product.ProductGoods">
+        SELECT * from product_goods where code IN
+        <foreach collection="skuCodes" item="item" separator="," close=")" open="(">
+            #{item}
+        </foreach>
+        and `tenantId` = #{tenantId, jdbcType=VARCHAR}
+    </select>
+</mapper>
