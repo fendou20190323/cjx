@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,12 +31,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/demo")
 @Slf4j(topic = "DemoBackGoods")
+@ControllerAdvice
 public class DemoBackGoods {
     @Autowired
     private BackGoodsMapper backGoodsMapper;
     @Autowired
     private BackProductInfoMapper backProductInfoMapper;
 
+    @GetMapping("/testAdvice")
+    public void testAdvice(){
+        BackGoods b2=null;
+        BackGoods b1 = new BackGoods();
+        Assert.notNull(b2, "不能为空");
+    }
+
+    public static void main(String[] args) {
+        BackGoods b2=null;
+        BackGoods b1 = new BackGoods();
+        Assert.notNull(b2, "不能为空");
+    }
     @GetMapping("/find")
     public String list(String orderSn) {
         BackGoods backGoods = findBackGoods(orderSn);

@@ -39,7 +39,9 @@ public class ProductServiceImpl implements ProductService {
      * 尺码---------size
      */
 
-    private static final String NEW_TENANTID = "4c1a45f1-d809-4965-b99d-1b2d5fa87e6b";
+//e41e5f3c-0d24-4ac2-9cf3-38b0ae53c001 （生产中台）
+//                                              e41e5f3c-0d24-4ac2-9cf3-38b0ae53c001
+    private static final String NEW_TENANTID = "e41e5f3c-0d24-4ac2-9cf3-38b0ae53c001";
 
     @Autowired
     private ProductBrandMapper productBrandMapper;
@@ -286,11 +288,19 @@ public class ProductServiceImpl implements ProductService {
         Map<String, Object> map = createParams();
         map.put("tenantId", NEW_TENANTID);
         List<ProductDto> productList = productMapper.listIdAndRemark(map);
-        System.err.println();
+        //查询色系id
+        Map<String, Object> newParams = createParams();
+        newParams.put("tenantId", NEW_TENANTID);
+        List<ColorSeries> colorSeriesList = colorSeriesMapper.list(newParams);
+        if (null==colorSeriesList||colorSeriesList.size()==0) throw new RuntimeException("色系列表为空");
         result.stream().forEach(pg -> {
             if (pg.getProductId() != null && !"".equals(pg.getProductId().trim())) {
                 String productId = productList.stream().filter(p -> p.getRemarks().split(":")[1].equals(pg.getProductId())).collect(Collectors.toList()).get(0).getId();
                 pg.setProductId(productId);
+            }
+            if (null!=pg.getColorSeriesId()&&!"".equals(pg.getColorSeriesId().trim())){
+                String colorseriesId = colorSeriesList.stream().filter(c -> c.getRemarks().split(":")[1].equals(pg.getColorSeriesId())).collect(Collectors.toList()).get(0).getId();
+                pg.setColorSeriesId(colorseriesId);
             }
             pg.insertSet();
         });
@@ -367,7 +377,8 @@ public class ProductServiceImpl implements ProductService {
     /**
      * 更新wms仓库
      */
-    private static final String NEW_WMS_TENANTID="33079544-335e-4189-bd8b-7bbcc4f6bca8";
+    //生产wms  32b6d593-401d-4bf1-8e9a-71b63ae877d9
+    private static final String NEW_WMS_TENANTID="32b6d593-401d-4bf1-8e9a-71b63ae877d9";
     @Override
     public void updateWmsDataInventory() {
         Map<String, Object> params = createParams();

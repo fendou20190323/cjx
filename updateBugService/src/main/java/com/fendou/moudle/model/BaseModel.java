@@ -10,7 +10,8 @@ public class BaseModel implements Serializable {
     private static final int NORMAL_STATUS = 0;
     private static final int UPDATE_STATUS = 1;
     private static final int DELETE_STATUS = 9;
-    private static final String NEW_TENANTID = "4c1a45f1-d809-4965-b99d-1b2d5fa87e6b ";
+//    private static final String NEW_TENANTID = "4c1a45f1-d809-4965-b99d-1b2d5fa87e6b";
+    private static final String NEW_TENANTID = "e41e5f3c-0d24-4ac2-9cf3-38b0ae53c001";
     private final String REMARKS = "copy_id";
     /**
      * 线程安全类
@@ -143,7 +144,7 @@ public class BaseModel implements Serializable {
         setUpdateBy("sys");
         setCreateBy("sys");
         setId(UUIDUtils.getUUID());
-        setStatus(NORMAL_STATUS);
+//        setStatus(NORMAL_STATUS);
         setUpdateTime(new Timestamp(System.currentTimeMillis()));
         setCreateTime(new Timestamp(System.currentTimeMillis()));
     }

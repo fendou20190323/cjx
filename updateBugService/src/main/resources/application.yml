@@ -9,10 +9,14 @@ spring:
 #    password: lssMysql2@
 #    driver-class-name: com.mysql.jdbc.Driver
 #    url: jdbc:mysql://rm-2ze877ndr3zv6a7z3.mysql.rds.aliyuncs.com:3306/scb?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
-    username: root
-    password: lssMysql2@
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://39.106.48.118:3306/imis?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
+#      生产
+#    username: xqyydbuser
+#    password: yyDb123456
+      #    url: jdbc:mysql://rm-2ze877ndr3zv6a7z3vo.mysql.rds.aliyuncs.com:3306/imis?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.218.128:3306/imis?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
   main:
     allow-bean-definition-overriding: true
 logging.level.com.fendou.moudle: debug
