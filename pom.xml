@@ -8,6 +8,9 @@
         <module>springCloudConfig</module>
         <module>springEureka</module>
         <module>springtest</module>
+        <module>regionService</module>
+        <module>untitled</module>
+        <module>common</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
