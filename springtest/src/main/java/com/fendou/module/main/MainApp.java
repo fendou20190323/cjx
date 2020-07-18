@@ -2,6 +2,8 @@ package com.fendou.module.main;
 
 import com.fendou.module.model.HelloWorld;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -12,7 +14,7 @@ import java.util.List;
 @Slf4j
 public class MainApp {
    public static void main(String[] args) {
-      test1();
+
    }
 
 

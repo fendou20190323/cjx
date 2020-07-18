@@ -98,7 +98,6 @@ public class ExcelUtil<T> {
                                 value = "未知类型";
                                 break;
                         }
-                        System.out.println(value);
                         if (value.equals("")) {
                             continue;
                         }
