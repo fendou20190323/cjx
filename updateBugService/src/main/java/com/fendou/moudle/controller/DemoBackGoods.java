@@ -10,17 +10,19 @@ import com.fendou.moudle.model.BackGoods;
 import com.fendou.moudle.model.BackProductInfo;
 import com.fendou.moudle.model.TestCjx;
 import com.fendou.moudle.model.TestCjx2;
+import com.fendou.moudle.service.impl.DemoBackGoodsImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.mockito.internal.configuration.MockAnnotationProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import javax.xml.ws.handler.Handler;
+import java.util.*;
 
 /**
  * @author Cjx
@@ -39,19 +41,20 @@ public class DemoBackGoods {
     private BackProductInfoMapper backProductInfoMapper;
 
     @GetMapping("/testAdvice")
-    public void testAdvice(){
-        BackGoods b2=null;
+    public void testAdvice() {
+        BackGoods b2 = null;
         BackGoods b1 = new BackGoods();
         Assert.notNull(b2, "不能为空");
     }
 
     public static void main(String[] args) {
-        BackGoods b2=null;
+        BackGoods b2 = null;
         BackGoods b1 = new BackGoods();
         Assert.notNull(b2, "不能为空");
     }
+
     @GetMapping("/find")
-    public String list(String orderSn) {
+    public String find(String orderSn) {
         BackGoods backGoods = findBackGoods(orderSn);
         List<BackProductInfo> infoList = findInfoByOrderSn(backGoods.getBackNum());
         backGoods.setBackProductInfoList(infoList);
@@ -98,17 +101,33 @@ public class DemoBackGoods {
         receiveOrderDto.setOrderItemDtoList(orderItemDtoList);
         return receiveOrderDto;
     }
-    private final Logger LOGGER= LoggerFactory.getLogger(DemoBackGoods.class);
+
+    private final Logger LOGGER = LoggerFactory.getLogger(DemoBackGoods.class);
+
+    /**
+     * @param t
+     * @return
+     */
     @PostMapping("/test")
-    public String test(@RequestBody @Valid TestCjx t){
+    public String test(@RequestBody @Valid TestCjx t) {
         /**logger*/
         log.debug(t.getId());
         log.debug(t.getNumList().toString());
         log.debug(t.getName());
         HashSet<Integer> set = new HashSet<>(t.getNumList());
-        log.debug("set{}",set.toString());
+        log.debug("set{}", set.toString());
         HashSet<TestCjx2> testCjx2s = new HashSet<>(t.getCjx2List());
-        log.debug("testCjx2s{}",testCjx2s.toString());
+        log.debug("testCjx2s{}", testCjx2s.toString());
         return "chenggong";
     }
+
+    @GetMapping("/list")
+    @Transactional
+    public String list() {
+        DemoBackGoodsImpl impl = new DemoBackGoodsImpl();
+        impl.query();
+        return "ok";
+    }
+
+
 }

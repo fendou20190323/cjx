@@ -1,6 +1,7 @@
 package com.fendou.moudle.model.product;
 
 import com.fendou.moudle.model.BaseModel;
+import com.lss.common.annotation.ExcelVOAttribute;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,10 +15,13 @@ import java.util.List;
 public class ProductBrandOwner extends BaseModel {
 
     @ApiModelProperty(value = "UUID")
+    @ExcelVOAttribute(name="ID",column = "A")
     private String id;
     @ApiModelProperty(value = "品牌商编码")
+    @ExcelVOAttribute(name="CODE",column = "A")
     private String code;
     @ApiModelProperty(value = "品牌商名称")
+    @ExcelVOAttribute(name="NAME",column = "A")
     private String name;
     @ApiModelProperty(value = "品牌商LOGO")
     private String logo;

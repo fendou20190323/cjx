@@ -320,4 +320,7 @@
         </foreach>
     </update>
 
+    <select id="findByName" parameterType="java.util.Map" resultType="com.fendou.moudle.model.product.ColorSeries">
+        select * from color_series where `name` = #{seriesName, jdbcType=VARCHAR} and   `tenantId` = #{newTenantid, jdbcType=VARCHAR}
+    </select>
 </mapper>

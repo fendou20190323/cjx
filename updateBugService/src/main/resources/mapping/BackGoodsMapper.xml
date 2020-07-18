@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fendou.com.fendou.moudle.mapper.BackGoodsMapper">
+<mapper namespace="com.fendou.moudle.mapper.BackGoodsMapper">
 	<resultMap id="BaseBackGoodsMap" type="com.fendou.moudle.model.BackGoods">
 		<id column="id" property="id" jdbcType="VARCHAR"/>
         <result column="backNum" property="backNum" jdbcType="VARCHAR"/>
@@ -277,7 +277,7 @@
             </if>-->
         </where>
     </sql>
-
+    <cache eviction="LRU" flushInterval="100000" readOnly="true" size="1024"></cache>
     <select id="list" parameterType="java.util.Map" resultMap="BaseBackGoodsMap">
         SELECT *
         FROM back_goods t

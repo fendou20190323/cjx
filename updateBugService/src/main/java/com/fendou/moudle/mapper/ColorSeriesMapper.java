@@ -28,4 +28,5 @@ public interface ColorSeriesMapper {
 
     int deleteBatch(List<ColorSeries> list);
 
+    ColorSeries findByName(@Param("seriesName") String seriesName, @Param("newTenantid") String newTenantid);
 }

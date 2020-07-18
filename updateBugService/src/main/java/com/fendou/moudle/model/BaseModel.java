@@ -11,7 +11,12 @@ public class BaseModel implements Serializable {
     private static final int UPDATE_STATUS = 1;
     private static final int DELETE_STATUS = 9;
 //    private static final String NEW_TENANTID = "4c1a45f1-d809-4965-b99d-1b2d5fa87e6b";
-    private static final String NEW_TENANTID = "e41e5f3c-0d24-4ac2-9cf3-38b0ae53c001";
+//    生产
+//    private static final String NEW_TENANTID = "34f9c86f-d585-40fc-b4be-d559da546e6d";
+//    预产工
+//    private static final String NEW_TENANTID = "7c3355e1-bd76-4948-9dbc-99c867682977";
+//    测试
+    private static final String NEW_TENANTID = "6948ba36-0ad5-4024-b0ce-7784173d0e06";
     private final String REMARKS = "copy_id";
     /**
      * 线程安全类
@@ -137,14 +142,14 @@ public class BaseModel implements Serializable {
     }
 
     public void insertSet() {
-        setRemarks(REMARKS+":"+this.getId());
+        setRemarks("import");
         setTenantId(NEW_TENANTID);
         setRelationUserId("sys");
         setRelationDepId(null);
         setUpdateBy("sys");
         setCreateBy("sys");
         setId(UUIDUtils.getUUID());
-//        setStatus(NORMAL_STATUS);
+        setStatus(NORMAL_STATUS);
         setUpdateTime(new Timestamp(System.currentTimeMillis()));
         setCreateTime(new Timestamp(System.currentTimeMillis()));
     }

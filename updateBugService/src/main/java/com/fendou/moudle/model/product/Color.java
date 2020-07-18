@@ -1,6 +1,7 @@
 package com.fendou.moudle.model.product;
 
 import com.fendou.moudle.model.BaseModel;
+import com.lss.common.annotation.ExcelVOAttribute;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,14 +15,15 @@ import java.sql.Timestamp;
 public class Color extends BaseModel {
 
     @ApiModelProperty(value = "UUID")
+    @ExcelVOAttribute(name="ID",column = "A")
     private String id;
 
     @ApiModelProperty(value = "颜色编码")
-    @NotBlank(message = "编码不能为空！")
-    @Size(min = 2, max = 2, message = "编码长度必须为两位数！")
+    @ExcelVOAttribute(name="COLORCODE",column = "D")
     private String code;
     @ApiModelProperty(value = "颜色名称")
     @NotBlank(message = "颜色名称不能为空")
+    @ExcelVOAttribute(name="COLORNAME",column = "C")
     private String name;
     @ApiModelProperty(value = "色系ID")
     @NotBlank(message = "色系ID不能为空！")
@@ -29,6 +31,7 @@ public class Color extends BaseModel {
     @ApiModelProperty(value = "色系编码")
     private String seriesCode;
     @ApiModelProperty(value = "色系名称")
+    @ExcelVOAttribute(name="seriesName",column = "B")
     private String seriesName;
     @ApiModelProperty(value = "业务关联用户")
     private String relationUserId;

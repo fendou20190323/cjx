@@ -5,14 +5,16 @@ import com.fendou.moudle.mapper.*;
 import com.fendou.moudle.model.ConfigurationGoodsOwner;
 import com.fendou.moudle.model.WarehouseInventory;
 import com.fendou.moudle.model.product.*;
+import com.fendou.moudle.service.ProductImportCSVService;
 import com.fendou.moudle.service.ProductService;
-import com.fendou.moudle.utils.UUIDUtils;
-import net.bytebuddy.asm.Advice;
+import com.lss.common.util.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Array;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,7 +27,7 @@ import java.util.stream.Stream;
 @SuppressWarnings("ALL")
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ProductServiceImpl implements ProductService {
+public class ProductImportCSVServiceImpl implements ProductImportCSVService {
 
 
     /**
@@ -41,9 +43,10 @@ public class ProductServiceImpl implements ProductService {
 
 //e41e5f3c-0d24-4ac2-9cf3-38b0ae53c001 （生产中台）
 //                                              e41e5f3c-0d24-4ac2-9cf3-38b0ae53c001
-            //音色
-    private static final String NEW_TENANTID = "34f9c86f-d585-40fc-b4be-d559da546e6d";
-
+    //音色
+//    private static final String NEW_TENANTID = "34f9c86f-d585-40fc-b4be-d559da546e6d";
+//    测试
+    private  final String NEW_TENANTID = "6948ba36-0ad5-4024-b0ce-7784173d0e06";
     @Autowired
     private ProductBrandMapper productBrandMapper;
 
@@ -142,18 +145,16 @@ public class ProductServiceImpl implements ProductService {
      * 品牌
      */
     @Override
-    public void updateProductBrand() {
-        //查询租户id=9889d4ed-dea4-11e9-a898-0242ac110002
-        Map<String, Object> params = createParams();
-        List<ProductBrand> lssList = productBrandMapper.list(params);
-        int oldSize = lssList.size();
-        //将数据转到新租户
-        lssList.stream().forEach(lss -> {
-            lss.insertSet();
+    public void updateProductBrand(MultipartFile file) throws IOException {
+        ExcelUtil excelUtil = new ExcelUtil(ProductBrand.class);
+        List<ProductBrand> list = excelUtil.importExcel("", file.getInputStream());
+        list.stream().forEach(t -> {
+            t.insertSet();
+            t.setType(t.getType() == 1 ? 0 : 1);
+            t.setCooperation(true);
+            t.setValid(true);
         });
-        //保存
-        int row = productBrandMapper.insertBatch(lssList);
-        if (oldSize != row) throw new RuntimeException("与原数据不等");
+        productBrandMapper.insertBatch(list);
     }
 
 
@@ -164,21 +165,17 @@ public class ProductServiceImpl implements ProductService {
     private ColorMapper colorMapper;
 
     @Override
-    public void updateColor() {
-        List<Color> lssList = colorMapper.list(createParams());
-        int oldSize = lssList.size();
-        //查询色系数据
-        Map<String, Object> colorSeriesParams = new HashMap<>();
-        colorSeriesParams.put("tenantId", NEW_TENANTID);
-        List<ColorSeries> colorSeriesList = colorSeriesMapper.list(colorSeriesParams);
-        if (colorSeriesList == null || colorSeriesList.size() == 0) throw new RuntimeException("色系不能为空");
-        lssList.stream().forEach(lss -> {
-            String seriesId = colorSeriesList.stream().filter(c -> c.getRemarks().split(":")[1].equals(lss.getSeriesId())).collect(Collectors.toList()).get(0).getId();
-            lss.setSeriesId(seriesId);
-            lss.insertSet();
+    public void updateColor(MultipartFile file) throws IOException {
+        ExcelUtil excelUtil = new ExcelUtil(Color.class);
+        List<Color> list = excelUtil.importExcel("", file.getInputStream());
+        list.stream().forEach(t -> {
+            ColorSeries colorSeries=colorSeriesMapper.findByName(t.getSeriesName(),NEW_TENANTID);
+            t.insertSet();
+            t.setSeriesCode(colorSeries.getCode());
+            t.setSeriesId(colorSeries.getId());
+            t.setValid(true);
         });
-        int row = colorMapper.insertBatch(lssList);
-        if (oldSize != row) throw new RuntimeException("与原数据不等");
+        colorMapper.insertBatch(list);
     }
 
 
@@ -206,14 +203,16 @@ public class ProductServiceImpl implements ProductService {
     private ProductBrandOwnerMapper productBrandOwnerMapper;
 
     @Override
-    public void updateProductBrandOwner() {
-        List<ProductBrandOwner> lssList = productBrandOwnerMapper.list(createParams());
-        int oldSize = lssList.size();
-        lssList.stream().forEach(lss -> {
-            lss.insertSet();
+    public void updateProductBrandOwner(MultipartFile file) throws IOException {
+        ExcelUtil excelUtil = new ExcelUtil(ProductBrand.class);
+        List<ProductBrandOwner> list = excelUtil.importExcel("", file.getInputStream());
+        list.stream().forEach(t -> {
+            t.insertSet();
+            t.setCooperation(true);
+            t.setValid(true);
+            t.setRecommend(true);
         });
-        int row = productBrandOwnerMapper.insertBatch(lssList);
-        if (oldSize != row) throw new RuntimeException("与原数据不等");
+        productBrandOwnerMapper.insertBatch(list);
     }
 
     /**
@@ -240,22 +239,35 @@ public class ProductServiceImpl implements ProductService {
     private CategoriesMapper categoriesMapper;
 
     @Override
-    public void updateCategories() {
-        List<Categories> lssList = categoriesMapper.list(createParams());
-        List<Categories> orginal = categoriesMapper.list(createParams());
-
-        int oldSize = lssList.size();
-        lssList.stream().forEach(lss -> {
-            lss.insertSet();
-        });
-        for (Categories c : lssList) {
-            if (null != c.getParentId() && !"".equals(c.getParentId().trim())) {
-                Categories categories = lssList.stream().filter(l -> l.getRemarks().split(":")[1].equals(c.getParentId())).collect(Collectors.toList()).get(0);
-                c.setParentId(categories.getId());
-            }
+    public void updateCategories(MultipartFile file) throws IOException {
+        ExcelUtil excelUtil = new ExcelUtil(Categories.class);
+        List<Categories> list = excelUtil.importExcel("", file.getInputStream());
+        List<Categories> insertList = new LinkedList<>();
+        insertList.addAll(list);
+        /**
+         * identifier
+         * level
+         * parentName
+         * fullCateName
+         * type=1
+         * */
+        Map<String,String> map=new HashMap<>();
+        for (Categories c : insertList) {
+            String orignalId = c.getId();
+            c.insertSet();
+            map.put(orignalId,c.getId());
         }
-        int row = categoriesMapper.insertBatch(lssList);
-        if (oldSize != row) throw new RuntimeException("与原数据不等");
+       insertList.stream().forEach(t->{
+           String newId = map.get(t.getParentId());
+           t.setParentId(newId);
+           if (t.getLevel()==1){
+               t.setFullCateName(t.getName());
+           }
+           t.setType(1);
+           t.setValid(true);
+
+       });
+        categoriesMapper.insertBatch(insertList);
     }
 
     @Autowired
@@ -293,13 +305,13 @@ public class ProductServiceImpl implements ProductService {
         Map<String, Object> newParams = createParams();
         newParams.put("tenantId", NEW_TENANTID);
         List<ColorSeries> colorSeriesList = colorSeriesMapper.list(newParams);
-        if (null==colorSeriesList||colorSeriesList.size()==0) throw new RuntimeException("色系列表为空");
+        if (null == colorSeriesList || colorSeriesList.size() == 0) throw new RuntimeException("色系列表为空");
         result.stream().forEach(pg -> {
             if (pg.getProductId() != null && !"".equals(pg.getProductId().trim())) {
                 String productId = productList.stream().filter(p -> p.getRemarks().split(":")[1].equals(pg.getProductId())).collect(Collectors.toList()).get(0).getId();
                 pg.setProductId(productId);
             }
-            if (null!=pg.getColorSeriesId()&&!"".equals(pg.getColorSeriesId().trim())){
+            if (null != pg.getColorSeriesId() && !"".equals(pg.getColorSeriesId().trim())) {
                 String colorseriesId = colorSeriesList.stream().filter(c -> c.getRemarks().split(":")[1].equals(pg.getColorSeriesId())).collect(Collectors.toList()).get(0).getId();
                 pg.setColorSeriesId(colorseriesId);
             }
@@ -320,21 +332,23 @@ public class ProductServiceImpl implements ProductService {
     private ProductSpecificationsMapper productSpecificationsMapper;
 
     @Override
-    public void updateProductSpecifications() {
-        List<ProductSpecifications> lssList = productSpecificationsMapper.list(createParams());
-        Map<String, Object> params1 = createParams();
-        params1.put("tenantId", NEW_TENANTID);
-        List<Categories> categories = categoriesMapper.list(params1);
-        int oldSize = lssList.size();
-        lssList.stream().forEach(lss -> {
-            if (null != lss.getCateId() && !"".equals(lss.getCateId())) {
-                String catId = categories.stream().filter(c -> c.getRemarks().split(":")[1].equals(lss.getCateId())).collect(Collectors.toList()).get(0).getId();
-                lss.setCateId(catId);
-            }
-            lss.insertSet();
+    public void updateProductSpecifications(MultipartFile speicifi,MultipartFile cate) throws IOException {
+        ExcelUtil speiExcelUtil = new ExcelUtil(ProductSpecifications.class);
+        ExcelUtil cateExcelUtil = new ExcelUtil(Categories.class);
+        List<ProductSpecifications> speiList = speiExcelUtil.importExcel("", speicifi.getInputStream());
+        List<Categories> cateList = cateExcelUtil.importExcel("", cate.getInputStream());
+
+        speiList.stream().forEach(t -> {
+            Categories oldCate = cateList.stream().filter(c -> c.getId().equals(t.getCateId())).collect(Collectors.toList()).get(0);
+//            Categories newCate = categoriesMapper.findByCode(oldCate.getCode(),NEW_TENANTID);
+            t.insertSet();
+//            t.setCateId(newCate.getId());
+//            t.setCateName(newCate.getName());
+//            t.setCateIdentifier(newCate.getIdentifier());
+
+            t.setValid(true);
         });
-        int row = productSpecificationsMapper.insertBatch(lssList);
-        if (oldSize != row) throw new RuntimeException("与原数据不等");
+        productSpecificationsMapper.insertBatch(speiList);
     }
 
     @Autowired
@@ -363,6 +377,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ConfigurationGoodsOwnerMapper configurationGoodsOwnerMapper;
+
     @Override
     public void updateConfigurationGoodsOwner() {
         List<ConfigurationGoodsOwner> lssList = configurationGoodsOwnerMapper.list(createParams());
@@ -379,13 +394,14 @@ public class ProductServiceImpl implements ProductService {
      * 更新wms仓库
      */
     //生产wms  32b6d593-401d-4bf1-8e9a-71b63ae877d9
-    private static final String NEW_WMS_TENANTID="32b6d593-401d-4bf1-8e9a-71b63ae877d9";
+    private static final String NEW_WMS_TENANTID = "32b6d593-401d-4bf1-8e9a-71b63ae877d9";
+
     @Override
     public void updateWmsDataInventory() {
         Map<String, Object> params = createParams();
         List<String> wareHoseCodes = Stream.of("004", "003").collect(Collectors.toList());
         params.put("wareHoseCodes", wareHoseCodes);
-      List<WarehouseInventory> lssList=  productGoodsMapper.listWMSInventory(params);
+        List<WarehouseInventory> lssList = productGoodsMapper.listWMSInventory(params);
         int oldSize = lssList.size();
         lssList.stream().forEach(lss -> {
             lss.insertSet();

@@ -1,6 +1,7 @@
 package com.fendou.moudle.model.product;
 
 import com.fendou.moudle.model.BaseModel;
+import com.lss.common.annotation.ExcelVOAttribute;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,20 +13,28 @@ import java.sql.Timestamp;
 public class Categories extends BaseModel {
 
     @ApiModelProperty(value = "UUID")
+    @ExcelVOAttribute(name="ID",column = "A")
     private String id;
     @ApiModelProperty(value = "分类编码")
+    @ExcelVOAttribute(name="CATEGORYCODE",column = "D")
     private String code;
     @ApiModelProperty(value = "分类识别码")
+    @ExcelVOAttribute(name="identifier",column = "F")
     private String identifier;
     @ApiModelProperty(value = "分类名称")
+    @ExcelVOAttribute(name="CATEGORYNAME",column = "C")
     private String name;
     @ApiModelProperty(value = "分类级别")
+    @ExcelVOAttribute(name="LEVEL",column = "E")
     private Integer level;
     @ApiModelProperty(value = "父级分类ID")
+    @ExcelVOAttribute(name="PARENTID",column = "B")
     private String parentId;
     @ApiModelProperty(value = "父级分类名称")
+    @ExcelVOAttribute(name="parentName",column = "G")
     private String parentName;
     @ApiModelProperty(value = "完整分类名称")
+    @ExcelVOAttribute(name="fullCateName",column = "H")
     private String fullCateName;
     @ApiModelProperty(value = "分类类型（1：标准分类，2：定制分类，3：原料分类）")
     private Integer type;

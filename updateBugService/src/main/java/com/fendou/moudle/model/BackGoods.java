@@ -2,7 +2,9 @@ package com.fendou.moudle.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -10,7 +12,8 @@ import java.util.List;
 import java.util.Objects;
 
 @ApiModel(description = "返货单")
-public class BackGoods  {
+@Data
+public class BackGoods implements Serializable {
 
 	@ApiModelProperty(value = "UUID")
 	private String id;
