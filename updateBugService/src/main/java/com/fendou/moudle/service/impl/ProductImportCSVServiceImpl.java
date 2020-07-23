@@ -46,7 +46,7 @@ public class ProductImportCSVServiceImpl implements ProductImportCSVService {
     //音色
 //    private static final String NEW_TENANTID = "34f9c86f-d585-40fc-b4be-d559da546e6d";
 //    测试
-    private  final String NEW_TENANTID = "6948ba36-0ad5-4024-b0ce-7784173d0e06";
+    private final String NEW_TENANTID = "6948ba36-0ad5-4024-b0ce-7784173d0e06";
     @Autowired
     private ProductBrandMapper productBrandMapper;
 
@@ -169,7 +169,7 @@ public class ProductImportCSVServiceImpl implements ProductImportCSVService {
         ExcelUtil excelUtil = new ExcelUtil(Color.class);
         List<Color> list = excelUtil.importExcel("", file.getInputStream());
         list.stream().forEach(t -> {
-            ColorSeries colorSeries=colorSeriesMapper.findByName(t.getSeriesName(),NEW_TENANTID);
+            ColorSeries colorSeries = colorSeriesMapper.findByName(t.getSeriesName(), NEW_TENANTID);
             t.insertSet();
             t.setSeriesCode(colorSeries.getCode());
             t.setSeriesId(colorSeries.getId());
@@ -251,22 +251,22 @@ public class ProductImportCSVServiceImpl implements ProductImportCSVService {
          * fullCateName
          * type=1
          * */
-        Map<String,String> map=new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         for (Categories c : insertList) {
             String orignalId = c.getId();
             c.insertSet();
-            map.put(orignalId,c.getId());
+            map.put(orignalId, c.getId());
         }
-       insertList.stream().forEach(t->{
-           String newId = map.get(t.getParentId());
-           t.setParentId(newId);
-           if (t.getLevel()==1){
-               t.setFullCateName(t.getName());
-           }
-           t.setType(1);
-           t.setValid(true);
+        insertList.stream().forEach(t -> {
+            String newId = map.get(t.getParentId());
+            t.setParentId(newId);
+            if (t.getLevel() == 1) {
+                t.setFullCateName(t.getName());
+            }
+            t.setType(1);
+            t.setValid(true);
 
-       });
+        });
         categoriesMapper.insertBatch(insertList);
     }
 
@@ -274,65 +274,35 @@ public class ProductImportCSVServiceImpl implements ProductImportCSVService {
     private ProductGoodsMapper productGoodsMapper;
 
     @Override
-    public void updateProdcutGoods() {
-        //查询数据条件
-        /**
-         * 1）货主DS下的所有档案，
-         * 2）以下所有品牌的档案：裙皇，惠迪吉，恩尚，貌美，Lirica Studios，惠迪吉，
-         * 3）535339003F，535336004S
-         * 4）零售门店：阿文
-         * 5）WMS：杭州迪艾斯残次仓，杭州迪艾斯仓库
-         这些的数据也都要*/
-
-        List<ProductGoods> productGoods1 = queryOwnerDS();
-        List<ProductGoods> productGoods2 = queryBrands();
-        List<ProductGoods> productGoods3 = querySpuCode();
-        List<ProductGoods> productGoods4 = queryStore();
-        List<ProductGoods> productGoods5 = queryWms();
-        List<ProductGoods> list = new LinkedList<>();
-        list.addAll(productGoods1);
-        list.addAll(productGoods2);
-        list.addAll(productGoods3);
-        list.addAll(productGoods4);
-        list.addAll(productGoods5);
-        //去重
-        HashSet<ProductGoods> productGoodsSet = new HashSet<>(list);
-        List<ProductGoods> result = new LinkedList<>(productGoodsSet);
-        Map<String, Object> map = createParams();
+    public void updateProdcutGoods() throws IOException {
+        Map<String, Object> map = new HashMap<>();
         map.put("tenantId", NEW_TENANTID);
-        List<ProductDto> productList = productMapper.listIdAndRemark(map);
-        //查询色系id
-        Map<String, Object> newParams = createParams();
-        newParams.put("tenantId", NEW_TENANTID);
-        List<ColorSeries> colorSeriesList = colorSeriesMapper.list(newParams);
-        if (null == colorSeriesList || colorSeriesList.size() == 0) throw new RuntimeException("色系列表为空");
-        result.stream().forEach(pg -> {
-            if (pg.getProductId() != null && !"".equals(pg.getProductId().trim())) {
-                String productId = productList.stream().filter(p -> p.getRemarks().split(":")[1].equals(pg.getProductId())).collect(Collectors.toList()).get(0).getId();
-                pg.setProductId(productId);
-            }
-            if (null != pg.getColorSeriesId() && !"".equals(pg.getColorSeriesId().trim())) {
-                String colorseriesId = colorSeriesList.stream().filter(c -> c.getRemarks().split(":")[1].equals(pg.getColorSeriesId())).collect(Collectors.toList()).get(0).getId();
-                pg.setColorSeriesId(colorseriesId);
-            }
-            pg.insertSet();
-        });
-//        int ceil = (int) Math.ceil(list.size() / (500 * 1.0));
-//        for (int i = 0; i < ceil; i++) {
-        List<ProductGoods> first = result.subList(0, 3000);
-        List<ProductGoods> second = result.subList(3000, result.size());
-        productGoodsMapper.insertBatch(first);
-        productGoodsMapper.insertBatch(second);
-//        }
-        System.err.println(result.size());
-//        productGoodsMapper.insertBatch(result);
+//        List<Product> productList = productMapper.list(map);
+        List<Color> colorList = colorMapper.list(map);
+//        List<ColorSeries> colorSeriesList = colorSeriesMapper.list(map);
+        Integer size = productGoodsMapper.listCount(map);
+        int ceil = (int)Math.ceil((1.0*size/1000));
+        for (int i = 0; i < ceil; i++) {
+            map.put("pageStart", i*1000);
+            map.put("pageSize", i*1000+1000);
+            List<ProductGoods> productGoodsList = productGoodsMapper.list(map);
+            productGoodsList.stream().forEach(t -> {
+                Color color = colorList.stream().filter(c -> c.getName().equals(t.getColor())).collect(Collectors.toList()).get(0);
+                t.setColorSeriesId(color.getSeriesId());
+                t.setColorSeries(color.getSeriesName());
+                t.setColorCode(color.getCode());
+            });
+        productGoodsMapper.updateBatch(productGoodsList);
+        }
+
+
     }
 
     @Autowired
     private ProductSpecificationsMapper productSpecificationsMapper;
 
     @Override
-    public void updateProductSpecifications(MultipartFile speicifi,MultipartFile cate) throws IOException {
+    public void updateProductSpecifications(MultipartFile speicifi, MultipartFile cate) throws IOException {
         ExcelUtil speiExcelUtil = new ExcelUtil(ProductSpecifications.class);
         ExcelUtil cateExcelUtil = new ExcelUtil(Categories.class);
         List<ProductSpecifications> speiList = speiExcelUtil.importExcel("", speicifi.getInputStream());
@@ -409,6 +379,24 @@ public class ProductImportCSVServiceImpl implements ProductImportCSVService {
         });
         int row = productGoodsMapper.insertBatchWMSInventory(lssList);
         if (oldSize != row) throw new RuntimeException("与原数据不等");
+    }
+
+    @Autowired
+    private SupplierMapper supplierMapper;
+
+    @Override
+    public void updateSupplier(MultipartFile file) throws IOException {
+        ExcelUtil excelUtil = new ExcelUtil(Supplier.class);
+        List<Supplier> list = excelUtil.importExcel("", file.getInputStream());
+        list.stream().forEach(t -> {
+            t.insertSet();
+            t.setCooperation(true);
+            t.setValid(true);
+            t.setRecommend(true);
+            t.setContact("杨杨");
+            t.setTelephone("15721145090");
+        });
+        supplierMapper.insertBatch(list);
     }
 
     private List<ProductGoods> queryWms() {

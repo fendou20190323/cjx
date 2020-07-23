@@ -1,6 +1,7 @@
 package com.fendou.moudle.model.product;
 
 import com.fendou.moudle.model.BaseModel;
+import com.lss.common.annotation.ExcelVOAttribute;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,10 +15,13 @@ import java.util.List;
 public class ProductGoods extends BaseModel {
 
     @ApiModelProperty(value = "UUID")
+    @ExcelVOAttribute(name="id",column = "A")
     private String id;
     @ApiModelProperty(value = "产品编码")
+    @ExcelVOAttribute(name="spu",column = "B")
     private String productCode;
     @ApiModelProperty(value = "货品编码")
+    @ExcelVOAttribute(name="sku",column = "C")
     private String code;
     @ApiModelProperty(value = "货品名称")
     private String name;
@@ -26,6 +30,7 @@ public class ProductGoods extends BaseModel {
     @ApiModelProperty(value = "货品类型（1：成衣，2：样衣）")
     private Integer type;
     @ApiModelProperty(value = "货品图片")
+    @ExcelVOAttribute(name="image",column = "D")
     private String image;
     @ApiModelProperty(value = "色系ID")
     private String colorSeriesId;
@@ -36,12 +41,15 @@ public class ProductGoods extends BaseModel {
     @ApiModelProperty(value = "颜色编码")
     private String colorCode;
     @ApiModelProperty(value = "颜色")
+    @ExcelVOAttribute(name="color",column = "E")
     private String color;
     @ApiModelProperty(value = "尺码编码")
     private String sizeCode;
     @ApiModelProperty(value = "尺码")
+    @ExcelVOAttribute(name="size",column = "F")
     private String size;
     @ApiModelProperty(value = "尺码属性")
+    @ExcelVOAttribute(name="attri",column = "G")
     private String sizeAttribute;
     @ApiModelProperty(value = "规格信息")
     private String specifications;

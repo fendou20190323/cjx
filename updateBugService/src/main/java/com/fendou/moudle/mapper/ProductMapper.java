@@ -71,6 +71,7 @@ public interface ProductMapper {
     List<ProductDto> listIdAndRemark(Map<String, Object> map);
 
 
+
 //    List<ProductItemShare> listProduct4Share(Map<String, Object> params);
 
 }

@@ -63,6 +63,28 @@ public class ProductImportCSVController {
             return "失败" + e.getMessage();
         }
     }
+    @ApiOperation(value = "更新Supplier表")
+    @PostMapping("/updateSupplier")
+    public String updateSupplier(@RequestBody MultipartFile file) {
+        try {
+            productImportCSVService.updateSupplier(file);
+            return "成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "失败" + e.getMessage();
+        }
+    }
+    @ApiOperation(value = "更新ProductGoods表")
+    @GetMapping("/updateProdcutGoods")
+    public String updateProdcutGoods() {
+        try {
+            productImportCSVService.updateProdcutGoods();
+            return "成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "失败" + e.getMessage();
+        }
+    }
 //
 //    @ApiOperation(value = "更新product_specifications表")
 //    @PostMapping("/updateProductSpecifications")

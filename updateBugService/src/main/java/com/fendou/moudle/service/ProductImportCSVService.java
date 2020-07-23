@@ -24,7 +24,7 @@ public interface ProductImportCSVService {
 
     void updateCategories(MultipartFile file) throws IOException;
 
-    void updateProdcutGoods();
+    void updateProdcutGoods() throws IOException;
 
     void updateProductSpecifications(MultipartFile speicifi,MultipartFile cate) throws IOException;
 
@@ -34,4 +34,5 @@ public interface ProductImportCSVService {
 
     void updateWmsDataInventory();
 
+    void updateSupplier(MultipartFile file) throws IOException;
 }

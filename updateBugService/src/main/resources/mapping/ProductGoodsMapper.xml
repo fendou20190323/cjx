@@ -127,7 +127,7 @@
 
     <sql id="listWherePart">
         <where>
-         1=1
+            `status` &lt; 9
             <if test="productCode != null and productCode != ''">
                 AND pg.`productCode` = #{productCode, jdbcType=VARCHAR}
             </if>
@@ -269,7 +269,7 @@
     </sql>
 
     <select id="list" parameterType="java.util.Map" resultMap="BaseProductGoodsMap">
-        select
+        select * from product_goods pg
         <include refid="listWherePart"/>
         <if test="orderBy != null and orderBy != ''">
             order by  pg.${orderBy} desc
@@ -304,7 +304,6 @@
     <select id="listCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1)
         from product_goods pg
-        left join product p on p.id = pg.productId
         <include refid="listWherePart"/>
     </select>
 

@@ -11,6 +11,7 @@
         <module>regionService</module>
         <module>untitled</module>
         <module>common</module>
+        <module>mqApplication</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

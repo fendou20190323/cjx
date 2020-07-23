@@ -14,7 +14,7 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class Application {
+public class RabbitMQApplication {
     
     //用于死信队列转发的交换机
     @Bean
@@ -47,6 +47,6 @@ public class Application {
  
     
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(RabbitMQApplication.class, args);
     }
 }
