@@ -56,11 +56,36 @@ public class DemoBackGoods {
     @GetMapping("/find")
     public String find(String orderSn) {
         BackGoods backGoods = findBackGoods(orderSn);
-        List<BackProductInfo> infoList = findInfoByOrderSn(backGoods.getBackNum());
-        backGoods.setBackProductInfoList(infoList);
-        ReceiveOrderDto dto = createReceiveOrderDto(backGoods);
-        String jsonString = JSONObject.toJSONString(dto);
-        return jsonString;
+        BackGoods backGoods1 = findBackGoods(orderSn);
+//        List<BackProductInfo> infoList = findInfoByOrderSn(backGoods.getBackNum());
+//        List<BackProductInfo> infoList2 = findInfoByOrderSn(backGoods.getBackNum());
+//        backGoods.setBackProductInfoList(infoList);
+//        ReceiveOrderDto dto = createReceiveOrderDto(backGoods);
+//        String jsonString = JSONObject.toJSONString(dto);
+        return "jsonString";
+    }
+    @GetMapping("/find2")
+    public String find2(String orderSn) {
+        BackGoods backGoods = findBackGoods(orderSn);
+        BackGoods backGoods1 = findBackGoods(orderSn);
+//        List<BackProductInfo> infoList = findInfoByOrderSn(backGoods.getBackNum());
+//        List<BackProductInfo> infoList2 = findInfoByOrderSn(backGoods.getBackNum());
+//        backGoods.setBackProductInfoList(infoList);
+//        ReceiveOrderDto dto = createReceiveOrderDto(backGoods);
+//        String jsonString = JSONObject.toJSONString(dto);
+        return "jsonString";
+    }
+    @GetMapping("/update")
+    public String update(String orderSn) {
+        BackGoods backGoods = findBackGoods(orderSn);
+        backGoods.setStatus(backGoods.getStatus()+1);
+//        List<BackProductInfo> infoList = findInfoByOrderSn(backGoods.getBackNum());
+//        List<BackProductInfo> infoList2 = findInfoByOrderSn(backGoods.getBackNum());
+//        backGoods.setBackProductInfoList(infoList);
+//        ReceiveOrderDto dto = createReceiveOrderDto(backGoods);
+//        String jsonString = JSONObject.toJSONString(dto);
+        backGoodsMapper.updateSelective(backGoods);
+        return "jsonString";
     }
 
     private BackGoods findBackGoods(String orderSn) {

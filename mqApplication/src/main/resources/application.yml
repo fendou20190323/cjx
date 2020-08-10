@@ -16,9 +16,11 @@ spring:
     port: 5672
     username: admin
     password: admin
-    listener:
-      simple:
-        acknowledge-mode: manual
+    publisher-confirms: true  #发送确认
+    publisher-returns: true   #发送失败返回
+#    listener:
+#      simple:
+  #        acknowledge-mode: manual
   #        retry:
 #          enabled: true   #开启消费者重试
 #          max-attempts: 5          #最大重试次数（重试5次还不行则会把消息删掉，默认是不限次数的，次数建议控制在10次以内）

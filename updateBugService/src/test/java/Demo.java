@@ -70,14 +70,19 @@ public class Demo {
 
 class DemoTestClone {
     public static void main(String[] args) {
-        Book b1 = new Book();
-        b1.setName("张三");
-        List<Integer> num = Stream.of(1, 2, 3).collect(Collectors.toList());
-        b1.setNums(num);
-        b1.setDate(new Date());
-        Book b2 = (Book) b1.clone();
-//        System.out.println(b1.getName().equals(b2.getName())+"=======name");
-//        System.out.println((b1.getNums()==b2.getNums())+"=======nums");
-        System.out.println(b1.getDate() == b2.getDate());
+       Map<String,String> map=new HashMap<>();
+       map.put("a", "a");
+       map.put("b", "b");
+       map.put("c", "c");
+       map.put("1", "c");
+       map.put("2", "c");
+       map.put("3", "c");
+       map.put("4", "c");
+       map.put("5", "c");
+       map.put("6", "c");
+       map.put("7", "c");
+       map.put("8", "c");
+       map.put("9", "c");
+       map.put("10", "c");
     }
 }

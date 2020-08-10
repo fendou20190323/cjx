@@ -560,7 +560,7 @@
         </foreach>
     </insert>
 
-    <update id="updateSelective" parameterType="com.fendou.moudle.model.BackGoods">
+    <update id="updateSelective" parameterType="com.fendou.moudle.model.BackGoods" flushCache="false">
         UPDATE back_goods
         SET
             updateTime = sysdate()
@@ -689,7 +689,7 @@
     <delete id="delete">
         DELETE FROM back_goods WHERE id = #{id, jdbcType=VARCHAR}
     </delete>
-
+<cache/>
     <select id="findByAssociateOrderSn" parameterType="java.lang.String" resultType="com.fendou.moudle.model.BackGoods">
         select * from back_goods where `associateOrderSn` = #{associateOrderSn, jdbcType=VARCHAR}
     </select>
