@@ -1,5 +1,5 @@
 server:
-  port: 9902
+  port: 9903
 
 logging.level.com.fendou.moudle: debug
   spring.rabbitmq.host=11.1.1.143
@@ -18,9 +18,9 @@ spring:
     password: admin
     publisher-confirms: true  #发送确认
     publisher-returns: true   #发送失败返回
-    listener:
-      simple:
-          acknowledge-mode: none
+#    listener:
+#      simple:
+#          acknowledge-mode: none
 #          acknowledge-mode: auto
 #          acknowledge-mode: manual
   #        retry:
@@ -28,4 +28,4 @@ spring:
 #          max-attempts: 5          #最大重试次数（重试5次还不行则会把消息删掉，默认是不限次数的，次数建议控制在10次以内）
 #          initial-interval: 1000   #重试间隔时间
   application:
-    name: mq_service
+    name: mq_service2
