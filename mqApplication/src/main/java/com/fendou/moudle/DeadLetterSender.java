@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fendou.config.mq.RabbitConfig;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -14,36 +15,28 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-public class DeadLetterSender implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnCallback {
+public class DeadLetterSender implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback {
 
-    private static String routingkey = "brand.dead.a";
-    private static String exchange = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD1";
-    private static String routingkeyb = "brand.dead.b";
-    private static String exchangeb = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD_b";
+    public static String routingkeyb = "brand.dead.b";
+    public static String exchangeb = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD_b";
+
+
+
     @Autowired
     private AmqpTemplate amqpTemplate;
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    //    public void send(String msg, long times) {
-//        System.out.println("DeadLetterSender 发送时间:" + LocalDateTime.now().toString() + " msg内容：" + msg);
-////        MessagePostProcessor processor = new MessagePostProcessor() {
-////            @Override
-////            public Message postProcessMessage(Message message) throws AmqpException {
-////                message.getMessageProperties().setExpiration(times + "");
-////                return message;
-////            }
-////        };
-//        rabbitTemplate.convertAndSend("deadLetterQueue", (Object)msg);
-//        rabbitTemplate.convertSendAndReceive("dead_exchange", "deadLetterQueue1", (Object)msg, processor);
-//    }
+    public void send3(String msg, long times) {
+        rabbitTemplate.convertAndSend(RabbitConfig.SEND3_EXCHANGE, RabbitConfig.TOPIC_KEYS, (Object) "msg");
+    }
 
 
-//    public void send(String msg, long times) {
+    public void send2(String msg, long times) {
 //        String uuid = String.valueOf(UUID.randomUUID());
 //        System.err.println(uuid);
 //        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("email", "756840349@qq.com");
+//        jsonObject.put("email", "send2");
 //        jsonObject.put("timestamp", System.currentTimeMillis());
 //        String jsonString = jsonObject.toJSONString();
 //        // 生产者发送消息的时候需要设置消息id
@@ -52,10 +45,11 @@ public class DeadLetterSender implements RabbitTemplate.ConfirmCallback,RabbitTe
 //                .setContentType(MessageProperties.CONTENT_TYPE_JSON).setContentEncoding("utf-8")
 //                .setMessageId(uuid)
 //                .build();
-//
-//        rabbitTemplate.convertAndSend(exchange,routingkey, message);
-//
-//    }
+
+        rabbitTemplate.convertAndSend(RabbitConfig.SEND2_EXCHANGE, RabbitConfig.SEND2_KEY, "message");
+
+    }
+
     public void send(String msg, long times) {
         String uuid = String.valueOf(UUID.randomUUID());
         System.err.println(uuid);
@@ -70,7 +64,7 @@ public class DeadLetterSender implements RabbitTemplate.ConfirmCallback,RabbitTe
                 .setMessageId(uuid)
                 .build();
 
-        rabbitTemplate.convertAndSend(exchangeb, routingkeyb, message, new CorrelationData(UUID.randomUUID().toString()));
+        rabbitTemplate.convertAndSend(exchangeb, routingkeyb, jsonString, new CorrelationData(UUID.randomUUID().toString()));
 
     }
 
@@ -94,17 +88,17 @@ public class DeadLetterSender implements RabbitTemplate.ConfirmCallback,RabbitTe
 
     @Override
     public void confirm(CorrelationData correlationData, boolean b, String s) {
-        System.out.println("消息唯一标识："+correlationData);
-        System.out.println("确认结果："+b);
-        System.out.println("失败原因："+s);
+        System.out.println("消息唯一标识：" + correlationData);
+        System.out.println("确认结果：" + b);
+        System.out.println("失败原因：" + s);
     }
 
     @Override
     public void returnedMessage(Message message, int i, String s, String s1, String s2) {
-        System.err.println("消息主体 message : "+message);
-        System.err.println("消息主体 message : "+i);
-        System.err.println("描述："+s);
-        System.err.println("消息使用的交换器 exchange : "+s1);
-        System.err.println("消息使用的路由键 routing : "+s2);
+        System.err.println("消息主体 message : " + message);
+        System.err.println("消息主体 message : " + i);
+        System.err.println("描述：" + s);
+        System.err.println("消息使用的交换器 exchange : " + s1);
+        System.err.println("消息使用的路由键 routing : " + s2);
     }
 }

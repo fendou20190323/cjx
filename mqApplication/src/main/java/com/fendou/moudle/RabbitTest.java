@@ -17,4 +17,12 @@ public class RabbitTest {
     public void deadTest() {
         deadLetterSender.send("消息设置过期时间测试",5000);
     }
+    @GetMapping("/send2")
+    public void send2() {
+        deadLetterSender.send2("消息设置过期时间测试",5000);
+    }
+    @GetMapping("/send3")
+    public void send3() {
+        deadLetterSender.send3("消息设置过期时间测试",5000);
+    }
 }
