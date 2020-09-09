@@ -18,14 +18,14 @@ spring:
     password: admin
 #    publisher-confirms: true  #发送确认
 #    publisher-returns: true   #发送失败返回
-    listener:
-      simple:
+#    listener:
+#      simple:
 #          acknowledge-mode: none
-          acknowledge-mode: auto
+#          acknowledge-mode: auto
 #          acknowledge-mode: manual
-  #          retry:
-#            enabled: true   #开启消费者重试
+#            retry:
+#              enabled: true   #开启消费者重试
 #            max-attempts: 2          #最大重试次数（重试5次还不行则会把消息删掉，默认是不限次数的，次数建议控制在10次以内）
-#            initial-interval: 1000   #重试间隔时间
+#              initial-interval: 5000   #重试间隔时间
   application:
     name: mq_service

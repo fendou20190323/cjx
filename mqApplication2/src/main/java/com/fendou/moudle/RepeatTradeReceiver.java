@@ -1,9 +1,11 @@
 package com.fendou.moudle;
 
 import com.rabbitmq.client.Channel;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.stereotype.Component;
 
@@ -44,22 +46,34 @@ public class RepeatTradeReceiver {
 ////        System.err.println("repeatTradeQueue 接收时间:" + LocalDateTime.now().toString() + " 接收内容:" + msg);
 //
 //    }
+//    @RabbitHandler
+//    @RabbitListener(bindings = @QueueBinding(value = @Queue("brand_drainage_order_queue_dead_c"), exchange = @Exchange(value = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD_b"),key ="brand.dead.c" ))
+//    public void process(Message message, @Headers Map<String, Object> headers, Channel channel) throws IOException {
+//        System.err.println(Thread.currentThread().getName()
+//                + ",msg:" + new String(message.getBody(), "UTF-8")
+//                + ",messageId:" + message.getMessageProperties().getMessageId());
+//        int a=1/0;
+//        System.err.println("单个消息访问次数"+System.currentTimeMillis());
+//
+////        int i=1/0;
+////        // 手动ack
+//        Long deliveryTag = (Long) headers.get(AmqpHeaders.DELIVERY_TAG);
+//////        // 手动签收
+//        channel.basicAck(deliveryTag, true);
+//
+////        System.err.println("repeatTradeQueue 接收时间:" + LocalDateTime.now().toString() + " 接收内容:" + msg);
+//
+//    }
+
+
+
+    @RabbitListener(queues = "PRODUCT_SYN_UPLUS_QUEUE")
     @RabbitHandler
-    @RabbitListener(bindings = @QueueBinding(value = @Queue("brand_drainage_order_queue_dead_c"), exchange = @Exchange(value = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD_b"),key ="brand.dead.c" ))
-    public void process(Message message, @Headers Map<String, Object> headers, Channel channel) throws IOException {
-        System.err.println(Thread.currentThread().getName()
-                + ",msg:" + new String(message.getBody(), "UTF-8")
-                + ",messageId:" + message.getMessageProperties().getMessageId());
-        int a=1/0;
-        System.err.println("单个消息访问次数"+System.currentTimeMillis());
+    public void process(Object productDTO) {
+        if (productDTO==null) return;
+        System.err.println(123);
 
-//        int i=1/0;
-//        // 手动ack
-        Long deliveryTag = (Long) headers.get(AmqpHeaders.DELIVERY_TAG);
-////        // 手动签收
-        channel.basicAck(deliveryTag, true);
 
-//        System.err.println("repeatTradeQueue 接收时间:" + LocalDateTime.now().toString() + " 接收内容:" + msg);
 
-    }
+}
 }

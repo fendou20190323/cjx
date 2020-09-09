@@ -41,6 +41,11 @@ public class RepeatTradeReceiver {
     @RabbitListener(bindings = @QueueBinding(value = @Queue("brand_drainage_order_queue_dead_b"), exchange = @Exchange(value = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD_b"), key = "brand.dead.b"))
     public void process(String body,Message message, @Headers Map<String, Object> headers, Channel channel) throws IOException {
         System.err.println(body);
+        try {
+            int i=1/0;
+        } catch (Exception e) {
+            System.err.println(123);
+        }
         System.err.println("单个消息访问次数" + System.currentTimeMillis());
 
 //        // 手动ack
