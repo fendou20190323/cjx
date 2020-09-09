@@ -1,0 +1,10 @@
+server:
+  port: 9904
+logging.level.com.fendou.moudle: debug
+spring:
+  application:
+    name: es_service
+  data:
+    elasticsearch:
+      cluster-name: my-elasticsearch
+      cluster-nodes: 127.0.0.1:9300,127.0.0.1:9301
