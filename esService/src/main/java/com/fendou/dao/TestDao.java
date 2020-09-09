@@ -20,7 +20,7 @@ import java.util.List;
  * <p>
  * 继承CRUD，第一个泛型是实体类类型，第二个泛型是id的类型
  */
-public interface TestDao extends CrudRepository<TestBean, Long> {
+public interface TestDao extends CrudRepository<TestBean, String> {
     List<TestBean> findByName(String name);
 
     List<TestBean> findByNameOrDesc(String text,String desc);

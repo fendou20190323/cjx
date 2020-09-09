@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 /**
@@ -64,7 +61,7 @@ public class TestServiceImpl implements TestService {
             int i1 = random.nextInt(names.length);
             int i2 = random.nextInt(descArr.length);
             //注意这里 第一个参数是id 所以无论你运行多少次，都只会添加100条数据，如果id存在es更新，不存在添加
-            TestBean testBean = new TestBean(i, names[i1], i, String.valueOf(i % 2), descArr[i2]);
+            TestBean testBean = new TestBean(UUID.randomUUID().toString(), names[i1], i, String.valueOf(i % 2), descArr[i2]);
 
             list.add(testBean);
         }
@@ -85,6 +82,11 @@ public class TestServiceImpl implements TestService {
     @Override
     public List<TestBean> findByNameOrDesc(String text,String desc) {
         return testDao.findByNameOrDesc(text,desc);
+    }
+
+    @Override
+    public void delete(String id) {
+        testDao.deleteById(id);
     }
 }
 

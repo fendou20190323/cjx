@@ -30,5 +30,7 @@ public interface TestService {
     List<TestBean> findByName(String text);
 
 	List<TestBean> findByNameOrDesc(String name,String desc);
+
+	void delete(String id);
 }
 

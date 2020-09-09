@@ -16,7 +16,7 @@ public class TestBean implements Serializable {
     public TestBean() {
     }
 
-    public TestBean(long id, String name, Integer age, String sex, String desc) {
+    public TestBean(String id, String name, Integer age, String sex, String desc) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -26,7 +26,7 @@ public class TestBean implements Serializable {
 
 	// 必须指定一个id，
     @Id
-    private long id;
+    private String id;
     // 这里配置了分词器，字段类型，可以不配置，默认也可
     @Field(analyzer = "ik_smart", type = FieldType.Text)
     private String name;

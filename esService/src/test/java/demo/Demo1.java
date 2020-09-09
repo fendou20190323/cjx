@@ -44,7 +44,7 @@ public class Demo1 {
     }
 
     @Test
-    public void test1(){
+    public void init(){
         testService.save(new ArrayList<TestBean>());
     }
 
@@ -116,5 +116,10 @@ public class Demo1 {
          如果某字段是字符串，我建议空的就设置为null，不要为""空串，貌似某些版本的ES，使用matchQuery空串会不生效。
          详细点的看这篇http://blog.csdn.net/dm_vincent/article/details/41743955
          * */
+    }
+
+    @Test
+    public void test5(){
+        testService.delete("1l");
     }
 }
