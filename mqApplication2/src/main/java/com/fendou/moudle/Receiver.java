@@ -1,7 +1,9 @@
 package com.fendou.moudle;
 
+import com.fendou.config.MQConfig;
 import com.rabbitmq.client.Channel;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.amqp.support.AmqpHeaders;
@@ -15,7 +17,7 @@ import java.util.Map;
 @Component
 //@RabbitListener(queues = "repeatTradeQueue1")
 
-public class RepeatTradeReceiver {
+public class Receiver {
 
 //    @RabbitHandler
 //    @RabbitListener(bindings = @QueueBinding(value = @Queue("brand_drainage_order_queue_dead"), exchange = @Exchange(value = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD"),key ="brand.dead" ))
@@ -66,14 +68,14 @@ public class RepeatTradeReceiver {
 //    }
 
 
-
-    @RabbitListener(queues = "PRODUCT_SYN_UPLUS_QUEUE")
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_A), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_A, type = ExchangeTypes.TOPIC), key = "T.K.A.B"))
     @RabbitHandler
-    public void process(Object productDTO) {
-        if (productDTO==null) return;
-        System.err.println(123);
-
-
-
-}
+    public void processA(String message) {
+        System.err.println("队列A：" + message);
+    }
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_B), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_A, type = ExchangeTypes.TOPIC), key = MQConfig.TOPIC_KEY_A))
+    @RabbitHandler
+    public void processB(String message) {
+        System.err.println("队列B：" + message);
+    }
 }

@@ -1,6 +1,7 @@
 package com.fendou.moudle;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fendou.config.MQConfig;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.support.CorrelationData;
@@ -11,12 +12,9 @@ import javax.annotation.PostConstruct;
 import java.util.UUID;
 
 @Component
-public class DeadLetterSender implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnCallback {
+public class Sender implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnCallback {
 
-    private static String routingkeyc = "brand.dead.c";
-    private static String exchangec = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD_c";
-    private static String routingkeyb = "brand.dead.b";
-    private static String exchangeb = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD_b";
+
     @Autowired
     private AmqpTemplate amqpTemplate;
     @Autowired
@@ -53,21 +51,9 @@ public class DeadLetterSender implements RabbitTemplate.ConfirmCallback,RabbitTe
 //        rabbitTemplate.convertAndSend(exchange,routingkey, message);
 //
 //    }
-    public void send(String msg, long times) {
-        String uuid = String.valueOf(UUID.randomUUID());
-        System.err.println(uuid);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("email", "756840349@qq.com");
-        jsonObject.put("timestamp", System.currentTimeMillis());
-        String jsonString = jsonObject.toJSONString();
-        // 生产者发送消息的时候需要设置消息id
-        Message message = MessageBuilder.withBody(jsonString.getBytes())
-                .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
-                .setContentType(MessageProperties.CONTENT_TYPE_JSON).setContentEncoding("utf-8")
-                .setMessageId(uuid)
-                .build();
+    public void send() {
 
-        rabbitTemplate.convertAndSend(exchangec, routingkeyc, message, new CorrelationData(UUID.randomUUID().toString()));
+        rabbitTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE_A, "T.K.A.B", "abc");
 
     }
 

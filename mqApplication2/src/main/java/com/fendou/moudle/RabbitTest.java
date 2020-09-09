@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class RabbitTest {
  
     @Autowired
-    private DeadLetterSender deadLetterSender;
+    private Sender sender;
     
     @GetMapping("/deadTest")
     public void deadTest() {
-        deadLetterSender.send("消息设置过期时间测试",5000);
+        sender.send();
     }
 }
