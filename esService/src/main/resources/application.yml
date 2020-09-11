@@ -6,5 +6,5 @@ spring:
     name: es_service
   data:
     elasticsearch:
-      cluster-name: my-elasticsearch
-      cluster-nodes: 127.0.0.1:9300,127.0.0.1:9301
+      cluster-name: my_es
+      cluster-nodes: 192.168.218.128:9300,192.168.218.128:9301

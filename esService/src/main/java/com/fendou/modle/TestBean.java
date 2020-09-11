@@ -6,6 +6,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import lombok.Data;
 //通过这个注解，可以不用写gettersetter方法
@@ -16,12 +17,14 @@ public class TestBean implements Serializable {
     public TestBean() {
     }
 
-    public TestBean(String id, String name, Integer age, String sex, String desc) {
+    public TestBean(String id, String name, Integer age, String sex, String desc,BigDecimal abc,String brandName) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.sex = sex;
         this.desc = desc;
+        this.abc=abc;
+        this.brandName=brandName;
     }
 
 	// 必须指定一个id，
@@ -35,4 +38,8 @@ public class TestBean implements Serializable {
     private String sex;
 	@Field(analyzer = "ik_smart", type = FieldType.Text)
     private String desc;
+
+    private BigDecimal abc;
+    @Field( type = FieldType.Text)
+    private String brandName;
 }

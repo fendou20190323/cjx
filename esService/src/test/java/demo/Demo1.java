@@ -47,7 +47,15 @@ public class Demo1 {
     public void init(){
         testService.save(new ArrayList<TestBean>());
     }
+    @Test
+    public void detroy(){
+        elasticsearchTemplate.deleteIndex(TestBean.class);
+    }
 
+    @Test
+    public void testAn(){
+
+    }
     @Test
     public void test2(){
         Iterable<TestBean> all = testService.findAll();
@@ -65,7 +73,7 @@ public class Demo1 {
     public void test4(){
         /** 查询某个字段中模糊包含目标字符串，使用matchQuery
          * */
-//        SearchQuery searchQuery=new NativeSearchQueryBuilder().withQuery(QueryBuilders.matchQuery("desc", "我个子很高")).build();
+        SearchQuery searchQuery=new NativeSearchQueryBuilder().withQuery(QueryBuilders.matchQuery("brandName", "老回")).build();
 
         /**和match查询类似，match_phrase查询首先解析查询字符串来产生一个词条列表。
          * 然后会搜索所有的词条，但只保留包含了所有搜索词条的文档，并且词条的位置要邻接。
@@ -107,7 +115,7 @@ public class Demo1 {
          SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(termQuery("userId", userId))
          .should(rangeQuery("weight").lt(weight)).must(matchQuery("title", title))).build();
          * */
-        SearchQuery searchQuery=new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termsQuery("id", ids))).build();
+//        SearchQuery searchQuery=new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termsQuery("id", ids))).build();
         List<TestBean> testBeans = elasticsearchTemplate.queryForList(searchQuery, TestBean.class);
         for (TestBean testBean : testBeans) {
             System.err.println(testBean);

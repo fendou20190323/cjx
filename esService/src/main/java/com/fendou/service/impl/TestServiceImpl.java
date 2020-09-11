@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -56,12 +59,14 @@ public class TestServiceImpl implements TestService {
 
         Random random = new Random();
 
+        List<String> brandNames = Stream.of("LSS&LU JOE", "真丝家（老汪带回）", "GHJ&菲拉普高登").collect(Collectors.toList());
         //模拟数据
         for (int i = 0; i < 100; i++) {
             int i1 = random.nextInt(names.length);
             int i2 = random.nextInt(descArr.length);
+            int i3 = random.nextInt(brandNames.size());
             //注意这里 第一个参数是id 所以无论你运行多少次，都只会添加100条数据，如果id存在es更新，不存在添加
-            TestBean testBean = new TestBean(UUID.randomUUID().toString(), names[i1], i, String.valueOf(i % 2), descArr[i2]);
+            TestBean testBean = new TestBean(UUID.randomUUID().toString(), names[i1], i, String.valueOf(i % 2), descArr[i2],new BigDecimal("2.03"),brandNames.get(i3));
 
             list.add(testBean);
         }
