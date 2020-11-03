@@ -76,6 +76,8 @@ public class Receiver {
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_B), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_A, type = ExchangeTypes.TOPIC), key = MQConfig.TOPIC_KEY_A))
     @RabbitHandler
     public void processB(String message) {
+        System.err.println("制造异常");
+//        int i= 1/0;
         System.err.println("队列B：" + message);
     }
 }
