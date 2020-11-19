@@ -1,6 +1,7 @@
 package sort;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.util.Assert;
 
@@ -16,51 +17,82 @@ import java.util.stream.Stream;
  * @Date: 2020-09-24 14:19
  * @Description;
  */
+@Slf4j
 public class Sort2 {
 
     public static void main(String[] args) {
         int[] arr = {8, 3, 9, 6, 4, 1, 2, 7, 10, 5};
-        System.err.println(Arrays.toString(arr));
+        log.debug(Arrays.toString(arr));
 //        System.out.println(Arrays.toString(mergeSort(arr)));
 //        System.out.println(Arrays.toString(selectSort(arr)));
-//        System.out.println(Arrays.toString(test1(arr)));
-        quickSort(arr,0,arr.length-1);
+        log.debug(Arrays.toString(test1(arr)));
+//        quickSort(arr, 0, arr.length - 1);
 //        QuickSort quickSort = new QuickSort();
 //        quickSort.quickSort(arr,0,arr.length-1);
-        System.out.println(Arrays.toString(arr));
+//        System.out.println(Arrays.toString(arr));
 
     }
 
-    @Test
-    public void test() {
-        List<String> list = Arrays.asList("A", "B", "C", "D");
-        List<Integer> num = Stream.of(1, 2, 3, 4, 5).collect(Collectors.toList());
-//        Double collect = num.stream().collect(Collectors.averagingDouble(d -> d));
-//        Double collect = num.stream().collect(Collectors.collectingAndThen(Collectors.averagingDouble(d->d),s->s+1));
-        String collect = list.stream().collect(Collectors.joining(",", "(", ")"));
-        System.out.println(collect);
-    }
-
-    @Test
-    public void test2() {
-        ArrayList<Integer> a = new ArrayList<>();
-        a.add(10);
-    }
 
     public static int[] test1(int[] arr) {
         int len = arr.length;
         if (len <= 1) return arr;
-        for (int i = 0; i < len; i++) {
-            for (int j = i; j < len; j++) {
-                if (arr[i] > arr[j]) {
-                    int tem = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = tem;
-                }
+//       冒泡
+//        for (int i = 0; i < len; i++) {
+//            for (int j = i; j < len; j++) {
+//                if (arr[i]>arr[j]){
+//                    int tem=arr[i];
+//                    arr[i]=arr[j];
+//                    arr[j]=tem;
+//                }
+//            }
+//        }
+//      选择
+//        for (int i = 0; i < len; i++) {
+//            int current = arr[i];
+//            int minIndex = i;
+//            for (int j = i; j < len; j++) {
+//                if (arr[minIndex] > arr[j]) {
+//                    minIndex=j;
+//                }
+//            }
+//            arr[i]=arr[minIndex];
+//            arr[minIndex]=current;
+//        }
+//        插入
+//        for (int i = 1; i < len; i++) {
+//            int current=arr[i];
+//            int preIndex=i-1;
+//            while (preIndex>=0&&current<arr[preIndex]){
+//                arr[preIndex+1]=arr[preIndex];
+//                preIndex--;
+//            }
+//            arr[preIndex+1]=current;
+//        }
+        int midIndex=len/2;
+        int [] left=Arrays.copyOfRange(arr,0, midIndex);
+        int [] right=Arrays.copyOfRange(arr, midIndex,len);
+         return mergeTest(test1(left),test1(right));
+
+    }
+
+    private static int[] mergeTest(int[] left, int[] right) {
+        int[] arr=new int[left.length+right.length];
+        int lIndex=0;
+        int rIndex=0;
+        for (int i = 0; i < arr.length; i++) {
+            if (lIndex>=left.length){
+                arr[i]=right[rIndex++];
+            }else if (rIndex>= right.length){
+                arr[i]=left[lIndex++];
+            }else if (left[lIndex]>right[rIndex]){
+                arr[i]=right[rIndex++];
+            }else {
+                arr[i]=left[lIndex++];
             }
         }
-        return arr;
 
+        return arr;
     }
 
     public static int[] merge2(int[] left, int[] right) {
@@ -93,16 +125,16 @@ public class Sort2 {
 
     private static int partition(int[] arr, int begin, int end) {
         int pivot = arr[end];
-        int pivotIndex=begin;
-        for (int i=begin;i<end;i++){
-            if (arr[i]<pivot){
-                if (i>pivotIndex){
-                    swap(arr,i,pivotIndex);
+        int pivotIndex = begin;
+        for (int i = begin; i < end; i++) {
+            if (arr[i] < pivot) {
+                if (i > pivotIndex) {
+                    swap(arr, i, pivotIndex);
                 }
                 pivotIndex++;
             }
         }
-        swap(arr,pivotIndex,end);
+        swap(arr, pivotIndex, end);
         return pivotIndex;
     }
 

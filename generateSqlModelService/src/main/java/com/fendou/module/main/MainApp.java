@@ -13,10 +13,18 @@ import java.util.List;
 
 @Slf4j
 public class MainApp {
+   private  String a="a";
    public static void main(String[] args) {
-
+      MainApp mainApp = new MainApp();
+//      System.err.println(mainApp.test2() == mainApp.a);
+      System.out.println(mainApp.a.hashCode());
+      System.err.println(mainApp.a.hashCode());
    }
 
+   public String test2(){
+    String a="a";
+    return a;
+   }
 
    public static void test1(){
       List<Integer> a=new LinkedList<>();

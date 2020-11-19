@@ -80,4 +80,16 @@ public class Receiver {
 //        int i= 1/0;
         System.err.println("队列B：" + message);
     }
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_FA), exchange = @Exchange(value = MQConfig.FANOUT_EXCHANGE_A, type = ExchangeTypes.FANOUT)))
+    @RabbitHandler
+    public void processFA(String message) {
+        System.err.println("队列A：" + message);
+    }
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_FB), exchange = @Exchange(value = MQConfig.FANOUT_EXCHANGE_A, type = ExchangeTypes.FANOUT)))
+    @RabbitHandler
+    public void processFB(String message) {
+        System.err.println("制造异常");
+//        int i= 1/0;
+        System.err.println("队列B：" + message);
+    }
 }
