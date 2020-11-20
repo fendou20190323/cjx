@@ -82,14 +82,24 @@ public class Receiver {
     }
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_FA), exchange = @Exchange(value = MQConfig.FANOUT_EXCHANGE_A, type = ExchangeTypes.FANOUT)))
     @RabbitHandler
-    public void processFA(String message) {
+    public void processFA(String message ,Channel channel,Message m) throws IOException {
         System.err.println("队列A：" + message);
+        long tag = m.getMessageProperties().getDeliveryTag();
+        channel.basicAck(tag,false);
     }
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_FB), exchange = @Exchange(value = MQConfig.FANOUT_EXCHANGE_A, type = ExchangeTypes.FANOUT)))
     @RabbitHandler
-    public void processFB(String message) {
-        System.err.println("制造异常");
-//        int i= 1/0;
-        System.err.println("队列B：" + message);
+    public void processFB(String message,Channel channel,Message m) throws IOException {
+        long tag = m.getMessageProperties().getDeliveryTag();
+        try {
+            System.err.println("制造异常");
+            int i= 1/0;
+            System.err.println("队列B：" + message);
+
+        } catch (Exception e) {
+
+        }finally {
+            channel.basicAck(tag,false);
+        }
     }
 }

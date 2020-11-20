@@ -20,6 +20,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TestMail {
 
     private String fromMail="cjianxun@126.com";
+    @Value("${spring.mail.tos}")
+    private String[] tos;
 
     @Autowired
     private JavaMailSender sender;
@@ -28,9 +30,9 @@ public class TestMail {
     public void test1(){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromMail);
-        message.setTo("cuijianxun@synqci.com");
+        message.setTo(tos);
         message.setText("from java");
-        message.setSubject("主题");
+        message.setSubject("主题1");
         sender.send(message);
     }
 
