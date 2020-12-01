@@ -80,6 +80,26 @@ public class Receiver {
 //        int i= 1/0;
         System.err.println("队列B：" + message);
     }
+
+
+
+
+
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_TA), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_B, type = ExchangeTypes.TOPIC), key = MQConfig.TOPIC_KEY_C))
+    @RabbitHandler
+    public void processTA(String message) {
+        System.err.println("队列A：" + message);
+    }
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_TB), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_B, type = ExchangeTypes.TOPIC), key =   MQConfig.TOPIC_KEY_C))
+    @RabbitHandler
+    public void processTB(String message) {
+        System.err.println("制造异常");
+//        int i= 1/0;
+        System.err.println("队列B：" + message);
+    }
+
+
+
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_FA), exchange = @Exchange(value = MQConfig.FANOUT_EXCHANGE_A, type = ExchangeTypes.FANOUT)))
     @RabbitHandler
     public void processFA(String message ,Channel channel,Message m) throws IOException {

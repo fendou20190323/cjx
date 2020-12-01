@@ -14,15 +14,24 @@ import org.springframework.stereotype.Component;
  * @Date: 2020-08-06 16:55
  * @Description;
  */
-@Configuration
+//@Configuration
 //@ConfigurationProperties()
+@PropertySource({"classpath:a.properties","classpath:b.properties"})
 @Data
 @Component
-public class B {
-//    @Value("${a.b}")
-    private String ab;
 
-    public  String getA(){
-        return this.ab;
+@ConfigurationProperties(prefix = "author")
+public class B {
+//    @Value("${author.name}")
+    private String name;
+    @Value("${a.b}")
+    private String b;
+
+    public String getA() {
+        return this.name;
+    }
+
+    public String getB(){
+        return this.b;
     }
 }

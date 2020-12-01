@@ -23,5 +23,6 @@ public class TestProperties {
     public void test1() {
 
         System.out.println(b.getA());
+        System.out.println(b.getB());
     }
 }
