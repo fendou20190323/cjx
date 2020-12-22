@@ -6,6 +6,7 @@ package e;
  * @Description;
  */
 public class Father implements Family{
+    private static String n1;
     private String name;
 
     @Override
@@ -14,9 +15,17 @@ public class Father implements Family{
     }
 
     public Father() {
+
     }
 
     public Father(String name) {
         this.name = name;
     }
+
+
+    public static void staticMet(){
+        System.err.println("父类静态方法");
+    }
+
+
 }

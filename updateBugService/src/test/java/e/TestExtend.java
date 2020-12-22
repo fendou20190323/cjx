@@ -12,18 +12,18 @@ import org.junit.Test;
 public class TestExtend {
 
     public static void main(String[] args) {
-//        Son s = new Son("zhangsan");
-//        Father father = new Father();
+        Son s = new Son("zhangsan");
+        Father father = new Father();
 //        new Family(){
 //            @Override
 //            public void eat() {
 //            log.debug("s");
 //            }
 //        }.eat();
-//
-//
-//        log.debug(s.toString());
-//        log.debug(father.toString());
+
+
+        log.debug(s.toString());
+        log.debug(father.toString());
     }
 
     @Test

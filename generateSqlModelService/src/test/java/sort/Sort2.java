@@ -37,7 +37,7 @@ public class Sort2 {
     public static int[] test1(int[] arr) {
         int len = arr.length;
         if (len <= 1) return arr;
-//       冒泡
+//        冒泡
 //        for (int i = 0; i < len; i++) {
 //            for (int j = i; j < len; j++) {
 //                if (arr[i]>arr[j]){
@@ -46,18 +46,6 @@ public class Sort2 {
 //                    arr[j]=tem;
 //                }
 //            }
-//        }
-//      选择
-//        for (int i = 0; i < len; i++) {
-//            int current = arr[i];
-//            int minIndex = i;
-//            for (int j = i; j < len; j++) {
-//                if (arr[minIndex] > arr[j]) {
-//                    minIndex=j;
-//                }
-//            }
-//            arr[i]=arr[minIndex];
-//            arr[minIndex]=current;
 //        }
 //        插入
 //        for (int i = 1; i < len; i++) {
@@ -69,26 +57,40 @@ public class Sort2 {
 //            }
 //            arr[preIndex+1]=current;
 //        }
-        int midIndex=len/2;
-        int [] left=Arrays.copyOfRange(arr,0, midIndex);
-        int [] right=Arrays.copyOfRange(arr, midIndex,len);
-         return mergeTest(test1(left),test1(right));
+//        选择
+//        for (int i = 0; i < len; i++) {
+//            int minIndex=i;
+//
+//            for (int j = i; j < len; j++) {
+//                if (arr[minIndex]>arr[j]){
+//                    minIndex=j;
+//                }
+//            }
+//            int current=arr[i];
+//            arr[i]=arr[minIndex];
+//            arr[minIndex]=current;
+//        }
+//        归并
+        int mid=len/2;
+        int [] left=Arrays.copyOfRange(arr,0,mid);
+        int [] right=Arrays.copyOfRange(arr,mid,len);
+        return mergeTest(test1(left),test1(right));
 
     }
 
     private static int[] mergeTest(int[] left, int[] right) {
-        int[] arr=new int[left.length+right.length];
-        int lIndex=0;
-        int rIndex=0;
+        int [] arr=new int[left.length + right.length];
+         int li=0;
+         int ri=0;
         for (int i = 0; i < arr.length; i++) {
-            if (lIndex>=left.length){
-                arr[i]=right[rIndex++];
-            }else if (rIndex>= right.length){
-                arr[i]=left[lIndex++];
-            }else if (left[lIndex]>right[rIndex]){
-                arr[i]=right[rIndex++];
+            if (li >= left.length){
+                arr[i]=right[ri++];
+            }else if (ri >= right.length){
+                arr[i]=left[li++];
+            }else if (left[li] < right[ri]){
+                arr[i]=left[li++];
             }else {
-                arr[i]=left[lIndex++];
+                arr[i]=right[ri++];
             }
         }
 
