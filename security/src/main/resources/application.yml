@@ -1,0 +1,11 @@
+server:
+  port: 10001
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8999/eureka/
+  instance:
+    instance-id: security_service:10001
+spring:
+  application:
+    name: security_service

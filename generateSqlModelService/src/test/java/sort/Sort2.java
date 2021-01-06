@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.util.Assert;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -33,64 +34,66 @@ public class Sort2 {
 
     }
 
+    @Test
+    public void test5() {
+        String regex = "([a-z]{1,10})";
+        String a = "abc";
+        boolean matches = a.matches(regex);
+        System.err.println(matches);
+    }
 
     public static int[] test1(int[] arr) {
         int len = arr.length;
         if (len <= 1) return arr;
-//        冒泡
+        //冒泡
 //        for (int i = 0; i < len; i++) {
 //            for (int j = i; j < len; j++) {
 //                if (arr[i]>arr[j]){
-//                    int tem=arr[i];
+//                    int current=arr[i];
 //                    arr[i]=arr[j];
-//                    arr[j]=tem;
+//                    arr[j]=current;
 //                }
 //            }
 //        }
-//        插入
+        //插入
 //        for (int i = 1; i < len; i++) {
-//            int current=arr[i];
 //            int preIndex=i-1;
-//            while (preIndex>=0&&current<arr[preIndex]){
+//            int current=arr[i];
+//            while (preIndex>=0&& current<arr[preIndex]){
 //                arr[preIndex+1]=arr[preIndex];
 //                preIndex--;
 //            }
 //            arr[preIndex+1]=current;
 //        }
-//        选择
-//        for (int i = 0; i < len; i++) {
-//            int minIndex=i;
-//
-//            for (int j = i; j < len; j++) {
-//                if (arr[minIndex]>arr[j]){
-//                    minIndex=j;
-//                }
-//            }
-//            int current=arr[i];
-//            arr[i]=arr[minIndex];
-//            arr[minIndex]=current;
-//        }
-//        归并
-        int mid=len/2;
-        int [] left=Arrays.copyOfRange(arr,0,mid);
-        int [] right=Arrays.copyOfRange(arr,mid,len);
-        return mergeTest(test1(left),test1(right));
+        //选择
+        for (int i = 0; i < len; i++) {
+            int minIndex = i;
+            for (int j = i; j < len; j++) {
+                if (arr[minIndex] > arr[j]) {
+                    minIndex = j;
+                }
+            }
+            int current = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = current;
+        }
+        return arr;
 
     }
 
     private static int[] mergeTest(int[] left, int[] right) {
-        int [] arr=new int[left.length + right.length];
-         int li=0;
-         int ri=0;
+        int[] arr = new int[left.length + right.length];
+        int li = 0;
+        int ri = 0;
         for (int i = 0; i < arr.length; i++) {
-            if (li >= left.length){
-                arr[i]=right[ri++];
-            }else if (ri >= right.length){
-                arr[i]=left[li++];
-            }else if (left[li] < right[ri]){
-                arr[i]=left[li++];
-            }else {
-                arr[i]=right[ri++];
+            if (li >= left.length) {
+                arr[i] = right[ri++];
+            } else if (ri >= right.length) {
+                arr[i] = left[li++];
+            } else if (left[li] < right[ri]) {
+                arr[i] = left[li++];
+            } else {
+                arr[i] = right[ri++];
             }
         }
 
