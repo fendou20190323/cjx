@@ -15,5 +15,8 @@ public class Son extends Father {
     public Son() {
     }
 
-
+    @Override
+    public void eat() {
+        System.err.println("son::::eat");
+    }
 }

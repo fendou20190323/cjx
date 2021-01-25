@@ -3,6 +3,9 @@ package e;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author: cjx
  * @Date: 2020-11-03 16:28
@@ -29,5 +32,25 @@ public class TestExtend {
     @Test
     public void test1(){
         System.err.println(123);
+    }
+
+    @Test
+    public void test2(){
+        Action action = new Action();
+        action.action(new Father());
+    }
+
+    @Test
+    public void test3(){
+        Action action = new Action();
+        action.action(new Son());
+    }
+
+    @Test
+    public void test4(){
+     Action action=new Action();
+
+
+     action.action(new Son());
     }
 }

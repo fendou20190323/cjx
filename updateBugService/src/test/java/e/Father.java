@@ -11,7 +11,7 @@ public class Father implements Family{
 
     @Override
     public void eat() {
-
+        System.err.println("father::::eat");
     }
 
     public Father() {
