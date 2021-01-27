@@ -37,7 +37,7 @@ public class TestExtend {
     @Test
     public void test2(){
         Action action = new Action();
-        action.action(new Father());
+        action.action1(new Son());
     }
 
     @Test
@@ -50,7 +50,8 @@ public class TestExtend {
     public void test4(){
      Action action=new Action();
 
-
-     action.action(new Son());
+        Son son = new Son();
+        Son [] arr={son};
+        action.action(arr);
     }
 }

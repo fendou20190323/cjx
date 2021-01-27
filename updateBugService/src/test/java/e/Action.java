@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Action {
 
-    public void action(Family f){
+    public void action1(Family f){
         f.eat();
     }
 
