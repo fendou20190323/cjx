@@ -54,4 +54,9 @@ public class TestExtend {
         Son [] arr={son};
         action.action(arr);
     }
+
+    @Test
+    public void test5(){
+
+    }
 }

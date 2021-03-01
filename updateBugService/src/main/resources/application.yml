@@ -14,17 +14,17 @@ spring:
 #    password: yyDb123456
       #    url: jdbc:mysql://rm-2ze877ndr3zv6a7z3vo.mysql.rds.aliyuncs.com:3306/imis?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
 #      虚拟机
-#    username: root
-#    password: 123456
-#    url: jdbc:mysql://192.168.218.128:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.218.128:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
 #      预生产
 #    username: root
 #    password: lssMysql2@
 #    url: jdbc:mysql://39.106.48.118:3306/imis?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
 #     测试
-    username: root
-    password: root123456
-    url: jdbc:mysql://11.1.1.143:33066/retailstore?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
+#    username: root
+#    password: root123456
+#    url: jdbc:mysql://11.1.1.143:33066/retailstore?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useAffectedRows=true
   main:
     allow-bean-definition-overriding: true
   mail:

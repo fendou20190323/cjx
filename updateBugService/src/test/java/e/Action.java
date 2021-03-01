@@ -22,4 +22,8 @@ public class Action {
            father.eat();
         }
     }
+
+    public void action2(Father f){
+
+    }
 }

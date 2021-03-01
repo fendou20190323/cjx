@@ -1,10 +1,13 @@
 package e;
 
+import lombok.Data;
+
 /**
  * @Author: cjx
  * @Date: 2020-11-03 16:27
  * @Description;
  */
+@Data
 public class Father implements Family{
     private static String n1;
     private String name;

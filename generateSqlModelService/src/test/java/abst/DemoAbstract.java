@@ -10,4 +10,6 @@ public abstract class  DemoAbstract {
     public void fun1(){
         System.err.println("fun1");
     }
+    protected abstract void fun2();
+
 }

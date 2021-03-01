@@ -10,4 +10,9 @@ public class DemoAbstractSon extends DemoAbstract {
     public void fun1() {
         System.err.println("son:fun1");
     }
+
+    @Override
+    protected void fun2() {
+
+    }
 }
