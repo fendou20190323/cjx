@@ -12,6 +12,8 @@ import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Map;
 
 @Component
@@ -19,7 +21,7 @@ import java.util.Map;
 
 public class Receiver {
 
-//    @RabbitHandler
+    //    @RabbitHandler
 //    @RabbitListener(bindings = @QueueBinding(value = @Queue("brand_drainage_order_queue_dead"), exchange = @Exchange(value = "BRAND_DRAINAGE_ORDER_EXCHANGE_DEAD"),key ="brand.dead" ))
 //    public void process(String msg) {
 //        int a=0;
@@ -66,13 +68,25 @@ public class Receiver {
 ////        System.err.println("repeatTradeQueue 接收时间:" + LocalDateTime.now().toString() + " 接收内容:" + msg);
 //
 //    }
-
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.DIRECT_QUEUE_A), exchange = @Exchange(value = MQConfig.DIRECT_EXCHANGE_A, type = ExchangeTypes.DIRECT), key = MQConfig.DIRECT_KEY_A))
+    @RabbitHandler
+    public void processDA1(String message) throws UnknownHostException {
+        System.err.println(InetAddress.getLocalHost());
+        System.err.println("04队列A1：" + message);
+    }
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.DIRECT_QUEUE_B), exchange = @Exchange(value = MQConfig.DIRECT_EXCHANGE_A, type = ExchangeTypes.DIRECT), key = MQConfig.DIRECT_KEY_A))
+    @RabbitHandler
+    public void processDA2(String message) throws UnknownHostException {
+        System.err.println(InetAddress.getLocalHost());
+        System.err.println("04队列A2：" + message);
+    }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_A), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_A, type = ExchangeTypes.TOPIC), key = "T.K.A.B"))
     @RabbitHandler
     public void processA(String message) {
         System.err.println("队列A：" + message);
     }
+
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_B), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_A, type = ExchangeTypes.TOPIC), key = MQConfig.TOPIC_KEY_A))
     @RabbitHandler
     public void processB(String message) {
@@ -82,44 +96,43 @@ public class Receiver {
     }
 
 
-
-
-
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_TA), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_B, type = ExchangeTypes.TOPIC), key = MQConfig.TOPIC_KEY_C))
     @RabbitHandler
-    public void processTA(String message) {
-        System.err.println("队列A：" + message);
+    public void processTA(String message) throws UnknownHostException {
+        System.err.println(InetAddress.getLocalHost());
+        System.err.println("04队列A：" + message);
     }
-    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_TB), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_B, type = ExchangeTypes.TOPIC), key =   MQConfig.TOPIC_KEY_C))
+
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_TB), exchange = @Exchange(value = MQConfig.TOPIC_EXCHANGE_B, type = ExchangeTypes.TOPIC), key = MQConfig.TOPIC_KEY_C))
     @RabbitHandler
     public void processTB(String message) {
         System.err.println("制造异常");
 //        int i= 1/0;
-        System.err.println("队列B：" + message);
+        System.err.println("04队列B：" + message);
     }
-
 
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_FA), exchange = @Exchange(value = MQConfig.FANOUT_EXCHANGE_A, type = ExchangeTypes.FANOUT)))
     @RabbitHandler
-    public void processFA(String message ,Channel channel,Message m) throws IOException {
+    public void processFA(String message, Channel channel, Message m) throws IOException {
         System.err.println("队列A：" + message);
         long tag = m.getMessageProperties().getDeliveryTag();
-        channel.basicAck(tag,false);
+        channel.basicAck(tag, false);
     }
+
     @RabbitListener(bindings = @QueueBinding(value = @Queue(MQConfig.QUEUE_FB), exchange = @Exchange(value = MQConfig.FANOUT_EXCHANGE_A, type = ExchangeTypes.FANOUT)))
     @RabbitHandler
-    public void processFB(String message,Channel channel,Message m) throws IOException {
+    public void processFB(String message, Channel channel, Message m) throws IOException {
         long tag = m.getMessageProperties().getDeliveryTag();
         try {
             System.err.println("制造异常");
-            int i= 1/0;
+            int i = 1 / 0;
             System.err.println("队列B：" + message);
 
         } catch (Exception e) {
 
-        }finally {
-            channel.basicAck(tag,false);
+        } finally {
+            channel.basicAck(tag, false);
         }
     }
 }

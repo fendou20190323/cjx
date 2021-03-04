@@ -1,5 +1,5 @@
 server:
-  port: 9904
+  port: 9905
 
 logging.level.com.fendou.moudle: debug
   spring.rabbitmq.host=11.1.1.143

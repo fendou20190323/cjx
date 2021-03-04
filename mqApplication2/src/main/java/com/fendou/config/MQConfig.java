@@ -13,6 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MQConfig {
 
+    public static final String DIRECT_EXCHANGE_A = "DE_A";
+    public static final String DIRECT_KEY_A = "DK_A";
+    public static final String DIRECT_QUEUE_A = "d_queue_a";
+    public static final String DIRECT_QUEUE_B = "d_queue_b";
     public static final String TOPIC_KEY_A = "T.K.A.B.#";
     public static final String TOPIC_KEY_B = "T.K.A.B.*";
     public static final String TOPIC_KEY_C = "*.C";

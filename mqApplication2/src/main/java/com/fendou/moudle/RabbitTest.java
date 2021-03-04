@@ -13,7 +13,7 @@ public class RabbitTest {
     @Autowired
     private Sender sender;
     
-    @GetMapping("/deadTest")
+    @GetMapping("/test")
     public void deadTest() {
         sender.send();
     }

@@ -52,8 +52,8 @@ public class Sender implements RabbitTemplate.ConfirmCallback,RabbitTemplate.Ret
 //
 //    }
     public void send() {
-
-        rabbitTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE_B, "B.C", "abc");
+//        int i=1/0;
+        rabbitTemplate.convertAndSend(MQConfig.DIRECT_EXCHANGE_A, MQConfig.DIRECT_KEY_A, "abc");
 //        rabbitTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE_B, "B.C", "abc");
 
     }
